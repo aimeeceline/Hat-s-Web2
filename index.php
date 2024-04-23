@@ -1,40 +1,4 @@
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>HAT BOOKSTORE</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
-  <link rel="stylesheet" href="css/index.css">
-
-</head>
-
-<body>
-  <!--------------------------Bắt đầu Header--------------------------------------------------->
-  <div class="container">
-    <nav>
-      <div class="logo">
-        <a href="html/index.html"><img src="img/banner/logoo.png" alt="Logo" height="120px" width="120px"></a>
-      </div>
-      <ul>
-        <li><a href="#">TÁC GIẢ</li></a>
-        <li class="theloai"><a href="#">THỂ LOẠI</a>
-          <div class="menuu">
-            <ul>
-              <li><a href="html/kynangsong1.html">Kỹ năng sống - Phát triển cá nhân</a></li>
-              <li><a href="html/manga.html">Manga – Comic</a></li>
-              <li><a href="html/Nghệ thuật - Văn hóa.html">Nghệ thuật – Văn hóa</a></li>
-            </ul>
-          </div>
-        </li>
-        <li><a href="#">SÁCH MỚI</li></a>
-        <li><a href="#">KHUYẾN MÃI</li></a>
-      </ul>
-      <div class="box">
-        <input type="checkbox" id="check">
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Tìm kiếm">
             <label for="check" class="icon">
