@@ -8,8 +8,8 @@
           <div class="menuu">
             <ul>
               <li><a href="quanlysanpham.php">Kỹ năng sống - Phát triển cá nhân</a></li>
-              <li><a href="page/quanlysanpham.php">Manga – Comic</a></li>
-              <li><a href="page/quanlysanpham.php">Nghệ thuật – Văn hóa</a></li>
+              <li><a href="quanlysanpham.php">Manga – Comic</a></li>
+              <li><a href="quanlysanpham.php">Nghệ thuật – Văn hóa</a></li>
             </ul>
           </div>
         </li>

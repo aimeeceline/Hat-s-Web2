@@ -16,9 +16,9 @@
   <div class="container">
   
     <?php 
-      include("header.php");
-      include("sidebar/sidebar.php");
-      include("footer.php");
+      include("page/header.php");
+      include("page/sidebar/sidebar.php");
+      include("page/footer.php");
     ?>
     <?php
      if(isset($_GET['quanly'])){
