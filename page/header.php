@@ -7,9 +7,9 @@
         <li class="theloai"><a href="#">THỂ LOẠI</a>
           <div class="menuu">
             <ul>
-              <li><a href="index.php?quanly=kynangsong&id=1">Kỹ năng sống - Phát triển cá nhân</a></li>
-              <li><a href="index.php?quanly=manga">Manga – Comic</a></li>
-              <li><a href="index.php?quanly=nghethuat">Nghệ thuật – Văn hóa</a></li>
+              <li><a href="quanlysanpham.php">Kỹ năng sống - Phát triển cá nhân</a></li>
+              <li><a href="page/quanlysanpham.php">Manga – Comic</a></li>
+              <li><a href="page/quanlysanpham.php">Nghệ thuật – Văn hóa</a></li>
             </ul>
           </div>
         </li>
