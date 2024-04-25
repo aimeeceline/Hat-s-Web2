@@ -3,18 +3,18 @@
         <a href="index.php"><img src="img/banner/logoo.png" alt="Logo" height="120px" width="120px"></a>
       </div>
       <ul>
-        <li><a href="#">TÁC GIẢ</li></a>
+        <li><a href="index.php?quanly=tacgia">TÁC GIẢ</li></a>
         <li class="theloai"><a href="#">THỂ LOẠI</a>
           <div class="menuu">
             <ul>
-              <li><a href="html/kynangsong1.html">Kỹ năng sống - Phát triển cá nhân</a></li>
-              <li><a href="html/manga.html">Manga – Comic</a></li>
-              <li><a href="html/Nghệ thuật - Văn hóa.html">Nghệ thuật – Văn hóa</a></li>
+              <li><a href="index.php?quanly=kynangsong&id=1">Kỹ năng sống - Phát triển cá nhân</a></li>
+              <li><a href="index.php?quanly=manga">Manga – Comic</a></li>
+              <li><a href="index.php?quanly=nghethuat">Nghệ thuật – Văn hóa</a></li>
             </ul>
           </div>
         </li>
-        <li><a href="#">SÁCH MỚI</li></a>
-        <li><a href="#">KHUYẾN MÃI</li></a>
+        <li><a href="index.php?quanly=sachmoi">SÁCH MỚI</li></a>
+        <li><a href="index.php?quanly=khuyenmai">KHUYẾN MÃI</li></a>
       </ul>
       <div class="box">
         <input type="checkbox" id="check">

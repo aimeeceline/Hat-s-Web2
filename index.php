@@ -17,9 +17,9 @@
   <div class="container">
   
     <?php 
-      include("page/header.php");
+      include("page/headermenu.php");
       include("page/slider.php");
-      include("page/menu.php");
+      include("page/main.php");
       include("page/footer.php");
   
       ?>
