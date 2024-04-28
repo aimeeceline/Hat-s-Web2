@@ -1,77 +1,48 @@
 <?php
 session_start();
-ob_start();
-include "classfunctionPHPdatabase.php";
-include "user.php";
-if ((isset($_POST['dangnhap'])) && ($_POST['dangnhap'])) {
-    $user = $_POST['user'];
-    $pass = $_POST['pass'];
-    $role = checkuser($user, $pass);
-    $_SESSION['role'] = $role;
-    if ($role == 1) header('location: index.php');
-    else {
-        $txt_erro = "Tên đăng nhập hoặc mật khẩu không đúng";
-    }
+include("classfunctionPHPdatabase.php");
+$p = new database();
+$conn = $p->connect();
+
+if (!$conn) {
+  die("Kết nối thất bại: " . mysqli_connect_error());
 }
+// Kiểm tra xem người dùng đã đăng nhập chưa
+if (isset($_POST['username']) && isset($_POST['password'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Truy vấn để kiểm tra username và password trong cơ sở dữ liệu
+    $sql = "SELECT * FROM user WHERE user=? AND pass=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Đăng nhập thành công, lấy thông tin người dùng và xác định vai trò
+        $row = $result->fetch_assoc();
+        $role = $row['role'];
+
+        // Lưu vai trò vào session và chuyển hướng tới trang tương ứng
+        $_SESSION['role'] = $role;
+        if ($role == 0) {
+            header('Location: http://localhost/HAT-s-web2/index.php');
+            exit();
+        } elseif ($role == 1) {
+            header('Location: http://localhost/Gr9-Web/admin/admin.php');
+            exit();
+        }
+    } else {
+        // Đăng nhập không thành công, thông báo lỗi hoặc chuyển hướng về trang đăng nhập với thông báo
+        header('Location: login.php?error=1');
+        exit();
+    }
+} else {
+    // Nếu không có dữ liệu đăng nhập được gửi đi, chuyển hướng về trang đăng nhập
+    header('Location: login.php');
+    exit();
+}
+
+$conn->close();
 ?>
-<!DOCTYPE html>
-<html lang="vi">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="css/signupsignin.css">
-</head>
-
-<body>
-
-    <div class="container" id="container">
-        <div class="form-container sign-up">
-            <form>
-                <a href="../html/index.html"><img src="../img/banner/logoo.png" width="130px"></a>
-                <h1>Tạo tài khoản</h1>
-                
-                <input type="text" placeholder="Tên đăng nhập">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Mật khẩu">
-                <a href="../html/signupsignin.html"><button onclick="myFunction1()">Đăng ký</button></a>
-            </form>
-        </div>
-        <div class="form-container sign-in">
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                <a href="../html/index.html"><img src="../img/banner/logoo.png" width="130px"></a>
-                <h1>Đăng nhập</h1>
-                
-                <input type="text" name="user" id="" placeholder="Tên đăng nhập">
-                <input type="password" name="pass" id="" placeholder="Mật khẩu">
-                <?php
-                if (isset($txt_erro) && ($txt_erro != "")) {
-                    echo "<font color='red'>" . $txt_erro . "</font>";
-                }
-                ?>
-                <a href="#">Quên mật khẩu?</a>
-                <button type="submit" name="dangnhap" class="j">Đăng nhập</button>
-            </form>
-        </div>
-        <div class="toggle-container">
-            <div class="toggle">
-                <div class="toggle-panel toggle-left">
-                    <h1>Chào mừng trở lại!</h1>
-                    <p>Đăng nhập để mua sắm dễ dàng và hưởng nhiều ưu đãi hơn tại HAT BOOKSTORE</p>
-                    <button class="hidden" id="login">Đăng nhập</button>
-                </div>
-                <div class="toggle-panel toggle-right">
-                    <h1>Chào bạn!</h1>
-                    <p>Đăng kí tài khoản để mua sắm dễ dàng và hưởng nhiều ưu đãi hơn tại HAT BOOKSTORE</p>
-                    <button class="hidden" id="register">Đăng kí</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="../js/signupsignin.js"></script>
-
-</body>
-
-</html>
