@@ -29,13 +29,10 @@ if (!$conn) {
       include("page/slider.php");
     ?>
     <h2 class="title">SẢN PHẨM NỔI BẬT</h2>
-  
-<<<<<<< HEAD
-      ?>
    
-    
+
   </div>
-=======
+
   <div class="onmainindex">
     <?php
     $item_per_page = 12;
@@ -82,7 +79,7 @@ if (!$conn) {
     }
     ?>
 </div>
->>>>>>> 4998a03c0359c9ccb8340b8c3fe4897ee1a63873
+
 
 <?php 
       include("page/footer.php");
