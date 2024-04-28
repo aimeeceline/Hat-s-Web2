@@ -28,11 +28,11 @@ if (!$conn) {
       include("page/header.php");
       include("page/slider.php");
     ?>
-    <h2 class="title">Products in the Shop</h2>
+    <h2 class="title">SẢN PHẨM NỔI BẬT</h2>
   
   <div class="onmainindex">
     <?php
-    $item_per_page = 8;
+    $item_per_page = 12;
     $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
     $offset = ($current_page - 1) * $item_per_page;
     // Thực hiện truy vấn SQL để lấy dữ liệu sản phẩm
@@ -56,11 +56,11 @@ if (!$conn) {
           echo '<div class="on2main">
                     <div class="main">
                   
-                      <a href="product.php?id='.$id.'">
+                      <a href="chitietsanpham.php?id='.$id.'">
                         <img src="'.$image_path.'" alt="'.$name.'">
                       </a>
                     </div>
-                    <a href="product.php?id='.$id.'">
+                    <a href="chitietsanpham.php?id='.$id.'">
                       <div class="unmain">
                         <p>'.$name.'</p>
                         <p><b>'.$formatted_price.'đ</b></p>

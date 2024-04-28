@@ -1,0 +1,145 @@
+/*-------PRODUCT-------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Karla', sans-serif;
+}
+
+body {
+  color: rgb(229, 44, 44);
+}
+
+.center {
+  display: flex;
+}
+
+.image {
+  width: 60%;
+  padding-right: 20px;
+  display: flex;
+}
+
+.big-image {
+  width: 60%;
+  padding-right: 20px;
+}
+
+.big-image img {
+  width: 100%;
+}
+
+.small-image {
+  width: 40%;
+  cursor: pointer;
+}
+
+.small-image img {
+  width: 50%;
+  height: 30%;
+}
+
+.infor {
+  width: 40%;
+  padding-left: 20px;
+}
+
+.name {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+.price {
+  margin: 12px 0;
+  font-size: 25px;
+  font-weight: bold;
+  color: brown;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.description {
+  line-height: 1.5;
+}
+
+.rating {
+  font-size: 30px;
+  /* Kích thước của sao */
+}
+
+.rating .nbuy {
+  font-size: 20px;
+  color: grey;
+}
+
+.star {
+  color: gold;
+  /* Màu sắc của sao */
+}
+
+.addtocart button {
+  width: 200px;
+  height: 40px;
+  color: rgb(152, 50, 50);
+  font-size: 15px;
+  font-weight: bold;
+  border: 2px solid rgb(152, 50, 50);
+  border-radius: 8px;
+  display: block;
+  margin: 20px 0 12px;
+  cursor: pointer;
+}
+
+.addtocart button:hover {
+  background-color: rgb(186, 31, 31);
+  color: #fff;
+}
+
+.othersProduct {
+  padding-top: 10px;
+}
+
+.othersProduct .listProduct {
+  padding-top: 20px;
+  width: 100%;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2%;
+}
+
+.notifications {
+  position: fixed;
+  top: 30px;
+  right: 20px;
+}
+#buy-amount{
+  margin-top: 10px;
+}
+#buy-amount #amount {
+  width: 20%;
+  text-align: center;
+  border: 1px solid #acaaaa;
+  cursor: pointer;
+}
+
+#buy-amount button:hover {
+  background-color: #ffffff;
+}
+
+#buy-amount button svg {
+  color: #909090;
+}
+
+#buy-amount button:hover svg {
+  color: #fa0000
+}
+
+#buy-amount {
+  display: flex;
+}
+
+#buy-amount button {
+  width: 35px;
+  height: 35px;
+  outline: none;
+  background: none;
+  border: 1px solid #909090;
+}

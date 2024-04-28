@@ -36,7 +36,7 @@ $result = mysqli_query($conn, $query);
   <title>HAT BOOKSTORE</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
   <link rel="stylesheet" href="css/index.css">
-
+  <link rel="stylesheet" href="css/pagination.css">
 </head>
 
 <body>
@@ -54,11 +54,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query = "SELECT * FROM product WHERE pro_name LIKE '%$search_name%'";
 
     // Xử lý tìm kiếm theo thể loại
-    $categories = isset($_POST['theloai']) ? $_POST['theloai'] : [];
-    if (!empty($categories)) {
-        $category_condition = "'" . implode("','", $categories) . "'";
-        $query .= " AND id_category IN ($category_condition)";
-    }
+$categories = isset($_POST['theloai']) ? $_POST['theloai'] : [];
+if (!empty($categories)) {
+    $category_condition = "'" . implode("','", $categories) . "'";
+    $query .= " AND id_category IN ($category_condition)";
+} else {
+    // Nếu không có thể loại nào được chọn, bạn có thể hiển thị thông báo hoặc xử lý theo cách khác tùy ý của bạn
+    echo "Vui lòng chọn ít nhất một thể loại để tìm kiếm.";
+    exit; // Dừng xử lý form
+}
 
     // Xử lý tìm kiếm theo giá bán
     $prices = isset($_POST['giaban']) ? $_POST['giaban'] : [];
@@ -89,10 +93,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Lỗi truy vấn: " . mysqli_error($conn);
     }
 }
+
 ?>
 
 <!-- Form tìm kiếm sản phẩm -->
-<h2 id="head">KỸ NĂNG SỐNG - PHÁT TRIỂN CÁ NHÂN</h2>
+<?php
+        $category_name = $p->getCategoryName($id_category);
+
+// In ra tên loại sản phẩm
+echo '<h2 id=head>'.mb_strtoupper($category_name, 'UTF-8').'</h2>';
+?>
+
     <div class="show">
 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
     <div id="accordion">
@@ -122,6 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         <!-- Hiển thị sản phẩm -->
+        
         <div class="onmain">
         <?php
 $item_per_page = 8;
@@ -155,11 +167,11 @@ if ($ketqua) {
             $formatted_price = number_format($price, 0, ',', '.');
             echo '<div class="on2main">
                     <div class="main">
-                        <a href="product.php?id='.$id.'">
+                        <a href="chitietsanpham.php?id='.$id.'">
                             <img src="'.$image_path.'" alt="'.$name.'">
                         </a>
                     </div>
-                    <a href="product.php?id='.$id.'">
+                    <a href="chitietsanpham.php?id='.$id.'">
                         <div class="unmain">
                             <p>'.$name.'</p>
                             <p><b>'.$formatted_price.'đ</b></p>
@@ -174,9 +186,12 @@ if ($ketqua) {
     echo "Lỗi truy vấn: " . mysqli_error($conn);
 }
 ?>
-
+ 
         </div>
   </div>
+  <?php 
+      include("page/footer.php");
+    ?>
   </div>  
 </body>
 
