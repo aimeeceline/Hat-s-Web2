@@ -29,7 +29,7 @@ if (!$conn) {
       include("page/slider.php");
     ?>
     <h2 class="title">Products in the Shop</h2>
-  </div>
+  
   <div class="onmainindex">
     <?php
     $item_per_page = 8;
@@ -52,7 +52,7 @@ if (!$conn) {
       
           // Tạo đường dẫn cho ảnh dựa trên loại sản phẩm
           $image_path = 'img/product/' . $category_name . '/' . $img;
-      
+          $formatted_price = number_format($price, 0, ',', '.'); 
           echo '<div class="on2main">
                     <div class="main">
                   
@@ -63,7 +63,7 @@ if (!$conn) {
                     <a href="product.php?id='.$id.'">
                       <div class="unmain">
                         <p>'.$name.'</p>
-                        <p><b>$'.$price.'</b></p>
+                        <p><b>'.$formatted_price.'đ</b></p>
                       </div>
                     </a>
                 </div>';
@@ -77,6 +77,10 @@ if (!$conn) {
     ?>
 </div>
 
+<?php 
+      include("page/footer.php");
+    ?>
+</div>    
 <body>
 
 
