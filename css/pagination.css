@@ -1,0 +1,25 @@
+.pagination {
+  padding: 10px;
+  padding-left: 40%;
+  text-align: center;
+  list-style: none;
+}
+
+.pagination li {
+  padding: 20px;
+  display: inline-block;
+  margin: 20px 10px;
+  cursor: pointer;
+}
+
+.pagination .hientai {
+  border-bottom: 3px solid rgb(0, 0, 0);
+}
+
+.pagination li:not(.hientai):hover {
+  background-color: rgb(152, 50, 50);
+  border-radius: 10px;
+}
+#head{
+  margin-left: 390px;
+}

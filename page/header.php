@@ -6,11 +6,12 @@
         <li><a href="index.php?quanly=tacgia">TÁC GIẢ</li></a>
         <li class="theloai"><a href="#">THỂ LOẠI</a>
           <div class="menuu">
-            <ul>
-              <li><a href="quanlysanpham.php">Kỹ năng sống - Phát triển cá nhân</a></li>
-              <li><a href="quanlysanpham.php">Manga – Comic</a></li>
-              <li><a href="quanlysanpham.php">Nghệ thuật – Văn hóa</a></li>
-            </ul>
+          <ul>
+    <li><a href="phanloai.php?id_category=1">Kỹ năng sống - Phát triển cá nhân</a></li>
+    <li><a href="phanloai.php?id_category=2">Manga – Comic</a></li>
+    <li><a href="phanloai.php?id_category=3">Nghệ thuật – Văn hóa</a></li>
+</ul>
+
           </div>
         </li>
         <li><a href="index.php?quanly=sachmoi">SÁCH MỚI</li></a>
