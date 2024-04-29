@@ -96,56 +96,87 @@ if ($result) {
           <span class="nbuy">(205)</span>
         </div>
         <div id="buy-amount">
-          <button class="minus-btn" onclick="handleMinus()">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
-            </svg>
-          </button>
-          <input type="text" name="amount" id="amount" value="1">
-          <button class="plus-btn" onclick="handlePlus()">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-          </button>
-        </div>
-        <script>
-          let amountElement = document.getElementById('amount');
-          let amount = amountElement.value;
+  <button class="minus-btn" onclick="handleMinus()">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+      stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+    </svg>
+  </button>
+  <input type="text" name="amount" id="amount" value="1">
+  <button class="plus-btn" onclick="handlePlus()">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+      stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+    </svg>
+  </button>
+</div>
+<script>
+  let amountElement = document.getElementById('amount');
+  let amount = amountElement.value;
 
-          let render = (amount) => {
-            amountElement.value = amount;
-          }
+  let render = (amount) => {
+    amountElement.value = amount;
+  }
 
-          let handlePlus = () => {
-            amount++;
-            render(amount);
-          }
+  let handlePlus = () => {
+    amount++;
+    render(amount);
+    // Cập nhật giá trị của trường quantity
+    document.querySelector('[name="quantity"]').value = amount;
+  }
 
-          let handleMinus = () => {
-            if (amount > 1)
-              amount--;
-            render(amount);
-          }
+  let handleMinus = () => {
+    if (amount > 1) {
+      amount--;
+      render(amount);
+      // Cập nhật giá trị của trường quantity
+      document.querySelector('[name="quantity"]').value = amount;
+    }
+  }
 
-          amountElement.addEventListener('input', () => {
-            amount = amountElement.value;
-            amount = parseInt(amount);
-            amount = (isNaN(amount) || amount == 0) ? 1 : amount;
-            render(amount);
-          });
-        </script>
-        <div class="addtocart">
-          <form method="post" action="cart.php">
-            <input type="hidden" name="product_id" value="<?php echo $pro_id; ?>">
-            <input type="hidden" name="product_img" value="<?php echo $image_path1; ?>">
-            <input type="hidden" name="product_name" value="<?php echo $product_name; ?>">
-            <input type="hidden" name="product_price" value="<?php echo $product_price; ?>">
-            <input type="hidden" name="quantity" value="1">
-            <button type="submit">Thêm vào giỏ hàng</button>
-          </form>
-        </div>
+  amountElement.addEventListener('input', () => {
+    amount = amountElement.value;
+    amount = parseInt(amount);
+    amount = (isNaN(amount) || amount == 0) ? 1 : amount;
+    render(amount);
+    // Cập nhật giá trị của trường quantity
+    document.querySelector('[name="quantity"]').value = amount;
+  });
+</script>
+
+<div class="addtocart">
+    <form id="add-to-cart-form" method="post">
+        <input type="hidden" name="product_id" value="<?php echo $pro_id; ?>">
+        <input type="hidden" name="product_img" value="<?php echo $image_path1; ?>">
+        <input type="hidden" name="product_name" value="<?php echo $product_name; ?>">
+        <input type="hidden" name="product_price" value="<?php echo $product_price; ?>">
+        <input type="hidden" name="quantity" value="1" id="amount">
+        <button type="submit">Thêm vào giỏ hàng</button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    document.getElementById("add-to-cart-form").addEventListener("submit", function(event) {
+        // Ngăn chặn hành vi mặc định của form
+        event.preventDefault();
+        
+        // Gửi dữ liệu form đến trang giỏ hàng bằng Ajax
+        axios.post('cart.php', new FormData(this))
+            .then(function(response) {
+                console.log('Dữ liệu đã được gửi thành công');
+                // Thực hiện bất kỳ xử lý nào khác nếu cần
+                
+                // Cập nhật số lượng sản phẩm trong giỏ hàng trên trang
+                var cartCountElement = document.getElementById("cart-count");
+                var currentCount = parseInt(cartCountElement.textContent.trim());
+                cartCountElement.textContent = currentCount + 1;
+            })
+            .catch(function(error) {
+                console.error('Lỗi khi gửi dữ liệu: ', error);
+            });
+    });
+</script>
+
       </div>
     </div>
     <h2 class="title">SẢN PHẨM KHÁC</h2>
