@@ -1,0 +1,93 @@
+
+
+nav {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .left {
+    flex-basis: 50%;
+  }
+  
+  .right {
+    flex-basis: 50%;
+  
+  }
+  
+  form {
+    padding: 0 1rem;
+  }
+  
+  .left h3,
+  .right h3,
+  .wrapper1 h3 {
+    margin: 10px;
+    margin-left: 0;
+    padding: 10px;
+    color: #fff;
+    background-color: #000;
+  }
+  
+  form input[type="radio"] {
+  
+    padding: 0.5rem 0.7rem;
+    margin: 0.5rem 0;
+    outline: none;
+  }
+  
+  form input[type="text"] {
+    width: 100%;
+    padding: 0.5rem 0.7rem;
+    margin: 0.5rem 0;
+    outline: none;
+  
+  }
+  
+   a:hover{
+    color: rgb(50, 50, 154);
+    text-decoration: underline;
+  }
+  
+  #num {
+    width: 13%;
+    text-align: center;
+  }
+  
+  #gia1 {
+    width: 20%;
+    text-align: center;
+  }
+  
+  #zip {
+    display: flex;
+    margin-top: 0.5rem;
+  }
+  
+  #zip select {
+    padding: 0.5rem 0.7rem;
+  }
+  
+  #zip input[type="number"] {
+    padding: 0.5rem 0.7rem;
+    margin-left: 5px;
+  }
+  
+  .fixed-buttons-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-top: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  label img {
+    width: 2%;
+  }
+  #zalopay{
+    width: 4%;
+  }
+  .checkout-btn:hover{
+    background-color: #C92127;
+  }
