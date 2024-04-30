@@ -12,28 +12,19 @@
 
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form action="logout.php" method="post"> <!-- Thay đổi action thành tên tập lệnh xử lý dữ liệu -->
-<<<<<<< Updated upstream
+            <form action="signup.php" method="post"> <!-- Thay đổi action thành tên tập lệnh xử lý dữ liệu -->
                 <a href="../html/index.html"><img src="../img/banner/logoo.png" width="130px"></a>
                 <h1>Tạo tài khoản</h1>
                 
-                <input type="text" name="user" placeholder="Username" />
+                <input type="text" name="user" placeholder="Username" required/>
                 <input type="email" name="email" placeholder="Email" />
                 <input type="password" name="pass" placeholder="Password" />
                 
-                <button type="submit">Đăng kí</button>
-=======
-                <h1>Đăng kí tài khoản</h1>
-                <input type="text" name="userName" placeholder="Username" />
-                <input type="email" name="email" placeholder="Email" />
-                <input type="password" name="password" placeholder="Password" />
-                
-                <button type="submit">Đăng ký</button>
->>>>>>> Stashed changes
+                <button  type="submit">Đăng kí</button>
             </form>
         </div>
         <div class="form-container sign-in">
-            <form action="login.php" method="post">
+            <form action="signin.php" method="post">
                 <h1>Sign in</h1>
                 <label for="username">Tên đăng nhập</label>
                 <input type="text" id="username" name="username" placeholder="Username" required />

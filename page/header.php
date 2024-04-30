@@ -29,12 +29,7 @@
             <div id="searchResults"></div>
 
         </div>
-<<<<<<< Updated upstream
-      </div>
-      <script>
-=======
         <script>
->>>>>>> Stashed changes
 function searchProducts() {
     var searchText = document.getElementById("searchInput").value;
     var xhr = new XMLHttpRequest();
@@ -47,27 +42,28 @@ function searchProducts() {
     xhr.send();
 }
 </script>
-<<<<<<< Updated upstream
-=======
 
         </form>
     </div>
->>>>>>> Stashed changes
     <div class="buttons">
     <div class="login">
     <img
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAkpJREFUSEvl1knIjVEcx/HPS+aNcWVnYSND5lKmiNgQC2RFyZBMCymlWFjItEBSNkRKSUJIFBtTkSHWZCEkRZGp/9u59bzPe+99njvUu3B2955zft/zH87vPB16aHT0EFcz4N4Yhynp0A/xHL8bCaJR8DIcxcgc5C0243JZeCPgw9haIHwIO8rAy4Ln42YSfIRdeJJ+T8L+TOrn4k4RvCz4FualWk7Gz5xwXzzGWFzHonaAe+Eb+mMTjtcQ3Yhj+Ioh+FMPXibi6OBnSWQxrtUQjCivprkxeNUqODr4XRJZhfM1BFfiXJqLPe9bBcf+TxiKel17ENvxESPaUePQ2IfdySSW4kpOeAkuIsxlD/a2CxyN9RKjkuD91MV9UifPTP+/Sa6W7/pu5yjTXJVN0WRnE6haQGGbUec4YOFoBBxicbU2YAGm41eKPO7uyaIrlD1No+DCSMouKAsehhmYhnCufjnAjxT5A0T9PxcdoAg8GAewltJP6N+U9p3JxaqeoR54OU5geGbn9+Ri1bx6PAZm1n7AelyqRq4Fjkc+0laZP40jeIGIqJZWPBJbsCYtiLVTUxm67KkGjpcmrsZoRIQLca+oZrn5WcnTIwOvEdnokqVq4LDFbUloHU41CK0sjzRHqWJ0s9pq4IhyAG6kaJvkdm67jfgwCM1B9e5xXJsw+RgrcKEVKlbjTNKIN/pLRS8f8cTMJ03UNqJuZWTf6LDc6J3OkQfPznwvzcHdVqioqZcHh2FMSLCn2dQ0eYCaekXO1SSveNv/B/4HUH5pHwh1c9gAAAAASUVORK5CYII=" />
-    <?php if(isset($_SESSION['id']) && isset($_SESSION['user']) && isset($_SESSION['pass']) && isset($_SESSION['myrole']) && $_SESSION['myrole'] == 2) { 
-    $loggedInUserName = $_SESSION['myuser'];
-    echo "Xin chào, $loggedInUserName!";?>
+    
         <span class="tooltip">
+        <?php if (isset($_SESSION['user'])) {
+    // Người dùng đã đăng nhập, lấy vai trò từ session
+    $user = $_SESSION['user'];
+    echo "Xin chào ,  " .$user ;
+
+?>
             <button>Lịch sử mua hàng</button>
             <a href="logout.php"><button>Đăng xuất</button></a>
         </span>
     <?php } else {?>
         <span class="tooltip">
-            <a href="html/signupsignin.html"><button>Đăng nhập</button></a>
-            <a href="html/signup.html"><button>Đăng ký</button></a>
+            <a href="signin.html"><button>Đăng nhập</button></a>
+            <a href="signup.html"><button>Đăng ký</button></a>
         </span>
     <?php } ?>
 </div>

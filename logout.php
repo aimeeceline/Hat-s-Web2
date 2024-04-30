@@ -1,49 +1,23 @@
 <?php
+// Bắt đầu hoặc tiếp tục một phiên đã tồn tại
 session_start();
-include("classfunctionPHPdatabase.php");
-$p = new database();
-$conn = $p->connect();
 
-if (!$conn) {
-  die("Kết nối thất bại: " . mysqli_connect_error());
-}
-<<<<<<< Updated upstream
+// Xóa tất cả các biến phiên
+$_SESSION = array();
 
-
-// Kiểm tra xem có dữ liệu được gửi từ form không
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Lấy dữ liệu từ form
-    $user = isset($_POST['user']) ? $_POST['user'] : '';
-    $email = isset($_POST['email']) ? $_POST['email'] : '';
-    $pass = isset($_POST['pass']) ? $_POST['pass'] : '';
-    
-
-    // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
-
-    // Tiến hành thêm dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO user ( `user`, `email`,  `pass`) VALUES ('$user', '$email',  '$pass')";
-=======
-// Kiểm tra xem có dữ liệu được gửi từ form không
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Lấy dữ liệu từ form
-    $userName = isset($_POST['userName']) ? $_POST['userName'] : '';
-    $email = isset($_POST['email']) ? $_POST['email'] : '';
-    $password = isset($_POST['password']) ? $_POST['password'] : '';
-    
-    // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
-
-    // Tiến hành thêm dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO user ( `user`, `email`,  `pass`) VALUES ( '$userName', '$email', '$password')";
->>>>>>> Stashed changes
-
-    if ($conn->query($sql) === TRUE) {
-        // Chuyển hướng người dùng về trang index hoặc trang khác tùy vào yêu cầu của bạn
-        header("Location: http://localhost/HAT-s-web2/index.php");
-        exit(); // Đảm bảo không có mã HTML hoặc mã PHP nào được thực thi sau hàm header
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+// Nếu cần, hủy bỏ cookie phiên
+if (ini_get("session.use_cookies")) {
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]
+    );
 }
 
-$conn->close();
+// Hủy bỏ phiên hiện tại
+session_destroy();
+
+// Chuyển hướng người dùng đến trang đăng nhập hoặc trang chính của bạn
+header("Location: http://localhost/HAT-s-web2/index.php");
+exit();
 ?>
