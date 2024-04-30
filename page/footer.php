@@ -19,7 +19,7 @@
           <h3>Nhận thông báo từ chúng tôi:</h3>
           <form>
             <label for="emailInput">Email:</label>
-            <input type="email" id="emailInput" name="email" placeholder="Nhập địa chỉ email của bạn" required>
+            <input type="email" id="emailInput" name="email" placeholder="Nhập địa chỉ email của bạn" >
             <input type="submit" value="Gửi">
           </form>
         </div>
