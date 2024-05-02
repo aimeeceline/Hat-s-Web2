@@ -2,11 +2,12 @@
 session_start();
 
 // Function to remove a product from the cart
-function removeFromCart($product_id) {
+function removeFromCart($product_id)
+{
     if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
         // Find the index of the product to remove
         $key = array_search($product_id, array_column($_SESSION['cart'], 'product_id'));
-        
+
         // If the product is found, remove it from the cart
         if ($key !== false) {
             unset($_SESSION['cart'][$key]);

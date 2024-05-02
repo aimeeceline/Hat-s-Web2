@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("classfunctionPHPdatabase.php");
+include ("classfunctionPHPdatabase.php");
 $p = new database();
 $conn = $p->connect();
 
@@ -9,9 +9,9 @@ $pro_id = isset($_GET['id']) ? $_GET['id'] : null;
 
 // Kiểm tra id_category có hợp lệ không
 if (!is_numeric($pro_id)) {
-    // Xử lý khi id_category không hợp lệ
-    echo "Lỗi: pro_id không hợp lệ!";
-    exit;
+  // Xử lý khi id_category không hợp lệ
+  echo "Lỗi: pro_id không hợp lệ!";
+  exit;
 }
 
 // Tạo câu truy vấn SQL để lấy các sản phẩm thuộc id_category đã chọn
@@ -20,27 +20,27 @@ $result = mysqli_query($conn, $query);
 
 // Kiểm tra kết quả truy vấn
 if ($result) {
-    // Lấy dữ liệu từ kết quả truy vấn
-    $row = mysqli_fetch_assoc($result);
+  // Lấy dữ liệu từ kết quả truy vấn
+  $row = mysqli_fetch_assoc($result);
 
-    // Gán dữ liệu vào các biến PHP
-    $product_name = $row['pro_name'];
-    $category = $row['id_category'];
-    $product_price = $row['pro_price'];
-    $author = $row['pro_author'];
-    $publisher = $row['pro_publisher'];
-    $description = $row['pro_description'];
-    $product_image1 = $row['pro_img1'];
-    $product_image2 = $row['pro_img2'];
-    $product_image3 = $row['pro_img3'];
-    // Gọi phương thức để lấy tên loại sản phẩm từ bảng category
-    $category_name = $p->getCategoryName($category);
-    
-    // Tạo đường dẫn cho ảnh dựa trên loại sản phẩm
-    $image_path1 = 'img/product/' . $category_name . '/' . $product_image1;
-    $image_path2 = 'img/product/' . $category_name . '/' . $product_image2;
-    $image_path3 = 'img/product/' . $category_name . '/' . $product_image3;
-    $formatted_price = number_format($product_price, 0, ',', '.'); 
+  // Gán dữ liệu vào các biến PHP
+  $product_name = $row['pro_name'];
+  $category = $row['id_category'];
+  $product_price = $row['pro_price'];
+  $author = $row['pro_author'];
+  $publisher = $row['pro_publisher'];
+  $description = $row['pro_description'];
+  $product_image1 = $row['pro_img1'];
+  $product_image2 = $row['pro_img2'];
+  $product_image3 = $row['pro_img3'];
+  // Gọi phương thức để lấy tên loại sản phẩm từ bảng category
+  $category_name = $p->getCategoryName($category);
+
+  // Tạo đường dẫn cho ảnh dựa trên loại sản phẩm
+  $image_path1 = 'img/product/' . $category_name . '/' . $product_image1;
+  $image_path2 = 'img/product/' . $category_name . '/' . $product_image2;
+  $image_path3 = 'img/product/' . $category_name . '/' . $product_image3;
+  $formatted_price = number_format($product_price, 0, ',', '.');
 }
 ?>
 
@@ -61,7 +61,7 @@ if ($result) {
 
 <body>
   <div class="container">
-    <?php include("page/header.php"); ?>
+    <?php include ("page/header.php"); ?>
 
     <div class="center">
       <div class="image">
@@ -69,9 +69,12 @@ if ($result) {
           <img src="<?php echo $image_path1; ?>" alt="<?php echo $product_name; ?>" id="bigImage">
         </div>
         <div class="small-image">
-          <img src="<?php echo $image_path1; ?>" alt="<?php echo $product_name; ?>" onclick="changeBigImage('<?php echo $image_path1; ?>')">
-          <img src="<?php echo $image_path2; ?>" alt="<?php echo $product_name; ?>" onclick="changeBigImage('<?php echo $image_path2; ?>')">
-          <img src="<?php echo $image_path3; ?>" alt="<?php echo $product_name; ?>" onclick="changeBigImage('<?php echo $image_path3; ?>')">
+          <img src="<?php echo $image_path1; ?>" alt="<?php echo $product_name; ?>"
+            onclick="changeBigImage('<?php echo $image_path1; ?>')">
+          <img src="<?php echo $image_path2; ?>" alt="<?php echo $product_name; ?>"
+            onclick="changeBigImage('<?php echo $image_path2; ?>')">
+          <img src="<?php echo $image_path3; ?>" alt="<?php echo $product_name; ?>"
+            onclick="changeBigImage('<?php echo $image_path3; ?>')">
         </div>
       </div>
 
@@ -85,8 +88,10 @@ if ($result) {
       <div class="infor">
         <h1 class="name"><?php echo $product_name; ?></h1>
         <div class="price"><?php echo $formatted_price; ?>đ</div>
-        <div class="description"><b>Tác giả:</b> <?php echo $author; ?><br><b>Nhà xuất bản:</b> <?php echo $publisher; ?>
-          <br><br><?php echo $description; ?></div>
+        <div class="description"><b>Tác giả:</b> <?php echo $author; ?><br><b>Nhà xuất bản:</b>
+          <?php echo $publisher; ?>
+          <br><br><?php echo $description; ?>
+        </div>
         <div class="rating">
           <span class="star">&#9733;</span>
           <span class="star">&#9733;</span>
@@ -96,86 +101,81 @@ if ($result) {
           <span class="nbuy">(205)</span>
         </div>
         <div id="buy-amount">
-  <button class="minus-btn" onclick="handleMinus()">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-      stroke="currentColor" class="w-6 h-6">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
-    </svg>
-  </button>
-  <input type="text" name="amount" id="amount" value="1">
-  <button class="plus-btn" onclick="handlePlus()">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-      stroke="currentColor" class="w-6 h-6">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-    </svg>
-  </button>
-</div>
-<script>
-  let amountElement = document.getElementById('amount');
-  let amount = amountElement.value;
+          <button class="minus-btn" onclick="handleMinus()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+            </svg>
+          </button>
+          <input type="text" name="amount" id="amount" value="1">
+          <button class="plus-btn" onclick="handlePlus()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+          </button>
+        </div>
+        <script>
+          let amountElement = document.getElementById('amount');
+          let amount = amountElement.value;
 
-  let render = (amount) => {
-    amountElement.value = amount;
-  }
+          let render = (amount) => {
+            amountElement.value = amount;
+          }
 
-  let handlePlus = () => {
-    amount++;
-    render(amount);
-    // Cập nhật giá trị của trường quantity
-    document.querySelector('[name="quantity"]').value = amount;
-  }
+          let handlePlus = () => {
+            amount++;
+            render(amount);
+            // Cập nhật giá trị của trường quantity
+            document.querySelector('[name="quantity"]').value = amount;
+          }
 
-  let handleMinus = () => {
-    if (amount > 1) {
-      amount--;
-      render(amount);
-      // Cập nhật giá trị của trường quantity
-      document.querySelector('[name="quantity"]').value = amount;
-    }
-  }
+          let handleMinus = () => {
+            if (amount > 1) {
+              amount--;
+              render(amount);
+              // Cập nhật giá trị của trường quantity
+              document.querySelector('[name="quantity"]').value = amount;
+            }
+          }
 
-  amountElement.addEventListener('input', () => {
-    amount = amountElement.value;
-    amount = parseInt(amount);
-    amount = (isNaN(amount) || amount == 0) ? 1 : amount;
-    render(amount);
-    // Cập nhật giá trị của trường quantity
-    document.querySelector('[name="quantity"]').value = amount;
-  });
-</script>
+          amountElement.addEventListener('input', () => {
+            amount = amountElement.value;
+            amount = parseInt(amount);
+            amount = (isNaN(amount) || amount == 0) ? 1 : amount;
+            render(amount);
+            // Cập nhật giá trị của trường quantity
+            document.querySelector('[name="quantity"]').value = amount;
+          });
+        </script>
 
-<div class="addtocart">
-    <form id="add-to-cart-form" method="post">
-        <input type="hidden" name="product_id" value="<?php echo $pro_id; ?>">
-        <input type="hidden" name="product_img" value="<?php echo $image_path1; ?>">
-        <input type="hidden" name="product_name" value="<?php echo $product_name; ?>">
-        <input type="hidden" name="product_price" value="<?php echo $product_price; ?>">
-        <input type="hidden" name="quantity" value="1" id="amount">
-        <button type="submit">Thêm vào giỏ hàng</button>
-    </form>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-    document.getElementById("add-to-cart-form").addEventListener("submit", function(event) {
-        // Ngăn chặn hành vi mặc định của form
-        event.preventDefault();
-        
-        // Gửi dữ liệu form đến trang giỏ hàng bằng Ajax
-        axios.post('cart.php', new FormData(this))
-            .then(function(response) {
+        <div class="addtocart">
+          <form id="add-to-cart-form" method="post">
+            <input type="hidden" name="product_id" value="<?php echo $pro_id; ?>">
+            <input type="hidden" name="product_img" value="<?php echo $image_path1; ?>">
+            <input type="hidden" name="product_name" value="<?php echo $product_name; ?>">
+            <input type="hidden" name="product_price" value="<?php echo $product_price; ?>">
+            <input type="hidden" name="quantity" value="1" id="amount">
+            <button type="submit">Thêm vào giỏ hàng</button>
+          </form>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+          document.getElementById("add-to-cart-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            axios.post('cart.php', new FormData(this))
+              .then(function (response) {
                 console.log('Dữ liệu đã được gửi thành công');
-                // Thực hiện bất kỳ xử lý nào khác nếu cần
-                
-                // Cập nhật số lượng sản phẩm trong giỏ hàng trên trang
-                var cartCountElement = document.getElementById("cart-count");
-                var currentCount = parseInt(cartCountElement.textContent.trim());
-                cartCountElement.textContent = currentCount + 1;
-            })
-            .catch(function(error) {
+
+                alert("SẢN PHẨM ĐÃ THÊM THÀNH CÔNG!!!");
+                // Load lại trang để cập nhật số lượng sản phẩm trong giỏ hàng và hiển thị cảnh báo
+                window.location.reload();
+              })
+              .catch(function (error) {
                 console.error('Lỗi khi gửi dữ liệu: ', error);
-            });
-    });
-</script>
+              });
+          });
+        </script>
 
       </div>
     </div>
@@ -187,7 +187,7 @@ if ($result) {
       $p->displayProducts($conn, $item_per_page, $current_page, $p, true); //Hàm này nằm trong classfunctionPHPdatabase.php
       ?>
     </div>
-    <?php include("page/footer.php"); ?>
+    <?php include ("page/footer.php"); ?>
   </div>
 </body>
 

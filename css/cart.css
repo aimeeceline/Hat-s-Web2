@@ -27,7 +27,6 @@ td{
 }
 
 #gia {
-    color: red;
     width: 20%;
     text-align: center;
     margin-top: 50px;
@@ -47,36 +46,7 @@ td a:hover {
     text-decoration: none;
 }
 
-#buy-amount #amount {
-    width: 20%;
-    text-align: center;
-    border: 1px solid #ececec;
-    cursor: pointer;
-}
 
-#buy-amount button:hover {
-    background-color: #ececec;
-}
-
-#buy-amount button svg {
-    color: #909090;
-}
-
-#buy-amount button:hover svg {
-    color: #4f4f4f
-}
-
-#buy-amount {
-    display: flex;
-}
-
-#buy-amount button {
-    width: 35px;
-    height: 35px;
-    outline: none;
-    background: none;
-    border: 1px solid #ececec;
-}
 
 .gogo button {
 
@@ -97,4 +67,45 @@ td a:hover {
     border: 2px solid #C92127;
     background-color: #C92127;
     color: #fff;
+}
+#buy-amount{
+    margin-top: 10px;
+  }
+  #buy-amount #amount {
+    width: 20%;
+    text-align: center;
+    border: 1px solid #acaaaa;
+    cursor: pointer;
+  }
+  
+  #buy-amount button:hover {
+    background-color: #ffffff;
+  }
+  
+  #buy-amount button svg {
+    color: #909090;
+  }
+  
+  #buy-amount button:hover svg {
+    color: #fa0000
+  }
+  
+  #buy-amount {
+    display: flex;
+  }
+  
+  #buy-amount button {
+    width: 35px;
+    height: 35px;
+    outline: none;
+    background: none;
+    border: 1px solid #909090;
+  }
+  .input-quantity {
+    width: 70%; /* Độ rộng của input */
+    text-align: center; /* Căn giữa nội dung */
+    border: 1px solid #acaaaa;
+    cursor: pointer;
+    margin: 0 auto; /* Căn giữa theo chiều ngang */
+    display: block; /* Chuyển input thành block element để margin auto có hiệu lực */
 }

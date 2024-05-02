@@ -1,7 +1,6 @@
-
 <?php
 session_start();
-include("classfunctionPHPdatabase.php");
+include ("classfunctionPHPdatabase.php");
 $p = new database();
 $conn = $p->connect();
 
@@ -12,6 +11,7 @@ if (!$conn) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,24 +24,25 @@ if (!$conn) {
 
 <body>
   <div class="container">
-    <?php 
-      include("page/header.php");
-      include("page/slider.php");
+    <?php
+    include ("page/header.php");
+    include ("page/slider.php");
     ?>
     <!--------------------------Hiển thị sản phẩm--------------------------------------------------->
     <h2 class="title">SẢN PHẨM NỔI BẬT</h2>
-  <div class="onmainindex">
+    <div class="onmainindex">
+      <?php
+      $item_per_page = 8;
+      $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
+      $p->displayProducts($conn, $item_per_page, $current_page, $p, true);//Hàm này nằm trong classfunctionPHPdatabase.php
+      ?>
+    </div>
+
     <?php
-    $item_per_page = 8;
-    $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
-    $p->displayProducts($conn, $item_per_page, $current_page, $p, true);//Hàm này nằm trong classfunctionPHPdatabase.php
+    include ("page/footer.php");
     ?>
-</div>
+  </div>
 
-<?php 
-      include("page/footer.php");
-    ?>
-</div>  
+  <body>
 
-<body>
 </html>
