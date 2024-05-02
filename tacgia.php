@@ -1,4 +1,14 @@
 
+<?php
+session_start();
+include("classfunctionPHPdatabase.php");
+$p = new database();
+$conn = $p->connect();
+
+if (!$conn) {
+  die("Kết nối thất bại: " . mysqli_connect_error());
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

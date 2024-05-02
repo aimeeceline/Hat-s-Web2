@@ -44,6 +44,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     // Nếu không có dữ liệu đăng nhập được gửi đi, chuyển hướng về trang đăng nhập
     header('Location: login.php');
     exit();
+    
 }
 
 $conn->close();

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("classfunctionPHPdatabase.php");
+include ("classfunctionPHPdatabase.php");
 $p = new database();
 $conn = $p->connect();
 
@@ -49,110 +49,113 @@ $result = mysqli_query($conn, $query);
     <div class="container">
 
         <?php
-        include("page/header.php");
+        include ("page/header.php");
         ?>
-<?php
-// Xử lý dữ liệu gửi từ form
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Xử lý tìm kiếm theo tên sản phẩm
-    $search_name = $_POST['search_name'];
-    $query = "SELECT * FROM product WHERE pro_name LIKE '%$search_name%'";
+        <?php
+        // Xử lý dữ liệu gửi từ form
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Xử lý tìm kiếm theo tên sản phẩm
+            $search_name = $_POST['search_name'];
+            $query = "SELECT * FROM product WHERE pro_name LIKE '%$search_name%'";
 
-    // Xử lý tìm kiếm theo thể loại
-$categories = isset($_POST['theloai']) ? $_POST['theloai'] : [];
-if (!empty($categories)) {
-    $category_condition = "'" . implode("','", $categories) . "'";
-    $query .= " AND id_category IN ($category_condition)";
-} else {
-    // Nếu không có thể loại nào được chọn, bạn có thể hiển thị thông báo hoặc xử lý theo cách khác tùy ý của bạn
-    echo "Vui lòng chọn ít nhất một thể loại để tìm kiếm.";
-    exit; // Dừng xử lý form
-}
+            // Xử lý tìm kiếm theo thể loại
+            $categories = isset($_POST['theloai']) ? $_POST['theloai'] : [];
+            if (!empty($categories)) {
+                $category_condition = "'" . implode("','", $categories) . "'";
+                $query .= " AND id_category IN ($category_condition)";
+            } else {
+                // Nếu không có thể loại nào được chọn, bạn có thể hiển thị thông báo hoặc xử lý theo cách khác tùy ý của bạn
+                echo "Vui lòng chọn ít nhất một thể loại để tìm kiếm.";
+                exit; // Dừng xử lý form
+            }
 
-    // Xử lý tìm kiếm theo giá bán
-    $prices = isset($_POST['giaban']) ? $_POST['giaban'] : [];
-    if (!empty($prices)) {
-        $price_condition = [];
-        foreach ($prices as $price) {
-            switch ($price) {
-                case '1':
-                    $price_condition[] = "pro_price < 100000";
-                    break;
-                case '2':
-                    $price_condition[] = "pro_price >= 100000 AND pro_price <= 500000";
-                    break;
-                case '3':
-                    $price_condition[] = "pro_price >= 500000 AND pro_price <= 1000000";
-                    break;
+            // Xử lý tìm kiếm theo giá bán
+            $prices = isset($_POST['giaban']) ? $_POST['giaban'] : [];
+            if (!empty($prices)) {
+                $price_condition = [];
+                foreach ($prices as $price) {
+                    switch ($price) {
+                        case '1':
+                            $price_condition[] = "pro_price < 100000";
+                            break;
+                        case '2':
+                            $price_condition[] = "pro_price >= 100000 AND pro_price <= 500000";
+                            break;
+                        case '3':
+                            $price_condition[] = "pro_price >= 500000 AND pro_price <= 1000000";
+                            break;
+                    }
+                }
+                $query .= " AND (" . implode(" OR ", $price_condition) . ")";
+            }
+
+            // Thực hiện truy vấn SQL
+            $result = mysqli_query($conn, $query);
+            if ($result) {
+                // Xử lý kết quả trả về từ cơ sở dữ liệu
+                // Hiển thị kết quả tìm kiếm
+            } else {
+                echo "Lỗi truy vấn: " . mysqli_error($conn);
             }
         }
-        $query .= " AND (" . implode(" OR ", $price_condition) . ")";
-    }
 
-    // Thực hiện truy vấn SQL
-    $result = mysqli_query($conn, $query);
-    if ($result) {
-        // Xử lý kết quả trả về từ cơ sở dữ liệu
-        // Hiển thị kết quả tìm kiếm
-    } else {
-        echo "Lỗi truy vấn: " . mysqli_error($conn);
-    }
-}
-
-?>
+        ?>
 
 
-<!-- Form tìm kiếm sản phẩm -->
-<?php
+        <!-- Form tìm kiếm sản phẩm -->
+        <?php
         $category_name = $p->getCategoryName($id_category);
 
-// In ra tên loại sản phẩm
-echo '<h2 id=head>'.mb_strtoupper($category_name, 'UTF-8').'</h2>';
-?>
+        // In ra tên loại sản phẩm
+        echo '<h2 id=head>' . mb_strtoupper($category_name, 'UTF-8') . '</h2>';
+        ?>
 
-    <div class="show">
-<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-    <div id="accordion">
-        <div class="cap">Tìm kiếm nâng cao</div>
-        <input type="text" name="search_name" placeholder="Nhập tên sản phẩm cần tìm" style="width: 90%; padding: 10px; border-radius: 8px; margin: 8px;">
+        <div class="show">
+            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <div id="accordion">
+                    <div class="cap">Tìm kiếm nâng cao</div>
+                    <input type="text" name="search_name" placeholder="Nhập tên sản phẩm cần tìm"
+                        style="width: 90%; padding: 10px; border-radius: 8px; margin: 8px;">
 
-        <!-- Thể loại -->
-        <div class="cap1">Thể loại:</div>
-        <div class="ct">
-            <label><input type="checkbox" name="theloai[]" value="Kỹ năng sống phát triển cá nhân">Kỹ năng sống phát triển cá nhân</label>
-            <label><input type="checkbox" name="theloai[]" value="Manga-Comic">Manga-Comic</label>
-            <label><input type="checkbox" name="theloai[]" value="Nghệ thuật văn hóa">Nghệ thuật văn hóa</label>
-            </div>
-        <!-- Giá bán -->
-        <div class="cap1">Giá bán:</div>
-        <div class="ct">
-            <label><input type="checkbox" name="giaban[]" value="1">&#60 100.000 đ</label>
-            <label><input type="checkbox" name="giaban[]" value="2">100.000 đ - 500.000 đ</label>
-            <label><input type="checkbox" name="giaban[]" value="3">500.000 đ - 1.000.000 đ</label>
-            </div>
-        <!-- Nút Áp dụng -->
-        <button type="submit" class="apply-button">Áp dụng</button>
-    </div>
-</form>
+                    <!-- Thể loại -->
+                    <div class="cap1">Thể loại:</div>
+                    <div class="ct">
+                        <label><input type="checkbox" name="theloai[]" value="Kỹ năng sống phát triển cá nhân">Kỹ năng
+                            sống phát triển cá nhân</label>
+                        <label><input type="checkbox" name="theloai[]" value="Manga-Comic">Manga-Comic</label>
+                        <label><input type="checkbox" name="theloai[]" value="Nghệ thuật văn hóa">Nghệ thuật văn
+                            hóa</label>
+                    </div>
+                    <!-- Giá bán -->
+                    <div class="cap1">Giá bán:</div>
+                    <div class="ct">
+                        <label><input type="checkbox" name="giaban[]" value="1">&#60 100.000 đ</label>
+                        <label><input type="checkbox" name="giaban[]" value="2">100.000 đ - 500.000 đ</label>
+                        <label><input type="checkbox" name="giaban[]" value="3">500.000 đ - 1.000.000 đ</label>
+                    </div>
+                    <!-- Nút Áp dụng -->
+                    <button type="submit" class="apply-button">Áp dụng</button>
+                </div>
+            </form>
 
-        <!-- Hiển thị danh sách sản phẩm -->
-<div class="onmain">
-    <?php
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_array($result)) {
-            $id = $row['pro_id'];
-            $name = $row['pro_name'];
-            $category = $row['id_category'];
-            $price = $row['pro_price'];
-            $img = $row['pro_img1'];
+            <!-- Hiển thị danh sách sản phẩm -->
+            <div class="onmain">
+                <?php
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_array($result)) {
+                        $id = $row['pro_id'];
+                        $name = $row['pro_name'];
+                        $category = $row['id_category'];
+                        $price = $row['pro_price'];
+                        $img = $row['pro_img1'];
 
-            // Gọi phương thức để lấy tên loại sản phẩm từ bảng category
-            $category_name = $p->getCategoryName($category);
+                        // Gọi phương thức để lấy tên loại sản phẩm từ bảng category
+                        $category_name = $p->getCategoryName($category);
 
-            // Tạo đường dẫn cho ảnh dựa trên loại sản phẩm
-            $image_path = 'img/product/' . $category_name . '/' . $img;
-            $formatted_price = number_format($price, 0, ',', '.');
-            echo '<div class="on2main">
+                        // Tạo đường dẫn cho ảnh dựa trên loại sản phẩm
+                        $image_path = 'img/product/' . $category_name . '/' . $img;
+                        $formatted_price = number_format($price, 0, ',', '.');
+                        echo '<div class="on2main">
                     <div class="main">
                         <a href="chitietsanpham.php?id=' . $id . '">
                             <img src="' . $image_path . '" alt="' . $name . '">
@@ -164,20 +167,14 @@ echo '<h2 id=head>'.mb_strtoupper($category_name, 'UTF-8').'</h2>';
                             <p><b>' . $formatted_price . 'đ</b></p>
                         </div>
                     </a>
-                    <div class="buttons">
-                        <form action="cart.php" method="post">
-                            <input type="hidden" name="product_id" value="' . $id . '">
-                            <button type="submit">Thêm vào giỏ hàng</button>
-                        </form>
-                        <a href="chitietsanpham.php?id=' . $id . '"><button>Xem chi tiết</button></a>
-                    </div>
+                    
                 </div>';
-        }
-    } else {
-        echo "Không có sản phẩm nào.";
-    }
-    ?>
-</div>
+                    }
+                } else {
+                    echo "Không có sản phẩm nào.";
+                }
+                ?>
+            </div>
 
         </div>
         <!-- Hiển thị nút phân trang -->
@@ -193,29 +190,29 @@ echo '<h2 id=head>'.mb_strtoupper($category_name, 'UTF-8').'</h2>';
             $total_pages = ceil($total_items / $item_per_page);
 
             // Hiển thị nút Previous
-        if ($current_page > 1) {
-            echo '<li><a href="' . $_SERVER['PHP_SELF'] . '?id_category=' . $id_category . '&page=' . ($current_page - 1) . '">TRC</a></li>';
-        }
+            if ($current_page > 1) {
+                echo '<li><a href="' . $_SERVER['PHP_SELF'] . '?id_category=' . $id_category . '&page=' . ($current_page - 1) . '">TRC</a></li>';
+            }
 
-        // Hiển thị nút phân trang
-        for ($i = 1; $i <= $total_pages; $i++) {
-            // Kiểm tra xem có phải trang hiện tại không
-            $current_class = ($i == $current_page) ? ' class="hientai"' : '';
-            echo '<li' . $current_class . '><a href="' . $_SERVER['PHP_SELF'] . '?id_category=' . $id_category . '&page=' . $i . '">' . $i . '</a></li>';
-        }
+            // Hiển thị nút phân trang
+            for ($i = 1; $i <= $total_pages; $i++) {
+                // Kiểm tra xem có phải trang hiện tại không
+                $current_class = ($i == $current_page) ? ' class="hientai"' : '';
+                echo '<li' . $current_class . '><a href="' . $_SERVER['PHP_SELF'] . '?id_category=' . $id_category . '&page=' . $i . '">' . $i . '</a></li>';
+            }
 
-        // Hiển thị nút Next
-        if ($current_page < $total_pages) {
-            echo '<li><a href="' . $_SERVER['PHP_SELF'] . '?id_category=' . $id_category . '&page=' . ($current_page + 1) . '">SAU</a></li>';
-        }
+            // Hiển thị nút Next
+            if ($current_page < $total_pages) {
+                echo '<li><a href="' . $_SERVER['PHP_SELF'] . '?id_category=' . $id_category . '&page=' . ($current_page + 1) . '">SAU</a></li>';
+            }
             ?>
         </div>
 
         <?php
-        include("page/footer.php");
+        include ("page/footer.php");
         ?>
     </div>
-    
+
 </body>
 
 </html>
