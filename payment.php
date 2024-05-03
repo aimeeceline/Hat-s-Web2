@@ -1,3 +1,10 @@
+
+<?php
+session_start();
+
+// Kiểm tra xem session giỏ hàng có tồn tại và không trống không
+if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+    ?>
 <!DOCTYPE html>
 <html>
 
@@ -50,32 +57,46 @@
 				<label for="age3">Thanh toán bằng tiền mặt</label><br>
 			</form>
 		</div>
-		<div class="wrapper1">
-			<h3>KIỂM TRA LẠI ĐƠN HÀNG</h3>
-			<div class="row">
-				<table class="table table-bordered" id="table-products">
-					<thead>
-						<tr>
-							<th>SẢN PHẨM</th>
-							<th>GIÁ TIỀN</th>
-							<th>SỐ LƯỢNG</th>
-							<th>TỔNG</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="sanpham">
-								<img src="../img/product/Nghệ thuật – Văn hóa/hoa sen 1.jpg">
-								<p>Từng Bước Nở Hoa Sen</p>
-							</td>
-							<td id="gia1">100.000 đ</td>
-							<td id="num">2</td>
-							<td id="xoa">200.000đ</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
+		
+    <div class="wrapper1">
+        <h3>KIỂM TRA LẠI ĐƠN HÀNG</h3>
+        <div class="row">
+            <table class="table table-bordered" id="table-products">
+                <thead>
+                    <tr>
+                        <th>SẢN PHẨM</th>
+                        <th>GIÁ TIỀN</th>
+                        <th>SỐ LƯỢNG</th>
+                        <th>TỔNG</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Duyệt qua từng sản phẩm trong giỏ hàng
+                    foreach ($_SESSION['cart'] as $item) {
+                        ?>
+                        <tr>
+                            <td class="sanpham">
+                                <img src="<?php echo $item['product_img']; ?>">
+                                <p><?php echo $item['product_name']; ?></p>
+                            </td>
+                            <td><?php echo $item['product_price']; ?>đ</td>
+                            <td><?php echo $item['quantity']; ?></td>
+                            <td><?php echo $item['product_price'] * $item['quantity']; ?>đ</td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <?php
+} else {
+    // Hiển thị thông báo khi giỏ hàng trống
+    echo "<p>Giỏ hàng của bạn trống</p>";
+}
+?>
 
 			
 				<div class="fixed-buttons-container">

@@ -207,7 +207,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
             if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                 ?>
                 <div class="gogo">
-                    <button><a href="../html/thanhtoan.html">Tiến hành thanh toán</a></button>
+                    <button><a href="payment.php">Tiến hành thanh toán</a></button>
                 </div>
                 <?php
 
