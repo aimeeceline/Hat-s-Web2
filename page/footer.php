@@ -30,7 +30,7 @@
     <div>
       <span>Copyright © 2023 All Rights Reserved</span>
       <span class="link">
-        <a href="html/index.html">Trang chủ</a>
+        <a href="index.php">Trang chủ</a>
       </span>
     </div>
   </footer>
