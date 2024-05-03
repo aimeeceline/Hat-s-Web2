@@ -61,7 +61,7 @@ function searchProducts() {
     echo "Xin chào ,  " .$user ;
 
 ?>
-            <button>Lịch sử mua hàng</button>
+            <a href="historycart.php"><button>Lịch sử mua hàng</button></a>
             <a href="logout.php"><button>Đăng xuất</button></a>
         </span>
     <?php } else {?>
