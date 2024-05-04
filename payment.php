@@ -35,8 +35,6 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 			<form>
 				Họ và tên người nhận
 				<input type="text" name="" placeholder="Nhập họ và tên người nhận">
-				Email
-				<input type="text" name="" placeholder="Nhập email">
 				Số điện thoại
 				<input type="text" name="" placeholder="Ví dụ: 0934686xxx">
 				Địa chỉ nhận hàng
@@ -44,19 +42,7 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 
 			</form>
 		</div>
-		<div class="right">
-			<h3>PHƯƠNG THỨC THANH TOÁN</h3>
-			<form>
-				<input type="radio" id="age1" name="age" value="30">
-				<label for="age1">&nbsp;<img id="zalopay" src="img/logo/zalo.png">&nbsp;&nbsp;ZALO</label><br>
-				<input type="radio" id="age2" name="age" value="60">
-				<label for="age2">&nbsp;<img  src="img/logo/momo.png">&nbsp;&nbsp;MOMO</label><br>
-				<input type="radio" id="age3" name="age" value="100">
-				<label for="age3">&nbsp;<img src="img/logo/atm.png">&nbsp;&nbsp;ATM</label><br>
-				<input type="radio" id="age4" name="age" value="120">
-				<label for="age3">Thanh toán bằng tiền mặt</label><br>
-			</form>
-		</div>
+		
 		
     <div class="wrapper1">
         <h3>KIỂM TRA LẠI ĐƠN HÀNG</h3>
@@ -97,6 +83,19 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
     echo "<p>Giỏ hàng của bạn trống</p>";
 }
 ?>
+<div class="right">
+			<h3>PHƯƠNG THỨC THANH TOÁN</h3>
+			<form>
+				<input type="radio" id="age1" name="age" value="30">
+				<label for="age1">&nbsp;<img id="zalopay" src="img/logo/zalo.png">&nbsp;&nbsp;ZALO</label><br>
+				<input type="radio" id="age2" name="age" value="60">
+				<label for="age2">&nbsp;<img  src="img/logo/momo.png">&nbsp;&nbsp;MOMO</label><br>
+				<input type="radio" id="age3" name="age" value="100">
+				<label for="age3">&nbsp;<img src="img/logo/atm.png">&nbsp;&nbsp;ATM</label><br>
+				<input type="radio" id="age4" name="age" value="120">
+				<label for="age3">Thanh toán bằng tiền mặt</label><br>
+			</form>
+		</div>
 
 			
 				<div class="fixed-buttons-container">
