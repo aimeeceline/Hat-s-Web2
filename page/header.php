@@ -66,8 +66,8 @@ function searchProducts() {
         </span>
     <?php } else {?>
         <span class="tooltip">
-            <a href="signin.html"><button>Đăng nhập</button></a>
-            <a href="signup.html"><button>Đăng ký</button></a>
+            <a href="signin.php"><button>Đăng nhập</button></a>
+            <a href="signup.php"><button>Đăng ký</button></a>
         </span>
     <?php } ?>
 </div>

@@ -185,7 +185,7 @@ if ($result) {
     <?php } else { ?>
         // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
         alert ('Phải đăng nhập trước khi mua hàng')
-        window.location.href = "signin.html"; // Điều hướng đến trang đăng nhập
+        window.location.href = "signin.php"; // Điều hướng đến trang đăng nhập
     <?php } ?>
     });
 </script>
