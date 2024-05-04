@@ -1,10 +1,21 @@
+<?php
+session_start();
+include ("classfunctionPHPdatabase.php");
+$p = new database();
+$conn = $p->connect();
 
+if (!$conn) {
+  die("Kết nối thất bại: " . mysqli_connect_error());
+}
+?>
 <?php
 session_start();
 
 // Kiểm tra xem session giỏ hàng có tồn tại và không trống không
 if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
     ?>
+
+
 <!DOCTYPE html>
 <html>
 
