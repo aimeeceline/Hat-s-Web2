@@ -25,8 +25,10 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $row = $result->fetch_assoc();
         $role = $row['role'];
         $user= $row['user'];
+        $id=$row['id'];
         // Lưu thông tin người dùng vào session
         $_SESSION['user'] = $user;
+        $_SESSION['id'] = $id;
         // Lưu vai trò vào session và chuyển hướng tới trang tương ứng
         if ($role == 0) {
             header('Location: http://localhost/HAT-s-web2/index.php');

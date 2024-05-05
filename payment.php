@@ -10,6 +10,17 @@ if (!$conn) {
 
 // Kiểm tra xem session giỏ hàng có tồn tại và không trống không
 if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+// Kiểm tra trạng thái của session và hiển thị thông tin tương ứng
+$session_status = session_status();
+if ($session_status == PHP_SESSION_DISABLED) {
+    echo "Session đã bị vô hiệu hóa trên máy chủ.";
+} elseif ($session_status == PHP_SESSION_NONE) {
+    echo "Session chưa được khởi tạo.";
+} elseif ($session_status == PHP_SESSION_ACTIVE) {
+    echo "Session đang hoạt động.";
+    // Hiển thị dữ liệu của session ở đây
+    print_r($_SESSION);
+}
     ?>
 
 
@@ -43,8 +54,8 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 			<form>
                 <?php
                 // Lấy thông tin của người dùng từ CSDL
-                // Ví dụ: Lấy thông tin từ CSDL cho user có id = 1
-                $id = 4; // Thay đổi userId theo cách bạn lấy thông tin từ session hoặc cách khác
+               
+                $id = $_SESSION['id']; // Thay đổi userId theo cách bạn lấy thông tin từ session hoặc cách khác
                 $sql = "SELECT * FROM `user` WHERE `id` = $id";
                 $result = mysqli_query($conn, $sql);
                 $row = mysqli_fetch_assoc($result);
