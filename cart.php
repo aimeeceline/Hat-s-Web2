@@ -44,9 +44,6 @@ function addToCart($product_id, $product_img, $product_name, $product_price, $qu
         array_unshift($_SESSION['cart'], $item);
     }
 }
-
-//session_destroy();
-// Process adding a product to the cart if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
     // Retrieve product data from the form
     $product_id = $_POST['product_id'];
@@ -58,6 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
     // Add the product to the cart
     addToCart($product_id, $product_img, $product_name, $product_price, $quantity);
 }
+//session_destroy();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
                                 <th>SẢN PHẨM</th>
                                 <th>GIÁ TIỀN</th>
                                 <th>SỐ LƯỢNG</th>
-                                
+                    
                                 <th>GHI CHÚ</th>
                             </tr>
                         </thead>
@@ -135,60 +134,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
                                     </td>
                                     
                                     <script>
-                                        function updateCart(productId, quantity) {
-                                            // Tạo một đối tượng FormData để chứa dữ liệu cần gửi
-                                            let formData = new FormData();
-                                            formData.append('product_id', productId);
-                                            formData.append('quantity', quantity);
+    function handleQuantityChange(productId, newQuantity) {
+        updateCart(productId, newQuantity);
+    }
 
-                                            // Tạo một đối tượng XMLHttpRequest
-                                            let xhr = new XMLHttpRequest();
+    function updateCart(productId, quantity) {
+        let formData = new FormData();
+        formData.append('product_id', productId);
+        formData.append('quantity', quantity);
 
-                                            // Thiết lập phương thức và URL endpoint
-                                            xhr.open('POST', 'update_cart.php', true);
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'update_cart.php', true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                console.log('Giỏ hàng đã được cập nhật thành công.');
+            } else {
+                console.error('Lỗi: ' + xhr.statusText);
+            }
+        };
+        xhr.send(formData);
+    }
 
-                                            // Gửi yêu cầu Ajax với dữ liệu từ FormData
-                                            xhr.onload = function () {
-                                                if (xhr.status === 200) {
-                                                    // Nếu yêu cầu thành công, có thể thực hiện các xử lý phản hồi ở đây (nếu cần)
-                                                    console.log('Giỏ hàng đã được cập nhật thành công.');
-                                                } else {
-                                                    // Xử lý lỗi nếu có
-                                                    console.error('Lỗi: ' + xhr.statusText);
-                                                }
-                                            };
+    function handlePlus(productId) {
+        let amountElement = document.getElementById('amount_' + productId);
+        let amount = parseInt(amountElement.value);
+        amount++;
+        amountElement.value = amount;
+        handleQuantityChange(productId, amount);
+    }
 
-                                            // Gửi yêu cầu Ajax với dữ liệu FormData
-                                            xhr.send(formData);
-                                        }
-                                        function handlePlus(productId) {
-                                            // Lấy số lượng hiện tại của sản phẩm
-                                            let amountElement = document.getElementById('amount_' + productId);
-                                            let amount = parseInt(amountElement.value);
-
-                                            // Tăng số lượng
-                                            amount++;
-                                            amountElement.value = amount;
-
-                                            // Gọi hàm cập nhật giỏ hàng thông qua Ajax
-                                            updateCart(productId, amount);
-                                        }
-
-                                        function handleMinus(productId) {
-                                            // Lấy số lượng hiện tại của sản phẩm
-                                            let amountElement = document.getElementById('amount_' + productId);
-                                            let amount = parseInt(amountElement.value);
-
-                                            // Giảm số lượng nếu số lượng lớn hơn 1
-                                            if (amount > 1) {
-                                                amount--;
-                                                amountElement.value = amount;
-                                                // Gọi hàm cập nhật giỏ hàng thông qua Ajax
-                                                updateCart(productId, amount);
-                                            }
-                                        }
-                                        
-                                    </script>
+    function handleMinus(productId) {
+        let amountElement = document.getElementById('amount_' + productId);
+        let amount = parseInt(amountElement.value);
+        if (amount > 1) {
+            amount--;
+            amountElement.value = amount;
+            handleQuantityChange(productId, amount);
+        }
+    }
+</script>
                                     <td><a href="remove_from_cart.php?product_id=<?php echo $item['product_id']; ?>">XÓA</a>
                                     </td>
                                 </tr>
