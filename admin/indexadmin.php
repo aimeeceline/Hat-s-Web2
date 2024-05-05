@@ -52,7 +52,7 @@
                 </li>
 
                 <li>
-                    <a href="../html/quanlykhachhang.html">
+                    <a href="../admin/quanlykhachhang.php">
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>

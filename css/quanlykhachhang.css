@@ -1,0 +1,244 @@
+.user{
+    font-family: Arial, Helvetica, sans-serif;
+    
+  }
+  .banner{
+    margin: 20px;
+      display: flex;
+      background-color: black;
+      justify-content: space-between;
+      padding: 10px;
+  }
+  .banner #adduser{
+      padding: 10px 20px;
+    font-size: 16px;
+    background-color: #fffbfb;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .banner #adduser:hover{
+      background-color: white;
+      color: rgb(218, 75, 75);
+      transform: translateY(-3px);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .boxadduser {
+    display: none;
+    position: fixed;
+    width: 50%;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1000;
+  }
+  
+  .boxadduser h2
+  {
+    text-align: center;
+  }
+  
+  .boxadduser .form-group
+  {
+    margin-bottom: 15px;
+  }
+  
+  .boxadduser label{
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .boxadduser input[type="text"],
+  .boxadduser input[type="email"],
+  .boxadduser input[type="password"],
+  .boxadduser select
+  {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .boxadduser input[type="submit"]
+   {
+    width: 100px;
+      height: 40px;
+      color: rgb(255, 255, 255);
+      font-size: 15px;
+      background-color: #000000;
+      font-weight: bold;
+      border: 2px solid rgb(0, 0, 0);
+      border-radius: 8px;
+      display: block;
+      margin: 20px 0 12px;
+      cursor: pointer;
+      margin-left: auto;
+    
+  }
+  
+  .boxadduser input[type="submit"]:hover
+   {
+    background-color: #C92127;
+    border: #C92127;
+    color: #ffffff;
+  }
+  #goi{
+    padding: 5px;
+    border: 1px solid #ccc;
+      background-color: #fff;
+      font-size: 16px;
+      border-radius: 10px;
+  }
+  
+  #option{
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      font-size: 16px;
+      border-radius: 10px;
+    }
+    option:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    }
+    
+   
+    option {
+      background-color: #fff;
+      color: #333;
+    }
+    
+    option:hover {
+      background-color: #f2f2f2;
+      color: #333;
+    }
+    
+    option:checked {
+      background-color: #3498db;
+      color: #fff;
+    }
+  
+  #timnguoidung {
+      padding: 8px; 
+      border: 1px solid #ccc; 
+      border-radius: 5px;
+      font-size: 16px; 
+      color: #333; 
+    }
+    
+    
+    #timnguoidung:focus {
+      outline: none; 
+      border-color: #3498db;
+      box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    }
+    
+    
+    #timnguoidung::placeholder {
+      color: #aaa; 
+    }
+    
+   
+    #timnguoidung[type="text"] {
+      width: 200px; 
+    }
+    .user .user-table {
+      position: relative;
+      background: var(--white);
+      padding: 20px;
+      box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+      border-radius: 20px;
+    }
+    .user-table{
+      padding: 30px;
+    }
+    .user table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      text-align: left;
+    }
+    .user table thead td {
+      font-weight: 600;
+      background-color: black;
+      color: #fff;
+    }
+    .user .user-table table tr {
+      color: var(--black1);
+      border-bottom: 1px solid rgba(146, 100, 100, 0.1);
+      font-weight: lighter;
+    }
+    .user .user-table table tbody tr:hover {
+      background-color: #9c9595;
+      color: var(--white);
+    }
+    .user .user-table table tr td {
+      padding: 10px;
+      text-align: center;
+    }
+   
+    .pagination {
+      padding: 10px;
+      text-align: center;
+      list-style: none;
+      font-weight: lighter;
+    }
+    
+    .pagination li {
+      padding: 20px;
+      display: inline-block;
+      margin: 20px 10px;
+      cursor: pointer;
+    }
+    
+    .pagination .hientai {
+      border-bottom: 3px solid rgb(0, 0, 0);
+    }
+    
+    .pagination li:not(.hientai):hover {
+      background-color: rgb(152, 50, 50);
+      border-radius: 10px;
+    }
+    #xoanguoidung{
+      padding: 4px;
+    background-color: red;
+    color: white;
+    border-radius: 4px;
+    border-color: red;
+    cursor: pointer;
+    }
+    #suanguoidung{
+      padding: 4px;
+    background-color: green;
+    color: white;
+    border-radius: 4px;
+    border-color: green;
+    cursor: pointer;
+    }
+    #basic{
+      color: green;
+    }
+    #standard{
+      color: blue;
+    }
+    #premium{
+      color: red;
+    }
+  /* ================== Charts JS ============== */
+  .chartsBx{
+    margin-left: 20px;
+  }
+  .chartsBx .chart{
+    position: relative;
+    background: #fff;
+    margin-top: 10px;
+    padding: 20px;
+    width: 70%;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    border: 1px solid var(--blue);
+  }
+  

@@ -15,12 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = isset($_POST['user']) ? $_POST['user'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $pass = isset($_POST['pass']) ? $_POST['pass'] : '';
+    $address = isset($_POST['address']) ? $_POST['address'] : '';
+    $name = isset($_POST['name']) ? $_POST['name'] : '';
     
 
     // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
 
     // Tiến hành thêm dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO user ( `user`, `email`,  `pass`) VALUES ('$user', '$email',  '$pass')";
+    $sql = "INSERT INTO user ( `user`, `email`,  `pass`, `address` , `name` ) VALUES ('$user', '$email',  '$pass', '$address' , '$name')";
 
     if ($conn->query($sql) === TRUE) {
         // Chuyển hướng người dùng về trang index hoặc trang khác tùy vào yêu cầu của bạn
@@ -71,6 +73,9 @@ $conn->close();
                 <input type="text" name="user" placeholder="Username" required/>
                 <input type="email" name="email" placeholder="Email" required/>
                 <input type="password" name="pass" placeholder="Password" required/>
+                <input type="address" name="address" placeholder="Address" required/>
+                <input type="name" name="name" placeholder="Name" required/>
+                
                 
                 <button type="submit">Đăng kí</button>
             </form>

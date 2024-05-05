@@ -32,7 +32,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             header('Location: http://localhost/HAT-s-web2/index.php');
             exit();
         } elseif ($role == 1) {
-            header('Location: http://localhost/Gr9-Web/admin/admin.php');
+            header('Location: http://localhost/HAT-s-web2/admin/indexadmin.php');
             exit();
         }
     } else {
