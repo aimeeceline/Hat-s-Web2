@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ quản trị</title>
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="../css/indexadmin.css">
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="logo">
+                            <img src="../img/banner/logooadmin.png">
+                        </span>
+                        <span class="title">HAT BOOKSTORE</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../html/trangchuadmin.html" id="active">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Bảng điều khiển</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../html/quanlydonhang.html">
+                        <span class="icon">
+                            <ion-icon name="cart-outline"></ion-icon>
+                        </span>
+                        <span class="title">Quản lý đơn hàng</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../html/quanlysanpham.html">
+                        <span class="icon">
+                            <ion-icon name="book-outline"></ion-icon>
+                        </span>
+                        <span class="title">Quản lý sản phẩm</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../html/quanlykhachhang.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Quản lý khách hàng</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="hello">
+                    <p>CHÀO MỪNG QUẢN TRỊ CỦA HAT !!!</p>
+                </div>
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Tìm kiếm chức năng quản trị">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+            </div>
+            
+        <h2 style="margin-left: 20px; padding: 10px; background-color: black; color: white;">Thống kê tình hình kinh doanh</h2>
+        
+            <div class="filter">
+                <div class="flex">
+                <span><input type="radio" name="chon" value="ten" id="ten" onclick="checkTen()" checked>Theo tên sản phẩm</span>
+                <span><input type="radio" name="chon" value="loai" id="loai" onclick="checkLoai()">Theo loại sản phẩm</span>
+                <input type="text" name="tenSp" id="tenSp" value="Chiến tranh tiền tệ">
+                <select name="loaiSp" id="loaiSp">
+                    <option value="Kỹ năng sống - Phát triển bản thân">Kỹ năng sống - Phát triển bản thân</option>
+                    <option value="Manga-Comic">Manga-Comic</option>
+                    <option value="Nghệ thuật-Văn hóa">Nghệ thuật-Văn hóa</option>
+                </select>
+                </div>
+                <div class="date">
+                    <label for="start">Từ ngày: </label>
+                    <input type="date" id="start" name="start" value="2023-11-24" min="2018-01-01" max="2023-12-31">
+                    <label for="start">đến </label>
+                    <input type="date" id="end" name="end" value="2023-11-30" min="2018-01-01" max="2023-12-31">
+                </div>
+                <button class="thongke"><a href="../html/thongke.html">Thống kê</a></button>
+            </div>
+
+            <div id="reportResult">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã ĐH</th>
+                            <th>Người đặt</th>
+                            <th>SĐT</th>
+                            <th>Tình trạng</th>
+                            <th>Thành tiền</th>
+                            
+                            <th>Ngày</th>
+                            <th>Số sp/Đơn</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
+                            <td>thaihien99</td>
+                            <td>0987654321</td>
+                            <td id="premium">Chờ xác nhận</td>
+                            <td>75.999đ</td>
+                            <td>14/10/2023</td>
+                            <td>2</td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
+                            <td>thaihien99</td>
+                            <td>0987654321</td>
+                            <td id="premium">Chờ xác nhận</td>
+                            <td>75.999đ</td>
+                            <td>14/10/2023</td>
+                            <td>2</td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
+                            <td>thaihien99</td>
+                            <td>0987654321</td>
+                            <td id="premium">Chờ xác nhận</td>
+                            <td>75.999đ</td>
+                            <td>14/10/2023</td>
+                            <td>3</td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
+                            <td>thaihien99</td>
+                            <td>0987654321</td>
+                            <td id="basic">Đã giao</td>
+                            <td>75.999đ</td>
+                            <td>14/10/2023</td>
+                            <td>1</td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
+                            <td>thaihien99</td>
+                            <td>0987654321</td>
+                            <td id="basic">Đã giao</td>
+                            <td>75.999đ</td>
+                            <td>14/10/2023</td>
+                            <td>1</td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
+                            <td>thaihien99</td>
+                            <td>0987654321</td>
+                            <td id="basic">Đã giao</td>
+                            <td>75.999đ</td>
+                            <td>14/10/2023</td>
+                            <td>2</td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
+                            <td>thaihien99</td>
+                            <td>0987654321</td>
+                            <td id="basic">Đã giao</td>
+                            <td>75.999đ</td>
+                            <td>14/10/2023</td>
+                            <td>2</td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
+                            <td>thaihien99</td>
+                            <td>0987654321</td>
+                            <td id="basic">Đã giao</td>
+                            <td>75.999đ</td>
+                            <td>14/10/2023</td>
+                            <td>2</td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <thead  style="margin-bottom: 100px;">
+                            <tr>
+                                <th style="background-color: white;"></th>
+                                <th style="background-color: white;"></th>
+                                <th style="background-color: white;"></th>
+                                <th style="background-color: white;"></th>
+                                <th style="background-color: white;"></th>
+                                <th style="background-color: white;"></th>                          
+                                <th>Tổng:</th>
+                                <th>15</th>
+                            </tr>
+                        </thead>
+                    </tbody>
+
+                </table>
+            </div>
+
+            <script>
+            
+                    ten = document.getElementById("ten");
+                    loai = document.getElementById("loai");
+                    tenSp = document.getElementById("tenSp");
+                    loaiSp = document.getElementById("loaiSp");
+                    function checkTen(){
+                        tenSp.style.display="block";
+                        loaiSp.style.display="none";
+                    }
+        
+                    function checkLoai(){
+                        tenSp.style.display="none";
+                        loaiSp.style.display="block";
+                    }
+                      
+            </script>
+            </div>
+    </div>
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

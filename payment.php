@@ -10,17 +10,7 @@ if (!$conn) {
 
 // Kiểm tra xem session giỏ hàng có tồn tại và không trống không
 if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
-// Kiểm tra trạng thái của session và hiển thị thông tin tương ứng
-$session_status = session_status();
-if ($session_status == PHP_SESSION_DISABLED) {
-    echo "Session đã bị vô hiệu hóa trên máy chủ.";
-} elseif ($session_status == PHP_SESSION_NONE) {
-    echo "Session chưa được khởi tạo.";
-} elseif ($session_status == PHP_SESSION_ACTIVE) {
-    echo "Session đang hoạt động.";
-    // Hiển thị dữ liệu của session ở đây
-    print_r($_SESSION);
-}
+
     ?>
 
 
@@ -85,9 +75,14 @@ if ($session_status == PHP_SESSION_DISABLED) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
+				<?php
+                    // Khởi tạo biến tổng giá
+                    $totalPrice = 0;
+
                     // Duyệt qua từng sản phẩm trong giỏ hàng
                     foreach ($_SESSION['cart'] as $item) {
+                        // Tính tổng giá
+                        $totalPrice += $item['product_price'] * $item['quantity'];
                         ?>
                         <tr>
                             <td class="sanpham">
@@ -102,6 +97,12 @@ if ($session_status == PHP_SESSION_DISABLED) {
                     }
                     ?>
                 </tbody>
+				<tfoot>
+                    <tr>
+                        <td colspan="3"><strong style="float: right;">Tổng giá:</strong></td>
+                        <td><?php echo $totalPrice; ?>đ</td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
