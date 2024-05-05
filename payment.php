@@ -7,9 +7,6 @@ $conn = $p->connect();
 if (!$conn) {
   die("Kết nối thất bại: " . mysqli_connect_error());
 }
-?>
-<?php
-session_start();
 
 // Kiểm tra xem session giỏ hàng có tồn tại và không trống không
 if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
@@ -44,14 +41,23 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 				<p style="font-size: 17px; margin: 20px 0;">Chọn địa chỉ từ tài khoản</p>
 			</a>
 			<form>
-				Họ và tên người nhận
-				<input type="text" name="" placeholder="Nhập họ và tên người nhận">
-				Số điện thoại
-				<input type="text" name="" placeholder="Ví dụ: 0934686xxx">
-				Địa chỉ nhận hàng
-				<input type="text" name="" placeholder="Nhập địa chỉ nhận hàng">
+                <?php
+                // Lấy thông tin của người dùng từ CSDL
+                // Ví dụ: Lấy thông tin từ CSDL cho user có id = 1
+                $id = 4; // Thay đổi userId theo cách bạn lấy thông tin từ session hoặc cách khác
+                $sql = "SELECT * FROM `user` WHERE `id` = $id";
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($result);
 
-			</form>
+                // Điền thông tin vào các trường
+                ?>
+                Họ và tên người nhận
+                <input type="text" name="user" value="<?php echo $row['user']; ?>" placeholder="Nhập họ và tên người nhận">
+                Số điện thoại
+                <input type="text" name="phone" value="<?php echo $row['phone']; ?>" placeholder="Ví dụ: 0934686xxx">
+                Địa chỉ nhận hàng
+                <input type="text" name="address" value="<?php echo $row['address']; ?>" placeholder="Nhập địa chỉ nhận hàng">
+            </form>
 		</div>
 		
 		
@@ -69,13 +75,8 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                 </thead>
                 <tbody>
                     <?php
-                    // Khởi tạo biến tổng giá
-                    $totalPrice = 0;
-
                     // Duyệt qua từng sản phẩm trong giỏ hàng
                     foreach ($_SESSION['cart'] as $item) {
-                        // Tính tổng giá
-                        $totalPrice += $item['product_price'] * $item['quantity'];
                         ?>
                         <tr>
                             <td class="sanpham">
@@ -90,12 +91,6 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                     }
                     ?>
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="3"><strong style="float: right;">Tổng giá:</strong></td>
-                        <td><?php echo $totalPrice; ?>đ</td>
-                    </tr>
-                </tfoot>
             </table>
         </div>
     </div>
@@ -136,7 +131,6 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 					<script>
 						function myFunction() {
 							alert("CẢM ƠN BẠN ĐÃ MUA HÀNG !!!");
-							window.location.href = "index.php";
 						}
 					</script>
 				</div>
