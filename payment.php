@@ -69,8 +69,13 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                 </thead>
                 <tbody>
                     <?php
+                    // Khởi tạo biến tổng giá
+                    $totalPrice = 0;
+
                     // Duyệt qua từng sản phẩm trong giỏ hàng
                     foreach ($_SESSION['cart'] as $item) {
+                        // Tính tổng giá
+                        $totalPrice += $item['product_price'] * $item['quantity'];
                         ?>
                         <tr>
                             <td class="sanpham">
@@ -85,6 +90,12 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                     }
                     ?>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3"><strong style="float: right;">Tổng giá:</strong></td>
+                        <td><?php echo $totalPrice; ?>đ</td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -125,6 +136,7 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 					<script>
 						function myFunction() {
 							alert("CẢM ƠN BẠN ĐÃ MUA HÀNG !!!");
+							window.location.href = "index.php";
 						}
 					</script>
 				</div>
