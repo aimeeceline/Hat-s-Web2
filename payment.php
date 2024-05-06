@@ -89,9 +89,9 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                                 <img src="<?php echo $item['product_img']; ?>">
                                 <p><?php echo $item['product_name']; ?></p>
                             </td>
-                            <td><?php echo $item['product_price']; ?>đ</td>
+                            <td><?php echo number_format($item['product_price'], 0, ',', '.') . 'đ'; ?></td>
                             <td><?php echo $item['quantity']; ?></td>
-                            <td><?php echo $item['product_price'] * $item['quantity']; ?>đ</td>
+                            <td><?php echo number_format($item['product_price'] * $item['quantity'], 0, ',', '.') . 'đ'; ?></td>
                         </tr>
                         <?php
                     }
@@ -100,7 +100,7 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 				<tfoot>
                     <tr>
                         <td colspan="3"><strong style="float: right;">Tổng giá:</strong></td>
-                        <td><?php echo $totalPrice; ?>đ</td>
+                        <td><?php echo number_format($totalPrice, 0, ',', '.') . 'đ'; ?></td>
                     </tr>
                 </tfoot>
             </table>

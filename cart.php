@@ -56,6 +56,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
     addToCart($product_id, $product_img, $product_name, $product_price, $quantity);
 }
 //session_destroy();
+// Kiểm tra trạng thái của session và hiển thị thông tin tương ứng
+$session_status = session_status();
+if ($session_status == PHP_SESSION_DISABLED) {
+    echo "Session đã bị vô hiệu hóa trên máy chủ.";
+} elseif ($session_status == PHP_SESSION_NONE) {
+    echo "Session chưa được khởi tạo.";
+} elseif ($session_status == PHP_SESSION_ACTIVE) {
+    echo "Session đang hoạt động.";
+    // Hiển thị dữ liệu của session ở đây
+    print_r($_SESSION);
+}
 
 ?>
 <!DOCTYPE html>
@@ -88,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
                                 <th>SẢN PHẨM</th>
                                 <th>GIÁ TIỀN</th>
                                 <th>SỐ LƯỢNG</th>
-                    
+                                <th>THÀNH TIỀN</th>
                                 <th>GHI CHÚ</th>
                             </tr>
                         </thead>
@@ -97,6 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
                             foreach ($_SESSION['cart'] as $item) {
                                 ?>
                                 <tr>
+                                    
                                     <td><input type="checkbox"></td>
                                     <td class="sanpham">
                                         <a href="chitietsanpham.php?id=<?php echo $item['product_id']; ?>"
@@ -106,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
                                             <p style="margin-left: 10px;"><?php echo $item['product_name']; ?></p>
                                         </a>
                                     </td>
-                                    <td id="gia"><?php echo $item['product_price']; ?>đ</td>
+                                    <td id="gia"><?php echo number_format($item['product_price'], 0, ',', '.') . 'đ'; ?></td>
                                     <td>
                                         <div id="buy-amount">
 
@@ -132,10 +144,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
 
                                         </div>
                                     </td>
-                                    
+                                    <td id="thanhtien"><?php echo number_format($item['product_price'] * $item['quantity'], 0, ',', '.') . 'đ'; ?></td>
                                     <script>
     function handleQuantityChange(productId, newQuantity) {
         updateCart(productId, newQuantity);
+        location.reload();
     }
 
     function updateCart(productId, quantity) {
