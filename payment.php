@@ -10,6 +10,25 @@ if (!$conn) {
 
 // Kiểm tra xem session giỏ hàng có tồn tại và không trống không
 if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+    // Xử lý khi nhấn nút "Cập nhật"
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
+        // Lấy dữ liệu từ form
+        $name = $_POST['name'];
+        $phone = $_POST['phone'];
+        $address = $_POST['address'];
+        $id = $_SESSION['id'];
+
+        // Cập nhật dữ liệu vào CSDL
+        $sql_update = "UPDATE `user` SET `name`='$name', `phone`='$phone', `address`='$address' WHERE `id`='$id'";
+        if (mysqli_query($conn, $sql_update)) {
+            // Cập nhật dữ liệu mặc định
+            $row['name'] = $name;
+            $row['phone'] = $phone;
+            $row['address'] = $address;
+        } else {
+            echo "Lỗi: " . mysqli_error($conn);
+        }
+    }
 
     ?>
 
@@ -36,42 +55,41 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 		?>
     <!-----------------------------------Kết thúc Header--------------------------------------------------->
 		
-		<div class="left">
-        <h3>ĐỊA CHỈ GIAO HÀNG</h3>
-                <button id="showAddressBtn" style="font-size: 17px; margin: 20px 0;">Chọn địa chỉ từ tài khoản</button>
-                <form>
-                    <?php
-                    // Lấy thông tin của người dùng từ CSDL
-                    $id = $_SESSION['id']; // Thay đổi userId theo cách bạn lấy thông tin từ session hoặc cách khác
-                    $sql = "SELECT * FROM `user` WHERE `id` = $id";
-                    $result = mysqli_query($conn, $sql);
-                    $row = mysqli_fetch_assoc($result);
-
-                    // Điền thông tin vào các trường
-                    ?>
+    <div class="left">
+                <h3>ĐỊA CHỈ GIAO HÀNG</h3>
+                <input type="submit" name="" value="Chọn địa chỉ từ tài khoản" class="checkout-btn" id="showAddressBtn" style="margin-bottom: 10px;">
+                <form method="POST" action="">
                     Họ và tên người nhận
-                    <input type="text" name="user" value="" placeholder="Nhập họ và tên người nhận" id="user">
+                    <input type="text" name="name" value="<?php echo $row['name']; ?>" placeholder="Nhập họ và tên người nhận" id="name">
                     Số điện thoại
-                    <input type="text" name="phone" value="" placeholder="Ví dụ: 0934686xxx" id="phone">
+                    <input type="text" name="phone" value="<?php echo $row['phone']; ?>" placeholder="Ví dụ: 0934686xxx" id="phone">
                     Địa chỉ nhận hàng
-                    <input type="text" name="address" value="" placeholder="Nhập địa chỉ nhận hàng" id="address">
+                    <input type="text" name="address" value="<?php echo $row['address']; ?>" placeholder="Nhập địa chỉ nhận hàng" id="address">
+                    <input type="submit" name="update" value="Cập nhật" class="checkout-btn" onclick="showUpdateSuccess()">
+                    <script>
+    function showUpdateSuccess() {
+        alert("Cập nhật thành công!");
+    }
+</script>
+
                 </form>
             </div>
-            <button id="updateAddressBtn" style="font-size: 17px; margin: 20px 0;" class="checkout-btn" >Cập nhật địa chỉ</button>
+
+           
             <script>
                 // Lưu giá trị mặc định của các input vào các biến JavaScript
-                var defaultUser = "<?php echo $row['user']; ?>";
+                var defaultUser = "<?php echo $row['name']; ?>";
                 var defaultPhone = "<?php echo $row['phone']; ?>";
                 var defaultAddress = "<?php echo $row['address']; ?>";
 
                 // Ẩn các giá trị mặc định khi trang được tải lần đầu
-                document.getElementById('user').value = "";
+                document.getElementById('name').value = "";
                 document.getElementById('phone').value = "";
                 document.getElementById('address').value = "";
 
                 document.getElementById('showAddressBtn').addEventListener('click', function() {
                     // Hiển thị giá trị mặc định khi người dùng nhấn nút
-                    document.getElementById('user').value = defaultUser;
+                    document.getElementById('name').value = defaultUser;
                     document.getElementById('phone').value = defaultPhone;
                     document.getElementById('address').value = defaultAddress;
                 });
