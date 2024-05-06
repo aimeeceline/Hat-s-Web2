@@ -57,7 +57,7 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                     <input type="text" name="address" value="" placeholder="Nhập địa chỉ nhận hàng" id="address">
                 </form>
             </div>
-
+            <button id="updateAddressBtn" style="font-size: 17px; margin: 20px 0;" class="checkout-btn" >Cập nhật địa chỉ</button>
             <script>
                 // Lưu giá trị mặc định của các input vào các biến JavaScript
                 var defaultUser = "<?php echo $row['user']; ?>";
