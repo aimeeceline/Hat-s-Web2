@@ -37,29 +37,46 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
     <!-----------------------------------Kết thúc Header--------------------------------------------------->
 		
 		<div class="left">
-			<h3>ĐỊA CHỈ GIAO HÀNG</h3>
-			<a href="../html/thanhtoan copy.html">
-				<p style="font-size: 17px; margin: 20px 0;">Chọn địa chỉ từ tài khoản</p>
-			</a>
-			<form>
-                <?php
-                // Lấy thông tin của người dùng từ CSDL
-               
-                $id = $_SESSION['id']; // Thay đổi userId theo cách bạn lấy thông tin từ session hoặc cách khác
-                $sql = "SELECT * FROM `user` WHERE `id` = $id";
-                $result = mysqli_query($conn, $sql);
-                $row = mysqli_fetch_assoc($result);
+        <h3>ĐỊA CHỈ GIAO HÀNG</h3>
+                <button id="showAddressBtn" style="font-size: 17px; margin: 20px 0;">Chọn địa chỉ từ tài khoản</button>
+                <form>
+                    <?php
+                    // Lấy thông tin của người dùng từ CSDL
+                    $id = $_SESSION['id']; // Thay đổi userId theo cách bạn lấy thông tin từ session hoặc cách khác
+                    $sql = "SELECT * FROM `user` WHERE `id` = $id";
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_assoc($result);
 
-                // Điền thông tin vào các trường
-                ?>
-                Họ và tên người nhận
-                <input type="text" name="user" value="<?php echo $row['user']; ?>" placeholder="Nhập họ và tên người nhận">
-                Số điện thoại
-                <input type="text" name="phone" value="<?php echo $row['phone']; ?>" placeholder="Ví dụ: 0934686xxx">
-                Địa chỉ nhận hàng
-                <input type="text" name="address" value="<?php echo $row['address']; ?>" placeholder="Nhập địa chỉ nhận hàng">
-            </form>
-		</div>
+                    // Điền thông tin vào các trường
+                    ?>
+                    Họ và tên người nhận
+                    <input type="text" name="user" value="" placeholder="Nhập họ và tên người nhận" id="user">
+                    Số điện thoại
+                    <input type="text" name="phone" value="" placeholder="Ví dụ: 0934686xxx" id="phone">
+                    Địa chỉ nhận hàng
+                    <input type="text" name="address" value="" placeholder="Nhập địa chỉ nhận hàng" id="address">
+                </form>
+            </div>
+
+            <script>
+                // Lưu giá trị mặc định của các input vào các biến JavaScript
+                var defaultUser = "<?php echo $row['user']; ?>";
+                var defaultPhone = "<?php echo $row['phone']; ?>";
+                var defaultAddress = "<?php echo $row['address']; ?>";
+
+                // Ẩn các giá trị mặc định khi trang được tải lần đầu
+                document.getElementById('user').value = "";
+                document.getElementById('phone').value = "";
+                document.getElementById('address').value = "";
+
+                document.getElementById('showAddressBtn').addEventListener('click', function() {
+                    // Hiển thị giá trị mặc định khi người dùng nhấn nút
+                    document.getElementById('user').value = defaultUser;
+                    document.getElementById('phone').value = defaultPhone;
+                    document.getElementById('address').value = defaultAddress;
+                });
+            </script>
+
 		
 		
     <div class="wrapper1">
@@ -143,6 +160,7 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 					<script>
 						function myFunction() {
 							alert("CẢM ƠN BẠN ĐÃ MUA HÀNG !!!");
+                            window.location.href = 'index.php';
 						}
 					</script>
 				</div>
