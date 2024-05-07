@@ -31,31 +31,7 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
         }
     }
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['checkout'])) {
-        $totalPrice = 0;
-        foreach ($_SESSION['cart'] as $item) {
-            $totalPrice += $item['product_price'] * $item['quantity'];
     
-        }   
-        // Lấy thông tin của người dùng từ session
-        $name = $_POST['name'];
-        $phone = $_POST['phone'];
-        $address = $_POST['address'];
-        
-        // Thêm dữ liệu vào bảng `oder`
-        if (mysqli_query($conn, $sql_insert_oder)) {
-            $sql_insert_oder = "INSERT INTO `oder` (`name`, `phone`, `address`, `total`) VALUES ('$name', '$phone', '$address', '$totalPrice')";
-        
-        } else {
-            // Insertion failed, you can handle the error here
-            echo "Error: " . mysqli_error($conn);
-        }
-      
-            
-
-    }
-    
-
     ?>
 
 
@@ -173,6 +149,9 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
     echo "<p>Giỏ hàng của bạn trống</p>";
 }
 ?>
+
+
+
 <div class="right">
 			<h3>PHƯƠNG THỨC THANH TOÁN</h3>
 			<form>
@@ -198,17 +177,32 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 							<span>Trở về trang chủ</span>
 						</a>
 					</div>
-					<div class="checkout-button" onclick="myFunction()">
-						<input type="submit" name="checkout" value="THANH TOÁN NGAY!!!" class="checkout-btn">
-                   
+
+                    <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['check'])) {
+    // Lấy thông tin từ form
+    $name = $_POST['name'];
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+
+    // Thêm đơn hàng vào bảng `order`
+    $sql_insert_order = "INSERT INTO `oder` (`name`, `phone`, `address`, `total`) VALUES ('$name', '$phone', '$address', '$totalPrice')";
+    if (mysqli_query($conn, $sql_insert_order)) {
+        // Thành công, thông báo và chuyển hướng về trang chủ
+        echo "<script>alert('Đã thanh toán thành công!');</script>";
+        echo "<script>window.location.href = 'index.php';</script>";
+    } else {
+        // Lỗi khi thêm đơn hàng
+        echo "Lỗi khi thêm đơn hàng: " . mysqli_error($conn);
+    }
+}
+            ?>
+					<div class="checkout-button">
+						<input type="submit" name="check" value="THANH TOÁN NGAY!!!">
+                        
                        
 					</div>
-					<script>
-						function myFunction() {
-							alert("CẢM ƠN BẠN ĐÃ MUA HÀNG !!!");
-                            window.location.href = 'index.php';
-						}
-					</script>
+					
 				</div>
 			
 	    <!-----------------------------------Bắt đầu Footer------------------------------------------->
@@ -219,3 +213,8 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 	  </body>
 	  
 	  </html>
+
+
+
+
+   

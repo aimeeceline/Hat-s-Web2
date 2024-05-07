@@ -19,7 +19,7 @@ function addToCart($product_id, $product_img, $product_name, $product_price, $qu
 {
     // Initialize the cart if it doesn't exist
     if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = array();
+        $_SESSION['cart'] = array();    
     }
 
     // Check if the product already exists in the cart
