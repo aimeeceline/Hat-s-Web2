@@ -52,9 +52,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <!-- =============== Navigation ================ -->
     <div class="container">
-    <?php
-        include("../page/navigation.php");
-        ?>
+    <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="logo">
+                            <img src="../img/banner/logooadmin.png">
+                        </span>
+                        <span class="title">HAT BOOKSTORE</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../admin/indexadmin.php">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Bảng điều khiển</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../admin/quanlydonhang.php">
+                        <span class="icon">
+                            <ion-icon name="cart-outline"></ion-icon>
+                        </span>
+                        <span class="title">Quản lý đơn hàng</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../admin/quanlysanpham.php">
+                        <span class="icon">
+                            <ion-icon name="book-outline"></ion-icon>
+                        </span>
+                        <span class="title">Quản lý sản phẩm</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../admin/quanlykhachhang.php" id="active">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Quản lý khách hàng</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="hello">
+                    <p>CHÀO MỪNG QUẢN TRỊ CỦA HAT !!!</p>
+                </div>
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Tìm kiếm chức năng quản trị">
+                        <a href="../html/adminnotfound.html"><ion-icon name="search-outline"></ion-icon></a>
+                    </label>
+                </div>
+            </div>
 
             <!-- ================ LÀM QUẢN LÝ KHÁCH HÀNG Ở ĐÂY ================= -->
             <div class="user">
@@ -191,10 +250,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         switch (action) {
             
             case 'lock':
-                confirmMessage = "Are you sure you want to lock this user?";
+                confirmMessage = "Bạn có chắc muốn KHÓA người dùng này?";
                 break;
             case 'unlock':
-                confirmMessage = "Are you sure you want to unlock this user?";
+                confirmMessage = "Bạn có chắc muốn MỞ KHÓA người dùng này?";
                 break;
             default:
                 confirmMessage = "Are you sure you want to perform this action?";

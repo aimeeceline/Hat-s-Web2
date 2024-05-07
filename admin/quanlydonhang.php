@@ -14,7 +14,7 @@
 <body>
     <!-- =============== Navigation ================ -->
     <div class="container">
-        <div class="navigation">
+    <div class="navigation">
             <ul>
                 <li>
                     <a href="#">
@@ -26,7 +26,7 @@
                 </li>
 
                 <li>
-                    <a href="../html/trangchuadmin.html">
+                    <a href="../admin/indexadmin.php">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
                         </span>
@@ -35,7 +35,7 @@
                 </li>
 
                 <li>
-                    <a href="../html/quanlydonhang.html" id="active">
+                    <a href="../admin/quanlydonhang.php" id="active">
                         <span class="icon">
                             <ion-icon name="cart-outline"></ion-icon>
                         </span>
@@ -44,7 +44,7 @@
                 </li>
 
                 <li>
-                    <a href="../html/quanlysanpham.html">
+                    <a href="../admin/quanlysanpham.php" >
                         <span class="icon">
                             <ion-icon name="book-outline"></ion-icon>
                         </span>
@@ -53,7 +53,7 @@
                 </li>
 
                 <li>
-                    <a href="../html/quanlykhachhang.html">
+                    <a href="../admin/quanlykhachhang.php" >
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>
@@ -62,7 +62,6 @@
                 </li>
             </ul>
         </div>
-
         <!-- ========================= Main ==================== -->
         <div class="main">
             <div class="topbar">
@@ -76,7 +75,6 @@
                     </label>
                 </div>
             </div>
-
             <!-- ================ LÀM QUẢN LÝ ĐƠN HÀNG Ở ĐÂY ================= -->
             <div class="order">
                 <!-- ================ LÀM BANNER ================= -->

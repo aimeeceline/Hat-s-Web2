@@ -54,35 +54,11 @@ $result = mysqli_query($conn, $query);
 
         // In ra tên loại sản phẩm
         echo '<h2 id=head>' . mb_strtoupper($category_name, 'UTF-8') . '</h2>';
-        ?>
+       
+        include("page/searchform.php");
         
-<div class="show">
-            <form method="POST" action="search.php">
-                <div id="accordion">
-                    <div class="cap">Tìm kiếm nâng cao</div>
-                    <input type="text" name="search_name" placeholder="Nhập tên sản phẩm cần tìm"
-                        style="width: 90%; padding: 10px; border-radius: 8px; margin: 8px;">
-
-                    <!-- Thể loại -->
-                    <div class="cap1">Thể loại:</div>
-                    <div class="ct">
-                        <label><input type="checkbox" name="theloai[]" value="Kỹ năng sống phát triển cá nhân">Kỹ năng
-                            sống phát triển cá nhân</label>
-                        <label><input type="checkbox" name="theloai[]" value="Manga-Comic">Manga-Comic</label>
-                        <label><input type="checkbox" name="theloai[]" value="Nghệ thuật văn hóa">Nghệ thuật văn
-                            hóa</label>
-                    </div>
-                    <!-- Giá bán -->
-                    <div class="cap1">Giá bán:</div>
-                    <div class="ct">
-                        <label><input type="checkbox" name="giaban[]" value="1">&#60 100.000 đ</label>
-                        <label><input type="checkbox" name="giaban[]" value="2">100.000 đ - 500.000 đ</label>
-                        <label><input type="checkbox" name="giaban[]" value="3">500.000 đ - 1.000.000 đ</label>
-                    </div>
-                    <!-- Nút Áp dụng -->
-                    <button type="submit" class="apply-button" >Áp dụng</button>
-                </div>
-            </form>
+        ?>
+ 
             <!-- Hiển thị danh sách sản phẩm -->
             <div class="onmain">
                 <?php
