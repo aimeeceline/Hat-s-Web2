@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $update_query = "UPDATE user SET " . implode(', ', $update_fields) . " WHERE id=$id";
 
     if ($conn->query($update_query) === TRUE) {
-        echo "Cập nhật thông tin thành công";
+        echo "Cập nhật thông tin thành công!";
     } else {
         echo "Lỗi: " . $conn->error;
     }

@@ -52,15 +52,6 @@ for (let i = 0; i < inputFiles.length; i++) {
         }
     });
 }
-function warning() {
-    boxreuser.style.display = 'none';
-    setTimeout(function () {
-        document.querySelector('.overlay').classList.remove('show-overlay');
-        document.body.classList.remove('no-scroll');
-    }, 0);
-}
-
-
 
 var form = document.getElementById("formId");
 function submitForm(event) {
@@ -78,23 +69,4 @@ function del(element) {
         alert("Xóa hình thành công!!!")
     }
 }
-document.getElementById('suaUserForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Ngăn chặn form gửi dữ liệu mặc định
-    var formData = new FormData(this); // Lấy dữ liệu từ form
-    fetch('../admin/sua.php', { // Gửi dữ liệu đến sua.php
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Có lỗi xảy ra khi cập nhật thông tin người dùng.');
-        }
-        return response.text();
-    })
-    .then(data => {
-        alert(data); // Hiển thị thông báo từ server
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-});
+

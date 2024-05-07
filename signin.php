@@ -14,18 +14,26 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     // Truy vấn để kiểm tra username và password trong cơ sở dữ liệu
-    $sql = "SELECT * FROM user WHERE user=? AND pass=? AND status=1";
+    $sql = "SELECT * FROM user WHERE user=? AND pass=? ";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $username, $password);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows == 1) {
+    if ($result->num_rows >0) {
         // Đăng nhập thành công, lấy thông tin người dùng và xác định vai trò
         $row = $result->fetch_assoc();
         $role = $row['role'];
         $user= $row['user'];
         $id=$row['id'];
+        $isLocked=$row['locked'];
+
+        // Kiểm tra trạng thái khóa
+        if ($isLocked == 1) {
+            // Nếu người dùng bị khóa, chuyển hướng về trang đăng nhập với thông báo
+            echo "Tài khoản bị khóa vui lòng liên hệ chăm sóc khách hàng   ";
+            exit();
+        }
         // Lưu thông tin người dùng vào session
         $_SESSION['user'] = $user;
         $_SESSION['id'] = $id;
