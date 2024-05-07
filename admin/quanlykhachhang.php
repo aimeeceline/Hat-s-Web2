@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <div class="form-group">
                                 <label for="name">Họ và tên:</label>
-                                <input type="name" name="name" id="name" placeholder="Lê Thị Lan Anh">
+                                <input type="text" name="name" id="name" placeholder="Lê Thị Lan Anh">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email:</label>
@@ -223,19 +223,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 echo "<td>".$row["name"]."</td>";
                                 echo "<td>".$row["email"]."</td>";
                                 echo "<td>".$row["pass"]."</td>";
-                                echo "<td>
-                                <button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row["id"]."\", \"".$row["user"]."\", \"".$row["name"]."\", \"".$row["email"]."\", \"".$row["pass"]."\")'>Sửa</button>
-                                <button onclick='myFunction()' id='xoanguoidung'>Khóa</button>
-                                        <script>
-                                            function myFunction() {
-                                                const confirmation = confirm('Bạn có chắc chắn muốn khóa người dùng này?');
-                                                if (confirmation) {
-                                                    alert('Khóa người dùng thành công!');
-                                                    window.location.href = '../html/qlkhlockeduser.html';
-                                                }
-                                            }
-                                        </script>
-                                    </td>";
+                                echo "<td>";
+                                echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row["id"]."\", \"".$row["user"]."\", \"".$row["name"]."\", \"".$row["email"]."\", \"".$row["pass"]."\")'>Sửa</button>";
+                                if ($row["locked"] == 1) {
+                                    // Nếu người dùng đã bị khóa, hiển thị nút "Mở khóa"
+                                    echo "<button id='xoanguoidung' onclick='unlockUser(\"".$row["id"]."\")'>Mở khóa</button>";
+                                } else {
+                                    // Nếu người dùng chưa bị khóa, hiển thị nút "Khóa"
+                                    echo "<button id='xoanguoidung' onclick='lockUser(\"".$row["id"]."\")'>Khóa</button>";
+                                }
+                                echo "</td>";
                                 echo "</tr>";
                             }
                         } else {
@@ -286,7 +283,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                                 <div class="form-group">
                                     <div class="update">
-                                        <button type="submit"><i class="fa-solid fa-download"></i>Cập nhật</button> <!--Thay đổi nút "a" thành "button" và thêm type="submit"-->
+                                       <button type="submit"><i class="fa-solid fa-download"></i>Cập nhật</button> <!--Thay đổi nút "a" thành "button" và thêm type="submit"-->
                                     </div>
                                 </div>
                             </form>

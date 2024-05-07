@@ -17,10 +17,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $pass = $_POST['pass'];
 
-    // Cập nhật dữ liệu vào cơ sở dữ liệu
-    $sql = "UPDATE user SET user='$user',name='$name', email='$email', pass='$pass' WHERE id=$id";
+    // Khởi tạo mảng để lưu các cặp tên cột và giá trị cần cập nhật
+    $update_fields = array();
 
-    if ($conn->query($sql) === TRUE) {
+    // Kiểm tra từng trường liệu có được cập nhật không
+    if (!empty($user)) {
+        $update_fields[] = "user='$user'";
+    }
+    if (!empty($name)) {
+        $update_fields[] = "name='$name'";
+    }
+    if (!empty($email)) {
+        $update_fields[] = "email='$email'";
+    }
+    if (!empty($pass)) {
+        $update_fields[] = "pass='$pass'";
+    }
+
+    // Tạo câu truy vấn UPDATE dựa trên các trường được cập nhật
+    $update_query = "UPDATE user SET " . implode(', ', $update_fields) . " WHERE id=$id";
+
+    if ($conn->query($update_query) === TRUE) {
         echo "Cập nhật thông tin thành công";
     } else {
         echo "Lỗi: " . $conn->error;
