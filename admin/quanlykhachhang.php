@@ -196,7 +196,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <table>
                         <thead>
                             <tr>
-                                <td>STT</td>
                                 <td>Tên đăng nhập </td>
                                 <td>Họ và tên</td>
                                 <td>Email</td>
@@ -207,27 +206,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         <tbody>
 
-                            <tr>
-                                <td>1</td>
-                                <td>thaihien99</td>
-                                <td>Trần Thái Hiễn</td>
-                                <td>tranthaihien02@gmail.com</td>
-                                <td>30012004</td>
-                                <td>
-                                    <button id="suanguoidung" onclick="hienBoxSuaUser()">Sửa</button>
-                                    <button onclick="myFunction()" id="xoanguoidung">Khóa</button>
-                                    <script>
-                                        function myFunction() {
-                                            const confirmation = confirm("Bạn có chắc chắn muốn khóa người dùng này ??? ");
-                                            if (confirmation) {
-                                                alert("Khóa người dùng thành công!!")
-                                                window.location.href = '../html/qlkhlockeduser.html';
-                                            }
-                                        }
-                                    </script>
-                                </td>
-                            </tr>
-
+                           
                             
                             <?php 
                             // Truy vấn dữ liệu từ cơ sở dữ liệu
@@ -240,7 +219,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             // Duyệt qua từng dòng dữ liệu
                             while($row = $result->fetch_assoc()) {
                                 echo "<tr>";
-                                echo "<td>".$row["id"]."</td>";
                                 echo "<td>".$row["user"]."</td>";
                                 echo "<td>".$row["name"]."</td>";
                                 echo "<td>".$row["email"]."</td>";
@@ -266,7 +244,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         $conn->close();
                         ?>
-
+                
 
 
 
@@ -283,42 +261,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             document.body.classList.remove('no-scroll');
                                         }
                                     </script>
-                    <h2 style="margin-bottom: 10px;">Sửa thông tin thaihien99</h2>
-                                    <form id="suaUserForm">                                      
-                                        <div class="form-group">
-                                            <label for="username">Tên đăng nhập:</label>
-                                            <input type="text" id="username" value="thaihien99">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="name">Họ và tên:</label>
-                                            <input type="text" id="name" value="Trần Thái Hiễn">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email:</label>
-                                            <input type="text" id="email" value="tranthaihien02@gmail.com">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="goi">Hạng thành viên:</label>
-                                            <select id="goi" name="goi">
-                                                <option>Bạc</option>
-                                                <option>Vàng</option>
-                                                <option>Kim cương</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password">Mật khẩu:</label>
-                                            <input type="password" id="password" value="password">
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="update">
-                                                <a onclick="warning()"><i class="fa-solid fa-download"></i>Cập nhật</a>
-                                            </div>
-
-                                        </div>
-
-                                    </form>
+                                <h2 style="margin-bottom: 10px;">Sửa thông tin </h2>
+                                <form id="suaUserForm" action="../admin/sua.php" method="post"> <!--Thêm action và method vào form-->
+                                <div class="form-group">
+                                    <label for="user">Tên đăng nhập:</label>
+                                    <input type="text" id="user" name="user">
                                 </div>
+                                <div class="form-group">
+                                    <label for="name">Họ và tên:</label>
+                                    <input type="text" id="name" name="name" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="email" id="email" name="email"  >
+                                </div>
+                                <div class="form-group">
+                                    <label for="pass">Mật khẩu:</label>
+                                    <input type="password" id="pass" name="pass" >
+                                </div>
+                                <div class="form-group">
+                                    <div class="update">
+                                        <button type="submit"><i class="fa-solid fa-download"></i>Cập nhật</button> <!--Thay đổi nút "a" thành "button" và thêm type="submit"-->
+                                    </div>
+                                </div>
+                            </form>
 
+                                </div>
+                                <script>
+                                document.getElementById('suaUserForm').addEventListener('submit', function(event) {
+                                    event.preventDefault(); // Ngăn chặn form gửi dữ liệu mặc định
+                                    var formData = new FormData(this); // Lấy dữ liệu từ form
+                                    fetch('../admin/sua.php', { // Gửi dữ liệu đến sua.php
+                                        method: 'POST',
+                                        body: formData
+                                    })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Có lỗi xảy ra khi cập nhật thông tin người dùng.');
+                                        }
+                                        return response.text();
+                                    })
+                                    .then(data => {
+                                        alert(data); // Hiển thị thông báo từ server
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                                });
+                                
+                                        </script>
                                 <script src="../js/suasanpham.js"></script>
                 </div>
                 <div class="pagination">
