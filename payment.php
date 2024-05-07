@@ -18,7 +18,8 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
         $address = $_POST['address'];
         $id = $_SESSION['id'];
 
-        // Cập nhật dữ liệu vào CSDL
+        
+    // Cập nhật dữ liệu vào CSDL
         $sql_update = "UPDATE `user` SET `name`='$name', `phone`='$phone', `address`='$address' WHERE `id`='$id'";
         if (mysqli_query($conn, $sql_update)) {
             // Cập nhật dữ liệu mặc định
@@ -29,6 +30,31 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
             echo "Lỗi: " . mysqli_error($conn);
         }
     }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['checkout'])) {
+        $totalPrice = 0;
+        foreach ($_SESSION['cart'] as $item) {
+            $totalPrice += $item['product_price'] * $item['quantity'];
+    
+        }   
+        // Lấy thông tin của người dùng từ session
+        $name = $_POST['name'];
+        $phone = $_POST['phone'];
+        $address = $_POST['address'];
+        
+        // Thêm dữ liệu vào bảng `oder`
+        if (mysqli_query($conn, $sql_insert_oder)) {
+            $sql_insert_oder = "INSERT INTO `oder` (`name`, `phone`, `address`, `total`) VALUES ('$name', '$phone', '$address', '$totalPrice')";
+        
+        } else {
+            // Insertion failed, you can handle the error here
+            echo "Error: " . mysqli_error($conn);
+        }
+      
+            
+
+    }
+    
 
     ?>
 
@@ -173,7 +199,9 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 						</a>
 					</div>
 					<div class="checkout-button" onclick="myFunction()">
-						<input type="submit" name="" value="THANH TOÁN NGAY!!!" class="checkout-btn">
+						<input type="submit" name="checkout" value="THANH TOÁN NGAY!!!" class="checkout-btn">
+                   
+                       
 					</div>
 					<script>
 						function myFunction() {
