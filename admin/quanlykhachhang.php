@@ -224,8 +224,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 echo "<td>".$row["email"]."</td>";
                                 echo "<td>".$row["pass"]."</td>";
                                 echo "<td>
-                                        <button id='suanguoidung' onclick='hienBoxSuaUser()'>Sửa</button>
-                                        <button onclick='myFunction()' id='xoanguoidung'>Khóa</button>
+                                <button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row["id"]."\", \"".$row["user"]."\", \"".$row["name"]."\", \"".$row["email"]."\", \"".$row["pass"]."\")'>Sửa</button>
+                                <button onclick='myFunction()' id='xoanguoidung'>Khóa</button>
                                         <script>
                                             function myFunction() {
                                                 const confirmation = confirm('Bạn có chắc chắn muốn khóa người dùng này?');
@@ -256,13 +256,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <script>
                                         function dongFormChinhSua() {
                                             var boxSuaUser = document.getElementById('boxsuauser');
+                                            var overlay = document.querySelector('.overlay');
+
                                             boxSuaUser.style.display = 'none';
                                             document.querySelector('.overlay').classList.remove('show-overlay');
                                             document.body.classList.remove('no-scroll');
                                         }
                                     </script>
+                                    
                                 <h2 style="margin-bottom: 10px;">Sửa thông tin </h2>
                                 <form id="suaUserForm" action="../admin/sua.php" method="post"> <!--Thêm action và method vào form-->
+                                <input type="hidden" id="id" name="id"> <!-- Trường ẩn để lưu ID -->
+
                                 <div class="form-group">
                                     <label for="user">Tên đăng nhập:</label>
                                     <input type="text" id="user" name="user">
