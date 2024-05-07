@@ -245,7 +245,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         return response.text();
                                     })
                                     .then(data => {
-                                        alert(data); // Hiển thị thông báo từ server
+                                        alert(data); 
+                                        location.reload();// Hiển thị thông báo từ server
                                     })
                                     .catch(error => {
                                         console.error('Error:', error);
