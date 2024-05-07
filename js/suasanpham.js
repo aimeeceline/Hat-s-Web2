@@ -33,7 +33,6 @@ function hienBoxSuaUser(id, user, name, email, pass) {
 
 reUserForm.addEventListener('submit', function (event) {
     event.preventDefault();
-    alert('Đã cập nhật thông tin');
     boxreuser.style.display = 'none';
 });
 for (let i = 0; i < inputFiles.length; i++) {
@@ -54,7 +53,6 @@ for (let i = 0; i < inputFiles.length; i++) {
     });
 }
 function warning() {
-    alert("Bạn đã cập nhật thành công !");
     boxreuser.style.display = 'none';
     setTimeout(function () {
         document.querySelector('.overlay').classList.remove('show-overlay');
@@ -80,3 +78,23 @@ function del(element) {
         alert("Xóa hình thành công!!!")
     }
 }
+document.getElementById('suaUserForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Ngăn chặn form gửi dữ liệu mặc định
+    var formData = new FormData(this); // Lấy dữ liệu từ form
+    fetch('../admin/sua.php', { // Gửi dữ liệu đến sua.php
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Có lỗi xảy ra khi cập nhật thông tin người dùng.');
+        }
+        return response.text();
+    })
+    .then(data => {
+        alert(data); // Hiển thị thông báo từ server
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});

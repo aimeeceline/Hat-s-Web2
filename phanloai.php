@@ -50,68 +50,14 @@ $result = mysqli_query($conn, $query);
 
         <?php
         include ("page/header.php");
-        ?>
-        <?php
-        // Xử lý dữ liệu gửi từ form
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Xử lý tìm kiếm theo tên sản phẩm
-            $search_name = $_POST['search_name'];
-            $query = "SELECT * FROM product WHERE pro_name LIKE '%$search_name%'";
-
-            // Xử lý tìm kiếm theo thể loại
-            $categories = isset($_POST['theloai']) ? $_POST['theloai'] : [];
-            if (!empty($categories)) {
-                $category_condition = "'" . implode("','", $categories) . "'";
-                $query .= " AND id_category IN ($category_condition)";
-            } else {
-                // Nếu không có thể loại nào được chọn, bạn có thể hiển thị thông báo hoặc xử lý theo cách khác tùy ý của bạn
-                echo "Vui lòng chọn ít nhất một thể loại để tìm kiếm.";
-                exit; // Dừng xử lý form
-            }
-
-            // Xử lý tìm kiếm theo giá bán
-            $prices = isset($_POST['giaban']) ? $_POST['giaban'] : [];
-            if (!empty($prices)) {
-                $price_condition = [];
-                foreach ($prices as $price) {
-                    switch ($price) {
-                        case '1':
-                            $price_condition[] = "pro_price < 100000";
-                            break;
-                        case '2':
-                            $price_condition[] = "pro_price >= 100000 AND pro_price <= 500000";
-                            break;
-                        case '3':
-                            $price_condition[] = "pro_price >= 500000 AND pro_price <= 1000000";
-                            break;
-                    }
-                }
-                $query .= " AND (" . implode(" OR ", $price_condition) . ")";
-            }
-
-            // Thực hiện truy vấn SQL
-            $result = mysqli_query($conn, $query);
-            if ($result) {
-                // Xử lý kết quả trả về từ cơ sở dữ liệu
-                // Hiển thị kết quả tìm kiếm
-            } else {
-                echo "Lỗi truy vấn: " . mysqli_error($conn);
-            }
-        }
-
-        ?>
-
-
-        <!-- Form tìm kiếm sản phẩm -->
-        <?php
         $category_name = $p->getCategoryName($id_category);
 
         // In ra tên loại sản phẩm
         echo '<h2 id=head>' . mb_strtoupper($category_name, 'UTF-8') . '</h2>';
         ?>
-
-        <div class="show">
-            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        
+<div class="show">
+            <form method="POST" action="search.php">
                 <div id="accordion">
                     <div class="cap">Tìm kiếm nâng cao</div>
                     <input type="text" name="search_name" placeholder="Nhập tên sản phẩm cần tìm"
@@ -134,10 +80,9 @@ $result = mysqli_query($conn, $query);
                         <label><input type="checkbox" name="giaban[]" value="3">500.000 đ - 1.000.000 đ</label>
                     </div>
                     <!-- Nút Áp dụng -->
-                    <button type="submit" class="apply-button">Áp dụng</button>
+                    <button type="submit" class="apply-button" >Áp dụng</button>
                 </div>
             </form>
-
             <!-- Hiển thị danh sách sản phẩm -->
             <div class="onmain">
                 <?php

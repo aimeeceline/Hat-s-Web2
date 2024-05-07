@@ -79,5 +79,20 @@ class database
         }
     }
 
+
+
+    function lockUser($userId) {
+        global $conn;
+        $sql = "UPDATE user SET status = 0 WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        // Kiểm tra xem có bất kỳ lỗi nào xảy ra không
+        if ($stmt->affected_rows > 0) {
+            return true; // Trả về true nếu khóa người dùng thành công
+        } else {
+            return false; // Trả về false nếu có lỗi xảy ra hoặc không có người dùng nào bị ảnh hưởng
+        }
+    }
 }
 ?>

@@ -14,7 +14,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     // Truy vấn để kiểm tra username và password trong cơ sở dữ liệu
-    $sql = "SELECT * FROM user WHERE user=? AND pass=?";
+    $sql = "SELECT * FROM user WHERE user=? AND pass=? AND status=1";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $username, $password);
     $stmt->execute();
