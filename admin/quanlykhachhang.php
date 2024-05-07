@@ -153,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             // Truy vấn dữ liệu từ cơ sở dữ liệu
                            
 
-                        $sql = "SELECT  id, user, name, email, pass FROM user WHERE id>1";
+                        $sql = "SELECT  id, user, name, email, pass, locked FROM user WHERE id>1";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
@@ -168,13 +168,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row["id"]."\", \"".$row["user"]."\", \"".$row["name"]."\", \"".$row["email"]."\", \"".$row["pass"]."\")'>Sửa</button>";
                                 if ($row["locked"] == 1) {
                                     // Nếu người dùng đã bị khóa, hiển thị nút "Mở khóa"
-                                    echo "<button id='xoanguoidung' onclick='unlockUser(\"".$row["id"]."\")'>Mở khóa</button>";
+                                    echo "<button class='xoanguoidung' onclick='performAction(\"unlock\", \"". $row['id'] ."\")'>Mở khóa</button>";
+
                                 } else {
                                     // Nếu người dùng chưa bị khóa, hiển thị nút "Khóa"
-                                    echo "<button id='xoanguoidung' onclick='lockUser(\"".$row["id"]."\")'>Khóa</button>";
+                                    echo "<button class='xoanguoidung' onclick='performAction(\"lock\", \"". $row['id'] ."\")'>Khóa</button>";
                                 }
+                                
                                 echo "</td>";
                                 echo "</tr>";
+                                
                             }
                         } else {
                             echo "0 results";
@@ -182,7 +185,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         $conn->close();
                         ?>
-                
+                <script>
+    function performAction(action, id) {
+        var confirmMessage = "";
+        switch (action) {
+            
+            case 'lock':
+                confirmMessage = "Are you sure you want to lock this user?";
+                break;
+            case 'unlock':
+                confirmMessage = "Are you sure you want to unlock this user?";
+                break;
+            default:
+                confirmMessage = "Are you sure you want to perform this action?";
+        }
+
+        if (confirm(confirmMessage)) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    location.reload();
+                }
+            };
+            xhttp.open("POST", "../admin/khoa.php", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("action=" + action + "&id=" + id);
+        }
+    }
+
+</script>
 
 
 
