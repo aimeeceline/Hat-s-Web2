@@ -230,7 +230,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </form>
 
                                 </div>
-            
+                                <script>
+                                document.getElementById('suaUserForm').addEventListener('submit', function(event) {
+                                    event.preventDefault(); // Ngăn chặn form gửi dữ liệu mặc định
+                                    var formData = new FormData(this); // Lấy dữ liệu từ form
+                                    fetch('../admin/sua.php', { // Gửi dữ liệu đến sua.php
+                                        method: 'POST',
+                                        body: formData
+                                    })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Có lỗi xảy ra khi cập nhật thông tin người dùng.');
+                                        }
+                                        return response.text();
+                                    })
+                                    .then(data => {
+                                        alert(data); // Hiển thị thông báo từ server
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                                });
+                                
+                                        </script>
                                 <script src="../js/suasanpham.js"></script>
                 </div>
                 <div class="pagination">
