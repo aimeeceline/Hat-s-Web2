@@ -25,9 +25,9 @@
         <input type="text"name="search" id="searchInput" placeholder="Tìm kiếm" >
         
             <label for="check" class="icon">
-               <button onclick="searchProducts()">  <a href="html/notfound.html"><i class="fas fa-search"></i></a></button>
+               <button onclick="searchProducts()"><i class="fas fa-search"></i></a></button>
             </label>
-            <div id="searchResults"></div>
+           
 
         </div>
         <script>
@@ -35,11 +35,6 @@ function searchProducts() {
     var searchText = document.getElementById("searchInput").value;
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "search.php?search=" + searchText, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            document.getElementById("searchResults").innerHTML = xhr.responseText;
-        }
-    };
     xhr.send();
 }
 </script>
