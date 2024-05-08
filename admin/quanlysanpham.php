@@ -201,6 +201,8 @@ if (!$conn) {
                                     <script>
                                         function dongFormChinhSua() {
                                             var boxSuaUser = document.getElementById('boxsuauser');
+                                            var overlay = document.querySelector('.overlay');
+
                                             boxSuaUser.style.display = 'none';
                                             document.querySelector('.overlay').classList.remove('show-overlay');
                                             document.body.classList.remove('no-scroll');
@@ -211,7 +213,7 @@ if (!$conn) {
                                         <div class="form-group">
                                             <label for="image1">Ảnh 1:</label>
                                             <div class="change_img">
-                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 1.jpg" id="product_pic1" name="pro_img1">
+                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 1.jpg" id="pro_img1" name="pro_img1">
                                                 <div class="change_action">
                                                     <label for="input_file1" class="change_button">Sửa</label>
                                                     <input type="file" id="input_file1" class="input_file" accept="image/*">
@@ -223,7 +225,7 @@ if (!$conn) {
                                         <div class="form-group">
                                             <label for="image2">Ảnh 2:</label>
                                             <div class="change_img">
-                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 2.jpg" id="product_pic2" name="pro_img2">
+                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 2.jpg" id="pro_img2" name="pro_img2">
                                                 <div class="change_action">
                                                     <label for="input_file2" class="change_button">Sửa</label>
                                                     <input type="file" id="input_file2" class="input_file" accept="image/*">
@@ -235,7 +237,7 @@ if (!$conn) {
                                         <div class="form-group">
                                             <label for="image3">Ảnh 3:</label>
                                             <div class="change_img">
-                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 3.jpg" id="product_pic3" name="pro_img3">
+                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 3.jpg" id="pro_img3" name="pro_img3">
                                                 <div class="change_action">
                                                     <label for="input_file3" class="change_button">Sửa</label>
                                                     <input type="file" id="input_file3" class="input_file" accept="image/*">
@@ -248,29 +250,29 @@ if (!$conn) {
 
                                         <div class="form-group">
                                             <label for="email">Mã sản phẩm:</label>
-                                            <input type="text" name="pro_id" id="email" value="KNS49">
+                                            <input type="text" name="pro_id" id="pro_id" value="KNS49">
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Tên sản phẩm:</label>
-                                            <input type="text" name="pro_name" id="name" value="Đắc Nhân Tâm">
+                                            <input type="text" name="pro_name" id="pro_name" value="Đắc Nhân Tâm">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="email">Giá:</label>
-                                            <input type="text" name="pro_price" id="email" value="77.400 đ">
+                                            <input type="text" name="pro_price" id="pro_price" value="77.400 đ">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Tác giả:</label>
-                                            <input type="text"name="pro_author" id="email" value="Dale Carnegie">
+                                            <input type="text"name="pro_author" id="pro_author" value="Dale Carnegie">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Nhà xuất bản:</label>
-                                            <input type="text" name="pro_publisher" id="email" value="Văn Học">
+                                            <input type="text" name="pro_publisher" id="pro_publisher" value="Văn Học">
                                         </div>
                                         <div class="form-group">
                                             <label for="description">Mô tả:</label>
                                             <textarea
-                                            name="pro_description" id="description">Đắc nhân tâm của Dale Carnegie là quyển sách của mọi thời đại và một hiện tượng đáng kinh ngạc trong ngành xuất bản Hoa Kỳ. Chiếm vị trí số một trong danh mục sách bán chạy nhất và trở thành một sự kiện có một không hai trong lịch sử ngành xuất bản thế giới và được đánh giá là một quyển sách có tầm ảnh hưởng nhất mọi thời đại.</textarea>
+                                            name="pro_description" id="pro_description">Đắc nhân tâm của Dale Carnegie là quyển sách của mọi thời đại và một hiện tượng đáng kinh ngạc trong ngành xuất bản Hoa Kỳ. Chiếm vị trí số một trong danh mục sách bán chạy nhất và trở thành một sự kiện có một không hai trong lịch sử ngành xuất bản thế giới và được đánh giá là một quyển sách có tầm ảnh hưởng nhất mọi thời đại.</textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="quatyti">Số lượng tồn kho:</label>
@@ -286,7 +288,7 @@ if (!$conn) {
                                         </div>
                                         <div class="form-group">
                                             <div class="update">
-                                                <a onclick="warning()"><i class="fa-solid fa-download"></i>Cập nhật</a>
+                                            <button type="submit"><i class="fa-solid fa-download"></i>Cập nhật</button> <!--Thay đổi nút "a" thành "button" và thêm type="submit"-->
                                             </div>
 
                                         </div>  
@@ -333,7 +335,7 @@ if (!$conn) {
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
         <script>
-        function hienBoxSuaUser1(pro_id, pro_img1, pro_img2, pro_img3, pro_name,pro_author,pro_publisher,pro_description,pro_quantity,pro_price,id_category) {
+        function hienBoxSuaUser1(pro_id,pro_name,pro_author,pro_publisher,pro_description,pro_quantity,pro_price,id_category) {
 
     var boxSuaUser = document.getElementById('boxsuauser');
     var overlay = document.querySelector('.overlay');
@@ -341,9 +343,6 @@ if (!$conn) {
 
     // Điền dữ liệu vào form
     form.elements['pro_id'].value = pro_id;
-    form.elements['pro_img1'].value = pro_img1;
-    form.elements['pro_img2'].value = pro_img2;
-    form.elements['pro_img3'].value = pro_img3;
     form.elements['pro_author'].value = pro_author;
     form.elements['pro_publisher'].value = pro_publisher;
     form.elements['pro_description'].value = pro_description;

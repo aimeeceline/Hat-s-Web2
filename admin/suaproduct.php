@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Tạo câu truy vấn UPDATE dựa trên các trường được cập nhật
-    $update_query = "UPDATE user SET " . implode(', ', $update_fields) . " WHERE id=$id";
+    $update_query = "UPDATE product SET " . implode(', ', $update_fields) . " WHERE id=$id";
 
     if ($conn->query($update_query) === TRUE) {
         echo "Cập nhật thông tin thành công!";
