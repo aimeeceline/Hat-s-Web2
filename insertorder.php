@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['check'])) {
     }
 
     // Thêm đơn hàng vào bảng `order` chỉ với user_id và tổng giá trị
-    $sql_order = "INSERT INTO `order` (`id_user`, `total`) VALUES ('$user_id', '$total_price')";
+    $sql_order = "INSERT INTO `order` (`id_user`, `order_date`, `total`) VALUES ('$user_id', NOW(), '$total_price')";
     if (mysqli_query($conn, $sql_order)) {
         $order_id = mysqli_insert_id($conn); // Lấy ID của đơn hàng vừa tạo
 

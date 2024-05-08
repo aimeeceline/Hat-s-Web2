@@ -9,10 +9,12 @@ if (!$conn) {
 }
 
 // Truy vấn để lấy dữ liệu từ bảng `order` và `orderdetails`
-$sql = "SELECT `order`.`id`, `order`.`order_date`, `order`.`total`, `orderdetails`.`product_id`, `orderdetails`.`quantity`, `orderdetails`.`unitprice`, `user`.`address`
+$sql = "SELECT `order`.`id`, `order`.`order_date`, `order`.`total`, `product`.`pro_name` AS product_name, `orderdetails`.`quantity`, `orderdetails`.`unitprice`, `user`.`address`
         FROM `order`
         INNER JOIN `orderdetails` ON `order`.`id` = `orderdetails`.`order_id`
-        INNER JOIN `user` ON `order`.`id_user` = `user`.`id`";
+        INNER JOIN `user` ON `order`.`id_user` = `user`.`id`
+        INNER JOIN `product` ON `orderdetails`.`product_id` = `product`.`pro_id`";
+   
 
 $result = mysqli_query($conn, $sql);
 
@@ -38,6 +40,7 @@ $result = mysqli_query($conn, $sql);
             <table>
                 <thead>
                     <tr>
+                        
                         <th>SẢN PHẨM</th>
                         <th>GIÁ TIỀN</th>
                         <th>SỐ LƯỢNG</th>
@@ -51,7 +54,8 @@ $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
-                            echo "<td>" . $row['product_id'] . "</td>";
+                            echo "<td><img src='" . $row['pro_img'] . "' alt='" . $row['product_name'] . "'></td>";
+                            
                             echo "<td>" . $row['unitprice'] . "</td>";
                             echo "<td>" . $row['quantity'] . "</td>";
                             echo "<td>" . $row['total'] . "</td>";

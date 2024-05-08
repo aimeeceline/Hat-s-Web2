@@ -217,10 +217,7 @@ document.getElementById("updateButton").addEventListener("click", function() {
 <div class="right">
 			<h3>PHƯƠNG THỨC THANH TOÁN</h3>
 			<form>
-				<input type="radio" id="age1" name="age" value="30">
-				<label for="age1">&nbsp;<img id="zalopay" src="img/logo/zalo.png">&nbsp;&nbsp;ZALO</label><br>
-				<input type="radio" id="age2" name="age" value="60">
-				<label for="age2">&nbsp;<img  src="img/logo/momo.png">&nbsp;&nbsp;MOMO</label><br>
+				
 				<input type="radio" id="age3" name="age" value="100">
 				<label for="age3">&nbsp;<img src="img/logo/atm.png">&nbsp;&nbsp;ATM</label><br>
 				<input type="radio" id="age4" name="age" value="120">
