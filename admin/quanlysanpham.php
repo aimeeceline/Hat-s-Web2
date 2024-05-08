@@ -1,3 +1,15 @@
+<?php
+session_start();
+include("../classfunctionPHPdatabase.php");
+$p = new database();
+$conn = $p->connect();
+
+if (!$conn) {
+  die("Kết nối thất bại: " . mysqli_connect_error());
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +21,8 @@
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="../css/indexadmin.css">
     <link rel="stylesheet" href="../css/quanlysanpham.css">
+    <link rel="stylesheet" href="../css/quanlykhachhang.css">
+
 </head>
 
 <body>
@@ -78,7 +92,7 @@
             <!-- ================ LÀM QUẢN LÝ SẢN PHẨM Ở ĐÂY ================= -->
             <div class="user">
                 <div class="banner">
-                    <button id="adduser"><a href="../html/themsanpham.html">+ Thêm sản phẩm</a></button>
+                    <button id="adduser"><a href="../admin/themsanpham.php">+ Thêm sản phẩm</a></button>
                     <div class="finder">
                         <select id="searchType" name="searchType" onchange="changeContent()">
                             <option value="category">Lọc theo danh mục</option>
@@ -125,131 +139,64 @@
                         <thead>
                             <tr>
                                 <td>STT</td>
-                                <td>Mã SP</td>
                                 <td>Ảnh</td>
                                 <td>Tên SP </td>
                                 <td>Danh mục</td>
                                 <td>Giá</td>
                                 <td>Tồn kho</td>
-                                <td>Ngày cập nhật</td>
                                 <td>Thao tác</td>
                             </tr>
                         </thead>
                         <!-- ================ bảng sửa sản phẩm  ================= -->
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>KNS49</td>
-                                <td><img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 1.jpg"></td>
-                                <td>Đắc nhân tâm</td>
-                                <td>KNS-PTCN</td>
-                                <td>200.000đ</td>
-                                <td>1000</td>
-                                <td>29/7/2023 11:11</td>
-                                <td>
-                                    <button class="suanguoidung" onclick="hienBoxSuaUser()">Sửa</button>
-                                    <button onclick="myFunction()" class="xoanguoidung">Xóa</button>
-                                    <script>
-                                        function myFunction() {
-                                            const confirmation = confirm("Bạn có chắc chắn xóa sách này không?");
-                                            if (confirmation) {
-                                                alert("Đã xóa sản phẩm thành công!");
-                                            }
-                                        }
-                                    </script>
-                                </td>
-                            </tr>
+                        <?php 
+                            // Truy vấn dữ liệu từ cơ sở dữ liệu
+                           
 
+                            $sql = "SELECT * FROM product";
+                            $result = $conn->query($sql);
+        
+                            // Kiểm tra nếu có dữ liệu trả về từ truy vấn
+                            if ($result->num_rows > 0) {
+                                // Duyệt qua từng dòng dữ liệu và hiển thị thông tin sản phẩm
+                                while ($row = $result->fetch_assoc()) {
+                                    $category = $row['id_category'];
+                                    $img = $row['pro_img1'];
 
-                            <tr>
-                                <td>1</td>
-                                <td>KNS49</td>
-                                <td><img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 1.jpg"></td>
-                                <td>Đắc nhân tâm</td>
-                                <td>KNS-PTCN</td>
-                                <td>200.000đ</td>
-                                <td>1000</td>
-                                <td>29/7/2023 11:11</td>
-                                <td>
-                                    <button class="suanguoidung" onclick="hienBoxSuaUser()">Sửa</button>
-                                    <button onclick="myFunction()" class="xoanguoidung">Xóa</button>
-                                    <script>
-                                        function myFunction() {
-                                            const confirmation = confirm("Bạn có chắc chắn xóa sách này không?");
-                                            if (confirmation) {
-                                                alert("Đã xóa sản phẩm thành công!");
-                                            }
-                                        }
-                                    </script>
-                                </td>
-                            </tr>
+                                    // Gọi phương thức để lấy tên loại sản phẩm từ bảng category
+                                    $category_name = $p->getCategoryName($category);
 
-                            <tr>
-                                <td>1</td>
-                                <td>KNS49</td>
-                                <td><img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 1.jpg"></td>
-                                <td>Đắc nhân tâm</td>
-                                <td>KNS-PTCN</td>
-                                <td>200.000đ</td>
-                                <td>1000</td>
-                                <td>29/7/2023 11:11</td>
-                                <td>
-                                    <button class="suanguoidung" onclick="hienBoxSuaUser()">Sửa</button>
-                                    <button onclick="myFunction()" class="xoanguoidung">Xóa</button>
-                                    <script>
-                                        function myFunction() {
-                                            const confirmation = confirm("Bạn có chắc chắn xóa sách này không?");
-                                            if (confirmation) {
-                                                alert("Đã xóa sản phẩm thành công!");
-                                            }
-                                        }
-                                    </script>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>KNS49</td>
-                                <td><img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 1.jpg"></td>
-                                <td>Đắc nhân tâm</td>
-                                <td>KNS-PTCN</td>
-                                <td>200.000đ</td>
-                                <td>1000</td>
-                                <td>29/7/2023 11:11</td>
-                                <td>
-                                    <button class="suanguoidung" onclick="hienBoxSuaUser()">Sửa</button>
-                                    <button onclick="myFunction()" class="xoanguoidung">Xóa</button>
-                                    <script>
-                                        function myFunction() {
-                                            const confirmation = confirm("Bạn có chắc chắn xóa sách này không?");
-                                            if (confirmation) {
-                                                alert("Đã xóa sản phẩm thành công!");
-                                            }
-                                        }
-                                    </script>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>KNS49</td>
-                                <td><img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 1.jpg"></td>
-                                <td>Đắc nhân tâm</td>
-                                <td>KNS-PTCN</td>
-                                <td>200.000đ</td>
-                                <td>1000</td>
-                                <td>29/7/2023 11:11</td>
-                                <td>
-                                    <button class="suanguoidung" onclick="hienBoxSuaUser()">Sửa</button>
-                                    <button onclick="myFunction()" class="xoanguoidung">Xóa</button>
-                                    <script>
-                                        function myFunction() {
-                                            const confirmation = confirm("Bạn có chắc chắn xóa sách này không?");
-                                            if (confirmation) {
-                                                alert("Đã xóa sản phẩm thành công!");
-                                            }
-                                        }
-                                    </script>
-                                </td>
-                            </tr>
+                                    // Tạo đường dẫn cho ảnh dựa trên loại sản phẩm
+                                    $image_path = '../img/product/' . $category_name . '/' . $img;
+                                    echo "<tr>";
+                                    echo "<td>".$row["pro_id"]."</td>";
+                                    echo ' <td><img src="' . $image_path . '" alt="' . $name . '"></td>';
+                                    echo "<td>".$row["pro_name"]."</td>";
+                                    echo "<td>".$row["id_category"]."</td>";
+                                    echo "<td>".$row["pro_price"]."</td>";
+                                    echo "<td>".$row["pro_quantity"]."</td>";
+                                    echo "<td>";
+                                echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row["id"]."\", \"".$row["user"]."\", \"".$row["name"]."\", \"".$row["email"]."\", \"".$row["pass"]."\")'>Sửa</button>";
+                                if ($row["status"] == 0) {
+                                    // Nếu người dùng đã bị khóa, hiển thị nút "Mở khóa"
+                                    echo "<button class='xoanguoidung' onclick='performAction(\"unlock\", \"". $row['id'] ."\")'>Mở khóa</button>";
+
+                                } else {
+                                    // Nếu người dùng chưa bị khóa, hiển thị nút "Khóa"
+                                    echo "<button class='xoanguoidung' onclick='performAction(\"lock\", \"". $row['id'] ."\")'>Xóa</button>";
+                                }
+                                
+                                echo "</td>";
+                                    echo "<tr>";
+
+                                }
+                            } else {
+                                echo "No products available";
+                            }
+        
+
+                        $conn->close();
+                        ?>
                         </tbody>
                     </table>
                     <div class="overlay"></div>

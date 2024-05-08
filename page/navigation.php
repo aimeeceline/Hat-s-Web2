@@ -28,7 +28,7 @@
                 </li>
 
                 <li>
-                    <a href="../html/quanlysanpham.html">
+                    <a href="../admin/quanlysanpham.php">
                         <span class="icon">
                             <ion-icon name="book-outline"></ion-icon>
                         </span>
