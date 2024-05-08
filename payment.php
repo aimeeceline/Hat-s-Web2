@@ -218,10 +218,10 @@ document.getElementById("updateButton").addEventListener("click", function() {
 			<h3>PHƯƠNG THỨC THANH TOÁN</h3>
 			<form>
 				
-				<input type="radio" id="age3" name="age" value="100">
-				<label for="age3">&nbsp;<img src="img/logo/atm.png">&nbsp;&nbsp;ATM</label><br>
-				<input type="radio" id="age4" name="age" value="120">
-				<label for="age3">Thanh toán bằng tiền mặt</label><br>
+            <input type="radio"  name="payment_method" value="ATM">
+<label for="age3">&nbsp;<img src="img/logo/atm.png">&nbsp;&nbsp;ATM</label><br>
+<input type="radio"  name="payment_method" value="cash">
+<label for="age4">Thanh toán bằng tiền mặt</label><br>
 
                 </form> <!-- Kết thúc form hiện tại -->
 <div class="fixed-buttons-container">
