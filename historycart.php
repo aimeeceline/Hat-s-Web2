@@ -8,7 +8,13 @@ if (!$conn) {
     die("Kết nối thất bại: " . mysqli_connect_error());
 }
 
+// Truy vấn để lấy dữ liệu từ bảng `order` và `orderdetails`
+$sql = "SELECT `order`.`id`, `order`.`order_date`, `order`.`total`, `orderdetails`.`product_id`, `orderdetails`.`quantity`, `orderdetails`.`unitprice`, `user`.`address`
+        FROM `order`
+        INNER JOIN `orderdetails` ON `order`.`id` = `orderdetails`.`order_id`
+        INNER JOIN `user` ON `order`.`id_user` = `user`.`id`";
 
+$result = mysqli_query($conn, $sql);
 
 ?>
 
@@ -40,7 +46,23 @@ if (!$conn) {
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    <?php
+                    // Hiển thị dữ liệu từ kết quả truy vấn
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td>" . $row['product_id'] . "</td>";
+                            echo "<td>" . $row['unitprice'] . "</td>";
+                            echo "<td>" . $row['quantity'] . "</td>";
+                            echo "<td>" . $row['total'] . "</td>";
+                            echo "<td>" . $row['address'] . "</td>";
+                            
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='5'>Không có dữ liệu</td></tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
             
@@ -51,7 +73,7 @@ if (!$conn) {
 </html>
 
 <?php
-// Giải phóng kết nối
+// Giải phóng kết nối và kết quả truy vấn
 mysqli_free_result($result);
 mysqli_close($conn);
 ?>
