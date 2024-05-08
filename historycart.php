@@ -8,12 +8,7 @@ if (!$conn) {
     die("Kết nối thất bại: " . mysqli_connect_error());
 }
 
-// Truy vấn SQL để lấy thông tin sản phẩm từ bảng oder_detail kèm theo địa chỉ từ bảng order
-$sql = "SELECT product.pro_name, oder_detail.quantity, oder_detail.price, oder.total, oder.address
-        FROM oder_detail
-        INNER JOIN product ON oder_detail.product_id = product.pro_id
-        INNER JOIN oder ON oder_detail.oder_id = oder.id_oder";
-$result = mysqli_query($conn, $sql);
+
 
 ?>
 
@@ -45,22 +40,7 @@ $result = mysqli_query($conn, $sql);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    // Hiển thị dữ liệu trong bảng
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo "<tr>";
-                            echo "<td>" . $row['pro_name'] . "</td>";
-                            echo "<td>" . $row['price'] . "</td>";
-                            echo "<td>" . $row['quantity'] . "</td>";
-                            echo "<td>" . $row['total'] . "</td>";
-                            echo "<td>" . $row['address'] . "</td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='5'>Không có dữ liệu</td></tr>";
-                    }
-                    ?>
+                    
                 </tbody>
             </table>
             
