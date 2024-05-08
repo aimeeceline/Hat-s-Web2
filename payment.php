@@ -28,34 +28,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
     }
 }
 
-// Xử lý khi nhấn nút "Thanh toán ngay"
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['check'])) {
-    // Lấy thông tin địa chỉ người nhận từ form
-    $name = $_POST['name'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
-
-    // Tạo một đơn hàng mới và lưu vào bảng `order`
-    $sql_order = "INSERT INTO `order` (`user_id`, `name`, `phone`, `address`) VALUES ('{$_SESSION['id']}', '$name', '$phone', '$address')";
-    mysqli_query($conn, $sql_order);
-    $order_id = mysqli_insert_id($conn); // Lấy ID của đơn hàng vừa tạo
-
-    // Lưu thông tin chi tiết đơn hàng vào bảng `orderdetails`
-    foreach ($_SESSION['cart'] as $item) {
-        $product_id = $item['product_id'];
-        $quantity = $item['quantity'];
-        $unitprice = $item['product_price'];
-
-        $sql_order_detail = "INSERT INTO `orderdetails` (`order_id`, `product_id`, `quantity`, `unitprice`) VALUES ('$order_id', '$product_id', '$quantity', '$unitprice')";
-        mysqli_query($conn, $sql_order_detail);
-    }
-
-    // Xóa giỏ hàng sau khi đã thanh toán
-    unset($_SESSION['cart']);
-
-    // Chuyển hướng người dùng đến trang cảm ơn hoặc trang xác nhận đơn hàng
-    header("Location: index.php");
-    exit();
+// Kiểm tra trạng thái của session và hiển thị thông tin tương ứng
+$session_status = session_status();
+if ($session_status == PHP_SESSION_DISABLED) {
+    echo "Session đã bị vô hiệu hóa trên máy chủ.";
+} elseif ($session_status == PHP_SESSION_NONE) {
+    echo "Session chưa được khởi tạo.";
+} elseif ($session_status == PHP_SESSION_ACTIVE) {
+    echo "Session đang hoạt động.";
+    // Hiển thị dữ liệu của session ở đây
+    print_r($_SESSION);
 }
 ?>
 
@@ -92,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['check'])) {
 
                     // Điền thông tin vào các trường
                     ?>
-                <input type="button" value="Chọn địa chỉ từ tài khoản" class="checkout-btn" id="showAddressBtn" style="margin-bottom: 10px;">
+                <input type="button" value="Chọn địa chỉ từ tài khoản" id="showAddressBtn" style="margin-bottom: 10px;">
 <form method="POST" id="updateForm">
     Họ và tên người nhận
     <input type="text" name="name" value="" placeholder="Nhập họ và tên người nhận" id="name">
@@ -244,29 +226,28 @@ document.getElementById("updateButton").addEventListener("click", function() {
 				<input type="radio" id="age4" name="age" value="120">
 				<label for="age3">Thanh toán bằng tiền mặt</label><br>
 
-
-                </div>
-				<div class="fixed-buttons-container">
-					<div class="back-to-cart">
-						<a href="index.php">
-							<span>
-								<img
-									src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/btn_back.svg?q=10354">
-							</span>
-							<span>Trở về trang chủ</span>
-						</a>
+                </form> <!-- Kết thúc form hiện tại -->
+<div class="fixed-buttons-container">
+    <div class="back-to-cart">
+        <a href="index.php">
+            <span>
+                <img src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/btn_back.svg?q=10354">
+            </span>
+            <span>Trở về trang chủ</span>
+        </a>
+    </div>
+    <form method="POST" action="insertorder.php">
+        <!-- Các trường dữ liệu -->
+        <button type="submit" name="check" class="checkout-button">THANH TOÁN NGAY!!!</button>
+    </form>
+</div>
 
                     
-					</div>
-                    <button type="submit" name="check" class="checkout-button">THANH TOÁN NGAY!!!</button>
          
 
                        
 			
-					
-				</div>
-			</form>
-		
+			
 			
 	    <!-----------------------------------Bắt đầu Footer------------------------------------------->
 		<?php 

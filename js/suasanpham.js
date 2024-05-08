@@ -12,7 +12,7 @@ function hienBoxSuaUser(id, user, name, email, pass) {
     var emailInput = document.getElementById('email');
     var passInput = document.getElementById('pass');
 
-    // Đổ dữ liệu vào form chỉnh sửa
+    // Đặt giá trị của mỗi trường thông tin với dữ liệu tương ứng
     idInput.value = id;
     userInput.value = user;
     nameInput.value = name;
