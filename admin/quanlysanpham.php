@@ -176,12 +176,8 @@ if (!$conn) {
                                     echo "<td>".$row["pro_price"]."</td>";
                                     echo "<td>".$row["pro_quantity"]."</td>";
                                     echo "<td>";
-                                echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row["id"]."\", \"".$row["user"]."\", \"".$row["name"]."\", \"".$row["email"]."\", \"".$row["pass"]."\")'>Sửa</button>";
-                                if ($row["status"] == 0) {
-                                    // Nếu người dùng đã bị khóa, hiển thị nút "Mở khóa"
-                                    echo "<button class='xoanguoidung' onclick='performAction(\"unlock\", \"". $row['id'] ."\")'>Mở khóa</button>";
-
-                                } else {
+                                    echo "<button id='suanguoidung' onclick='hienBoxSuaUser1(\"".$row['pro_id']."\", \"".$row['pro_img1']."\", \"".$row['pro_img2']."\", \"".$row['pro_img3']."\", \"".$row['pro_name']."\", \"".$row['pro_price']."\",\"".$row['pro_author']."\",\"".$row['pro_publisher']."\",\"".$row['pro_description']."\",\"".$row['pro_quantity']."\")'>Sửa</button>";
+                                    if ($row["status"] == 1) {
                                     // Nếu người dùng chưa bị khóa, hiển thị nút "Khóa"
                                     echo "<button class='xoanguoidung' onclick='performAction(\"lock\", \"". $row['id'] ."\")'>Xóa</button>";
                                 }
@@ -200,7 +196,7 @@ if (!$conn) {
                         </tbody>
                     </table>
                     <div class="overlay"></div>
-                                <div class="boxsuauser" id="boxsuauser">
+                    <div class="boxsuauser" id="boxsuauser">
                                     <button onclick="dongFormChinhSua()">X</button>
                                     <script>
                                         function dongFormChinhSua() {
@@ -211,11 +207,11 @@ if (!$conn) {
                                         }
                                     </script>
                                     <h2 style="margin-bottom: 10px;">Sửa thông tin sản phẩm  </h2>
-                                    <form id="suaUserForm">
+                                    <form id="suaUserForm" action="../admin/suaproduct.php" method="post"> <!--Thêm action và method vào form-->
                                         <div class="form-group">
                                             <label for="image1">Ảnh 1:</label>
                                             <div class="change_img">
-                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 1.jpg" id="product_pic1">
+                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 1.jpg" id="product_pic1" name="pro_img1">
                                                 <div class="change_action">
                                                     <label for="input_file1" class="change_button">Sửa</label>
                                                     <input type="file" id="input_file1" class="input_file" accept="image/*">
@@ -227,7 +223,7 @@ if (!$conn) {
                                         <div class="form-group">
                                             <label for="image2">Ảnh 2:</label>
                                             <div class="change_img">
-                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 2.jpg" id="product_pic2">
+                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 2.jpg" id="product_pic2" name="pro_img2">
                                                 <div class="change_action">
                                                     <label for="input_file2" class="change_button">Sửa</label>
                                                     <input type="file" id="input_file2" class="input_file" accept="image/*">
@@ -239,7 +235,7 @@ if (!$conn) {
                                         <div class="form-group">
                                             <label for="image3">Ảnh 3:</label>
                                             <div class="change_img">
-                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 3.jpg" id="product_pic3">
+                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 3.jpg" id="product_pic3" name="pro_img3">
                                                 <div class="change_action">
                                                     <label for="input_file3" class="change_button">Sửa</label>
                                                     <input type="file" id="input_file3" class="input_file" accept="image/*">
@@ -252,37 +248,37 @@ if (!$conn) {
 
                                         <div class="form-group">
                                             <label for="email">Mã sản phẩm:</label>
-                                            <input type="text" id="email" value="KNS49">
+                                            <input type="text" name="pro_id" id="email" value="KNS49">
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Tên sản phẩm:</label>
-                                            <input type="text" id="name" value="Đắc Nhân Tâm">
+                                            <input type="text" name="pro_name" id="name" value="Đắc Nhân Tâm">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="email">Giá:</label>
-                                            <input type="text" id="email" value="77.400 đ">
+                                            <input type="text" name="pro_price" id="email" value="77.400 đ">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Tác giả:</label>
-                                            <input type="text" id="email" value="Dale Carnegie">
+                                            <input type="text"name="pro_author" id="email" value="Dale Carnegie">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Nhà xuất bản:</label>
-                                            <input type="text" id="email" value="Văn Học">
+                                            <input type="text" name="pro_publisher" id="email" value="Văn Học">
                                         </div>
                                         <div class="form-group">
                                             <label for="description">Mô tả:</label>
                                             <textarea
-                                                id="description">Đắc nhân tâm của Dale Carnegie là quyển sách của mọi thời đại và một hiện tượng đáng kinh ngạc trong ngành xuất bản Hoa Kỳ. Chiếm vị trí số một trong danh mục sách bán chạy nhất và trở thành một sự kiện có một không hai trong lịch sử ngành xuất bản thế giới và được đánh giá là một quyển sách có tầm ảnh hưởng nhất mọi thời đại.</textarea>
+                                            name="pro_description" id="description">Đắc nhân tâm của Dale Carnegie là quyển sách của mọi thời đại và một hiện tượng đáng kinh ngạc trong ngành xuất bản Hoa Kỳ. Chiếm vị trí số một trong danh mục sách bán chạy nhất và trở thành một sự kiện có một không hai trong lịch sử ngành xuất bản thế giới và được đánh giá là một quyển sách có tầm ảnh hưởng nhất mọi thời đại.</textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="quatyti">Số lượng tồn kho:</label>
-                                            <input type="text" id="quatyti" value="1000">
+                                            <input type="text" name="pro_quantity" id="quatyti" value="1000">
                                         </div>
                                         <div class="form-group">
                                             <label for="goi">Danh mục:</label>
-                                            <select id="goi" name="goi">
+                                            <select id="goi" name="id_category">
                                                 <option>Kỹ năng sống - Phát triển cá nhân</option>
                                                 <option>Manga-Comic</option>
                                                 <option>Nghệ thuật-Văn hóa</option>
@@ -297,8 +293,31 @@ if (!$conn) {
 
                                     </form>
                                 </div>
-
-                                <script src="../js/suasanpham.js"></script>
+                                <script>
+                                document.getElementById('suaUserForm').addEventListener('submit', function(event) {
+                                    event.preventDefault(); // Ngăn chặn form gửi dữ liệu mặc định
+                                    var formData = new FormData(this); // Lấy dữ liệu từ form
+                                    fetch('../admin/suaproduct.php', { // Gửi dữ liệu đến sua.php
+                                        method: 'POST',
+                                        body: formData
+                                    })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Có lỗi xảy ra khi cập nhật thông tin người dùng.');
+                                        }
+                                        return response.text();
+                                    })
+                                    .then(data => {
+                                        alert(data); 
+                                        location.reload();// Hiển thị thông báo từ server
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                                });
+                                
+                                        </script>
+                                <script src="../js/suaproduct.js"></script>
                 </div>
                 <div class="pagination">
                     <li class="hientai">1</li>
@@ -313,6 +332,34 @@ if (!$conn) {
         <!-- ====== ionicons ======= -->
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <script>
+        function hienBoxSuaUser1(pro_id, pro_img1, pro_img2, pro_img3, pro_name,pro_author,pro_publisher,pro_description,pro_quantity,pro_price,id_category) {
+
+    var boxSuaUser = document.getElementById('boxsuauser');
+    var overlay = document.querySelector('.overlay');
+    var form = document.getElementById('suaUserForm');
+
+    // Điền dữ liệu vào form
+    form.elements['pro_id'].value = pro_id;
+    form.elements['pro_img1'].value = pro_img1;
+    form.elements['pro_img2'].value = pro_img2;
+    form.elements['pro_img3'].value = pro_img3;
+    form.elements['pro_author'].value = pro_author;
+    form.elements['pro_publisher'].value = pro_publisher;
+    form.elements['pro_description'].value = pro_description;
+    form.elements['pro_quantity'].value = pro_quantity;
+    form.elements['pro_price'].value = pro_price;
+    form.elements['id_category'].value = id_category;
+    form.elements['pro_name'].value = pro_name;
+
+
+    // Hiển thị form
+    boxSuaUser.style.display = 'block';
+    overlay.classList.add('show-overlay');
+    document.body.classList.add('no-scroll');
+}
+ </script>
+
 </body>
 
 </html>

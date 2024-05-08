@@ -18,7 +18,7 @@ function hienBoxSuaUser(id, user, name, email, pass) {
     nameInput.value = name;
     emailInput.value = email;
     passInput.value = pass;
-
+    
     if (boxSuaUser.style.display === 'block') {
         boxSuaUser.style.display = 'none';
         overlay.classList.remove('show-overlay');
@@ -28,7 +28,9 @@ function hienBoxSuaUser(id, user, name, email, pass) {
         overlay.classList.add('show-overlay');
         document.body.classList.add('no-scroll');
     }
+    
 }
+
 
 
 reUserForm.addEventListener('submit', function (event) {
