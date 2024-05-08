@@ -280,7 +280,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </tbody>
                     </table>
                     <div class="overlay"></div>
-                                <div class="boxsuauser" id="boxsuauser">
+                    <div class="boxsuauser" id="boxsuauser">
                                     <button onclick="dongFormChinhSua()">X</button>
                                     <script>
                                         function dongFormChinhSua() {
