@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = isset($_POST['user']) ? $_POST['user'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $pass = isset($_POST['pass']) ? $_POST['pass'] : '';
-    $id = isset($_POST['id']) ? $_POST['id'] : '';
+    $id = isset($_POST['id']) ? $_POST['id'] : '';  
     $name = isset($_POST['name']) ? $_POST['name'] : '';
     
 
@@ -52,9 +52,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <!-- =============== Navigation ================ -->
     <div class="container">
-    <?php
-        include("../page/navigation.php");
-        ?>
+    <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="logo">
+                            <img src="../img/banner/logooadmin.png">
+                        </span>
+                        <span class="title">HAT BOOKSTORE</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../admin/indexadmin.php">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Bảng điều khiển</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../admin/quanlydonhang.php">
+                        <span class="icon">
+                            <ion-icon name="cart-outline"></ion-icon>
+                        </span>
+                        <span class="title">Quản lý đơn hàng</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../admin/quanlysanpham.php">
+                        <span class="icon">
+                            <ion-icon name="book-outline"></ion-icon>
+                        </span>
+                        <span class="title">Quản lý sản phẩm</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../admin/quanlykhachhang.php" id="active">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Quản lý khách hàng</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="hello">
+                    <p>CHÀO MỪNG QUẢN TRỊ CỦA HAT !!!</p>
+                </div>
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Tìm kiếm chức năng quản trị">
+                        <a href="../html/adminnotfound.html"><ion-icon name="search-outline"></ion-icon></a>
+                    </label>
+                </div>
+            </div>
 
             <!-- ================ LÀM QUẢN LÝ KHÁCH HÀNG Ở ĐÂY ================= -->
             <div class="user">
@@ -165,7 +224,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 echo "<td>".$row["email"]."</td>";
                                 echo "<td>".$row["pass"]."</td>";
                                 echo "<td>";
-                                echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row["id"]."\", \"".$row["user"]."\", \"".$row["name"]."\", \"".$row["email"]."\", \"".$row["pass"]."\")'>Sửa</button>";
+                                echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row['id']."\", \"".$row['user']."\", \"".$row['name']."\", \"".$row['email']."\", \"".$row['pass']."\")'>Sửa</button>";
+
                                 if ($row["locked"] == 1) {
                                     // Nếu người dùng đã bị khóa, hiển thị nút "Mở khóa"
                                     echo "<button class='xoanguoidung' onclick='performAction(\"unlock\", \"". $row['id'] ."\")'>Mở khóa</button>";
@@ -191,10 +251,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         switch (action) {
             
             case 'lock':
-                confirmMessage = "Are you sure you want to lock this user?";
+                confirmMessage = "Bạn có chắc muốn KHÓA người dùng này?";
                 break;
             case 'unlock':
-                confirmMessage = "Are you sure you want to unlock this user?";
+                confirmMessage = "Bạn có chắc muốn MỞ KHÓA người dùng này?";
                 break;
             default:
                 confirmMessage = "Are you sure you want to perform this action?";
@@ -306,6 +366,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script>function hienBoxSuaUser(id, user, name, email, pass) {
+    var boxSuaUser = document.getElementById('boxsuauser');
+    var overlay = document.querySelector('.overlay');
+    var form = document.getElementById('suaUserForm');
+
+    // Điền dữ liệu vào form
+    form.elements['id'].value = id;
+    form.elements['user'].value = user;
+    form.elements['name'].value = name;
+    form.elements['email'].value = email;
+    form.elements['pass'].value = pass;
+
+    // Hiển thị form
+    boxSuaUser.style.display = 'block';
+    overlay.classList.add('show-overlay');
+    document.body.classList.add('no-scroll');
+}
+ </script>
 </body>
+
+
 
 </html>

@@ -8,24 +8,19 @@ if (!$conn) {
     die("Kết nối thất bại: " . mysqli_connect_error());
 }
 
-// Xử lý tìm kiếm từ Ajax
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['search'])) {
-    $search = $_GET['search'];
+// Thực hiện truy vấn tìm kiếm nếu có dữ liệu gửi từ form
+if (isset($_POST['search'])) {
+    $search = $_POST['search'];
     $sql = "SELECT * FROM product WHERE pro_name LIKE CONCAT('%', ?, '%')";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $search);
     $stmt->execute();
     $result = $stmt->get_result();
-
-
 }
 
-
+// Đóng kết nối sau khi sử dụng
+$conn->close();
 ?>
-
-    
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,9 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['search'])) {
 
 <body>
     <div class="container">
-        <?php include("page/header.php"); ?>
-
-        <h1>Kết quả tìm kiếm</h1>
+    <?php include("page/header.php");
+    echo "<h2 id='head'>KẾT QUẢ TÌM KIẾM:</h2>";
+        include("page/searchform.php");
+        ?>
+        
         <div class="onmain">
             <?php
             // Hiển thị kết quả tìm kiếm nếu có
@@ -81,6 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['search'])) {
                 echo '0 results found';
             }
             ?>
+        </div>
         </div>
         <!-- Hiển thị nút phân trang -->
         

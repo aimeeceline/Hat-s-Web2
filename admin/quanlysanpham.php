@@ -40,7 +40,7 @@ if (!$conn) {
                 </li>
 
                 <li>
-                    <a href="../html/trangchuadmin.html">
+                    <a href="../admin/indexadmin.php">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
                         </span>
@@ -49,7 +49,7 @@ if (!$conn) {
                 </li>
 
                 <li>
-                    <a href="../html/quanlydonhang.html">
+                    <a href="../admin/quanlydonhang.php">
                         <span class="icon">
                             <ion-icon name="cart-outline"></ion-icon>
                         </span>
@@ -58,7 +58,7 @@ if (!$conn) {
                 </li>
 
                 <li>
-                    <a href="../html/quanlysanpham.html" id="active">
+                    <a href="../admin/quanlysanpham.php" id="active">
                         <span class="icon">
                             <ion-icon name="book-outline"></ion-icon>
                         </span>
@@ -67,7 +67,7 @@ if (!$conn) {
                 </li>
 
                 <li>
-                    <a href="../html/quanlykhachhang.html">
+                    <a href="../admin/quanlykhachhang.php" >
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>

@@ -13,7 +13,7 @@
 <body>
     <!-- =============== Navigation ================ -->
     <div class="container">
-        <div class="navigation">
+    <div class="navigation">
             <ul>
                 <li>
                     <a href="#">
@@ -25,7 +25,7 @@
                 </li>
 
                 <li>
-                    <a href="../html/trangchuadmin.html" id="active">
+                    <a href="../admin/indexadmin.php" id="active">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
                         </span>
@@ -34,7 +34,7 @@
                 </li>
 
                 <li>
-                    <a href="../html/quanlydonhang.html">
+                    <a href="../admin/quanlydonhang.php">
                         <span class="icon">
                             <ion-icon name="cart-outline"></ion-icon>
                         </span>
@@ -52,7 +52,7 @@
                 </li>
 
                 <li>
-                    <a href="../admin/quanlykhachhang.php">
+                    <a href="../admin/quanlykhachhang.php" >
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>

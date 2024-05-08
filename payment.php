@@ -8,30 +8,56 @@ if (!$conn) {
   die("Kết nối thất bại: " . mysqli_connect_error());
 }
 
-// Kiểm tra xem session giỏ hàng có tồn tại và không trống không
-if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
-    // Xử lý khi nhấn nút "Cập nhật"
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
-        // Lấy dữ liệu từ form
-        $name = $_POST['name'];
-        $phone = $_POST['phone'];
-        $address = $_POST['address'];
-        $id = $_SESSION['id'];
+// Xử lý khi nhấn nút "Cập nhật"
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
+    // Lấy dữ liệu từ form
+    $name = $_POST['name'];
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+    $id = $_SESSION['id'];
 
-        // Cập nhật dữ liệu vào CSDL
-        $sql_update = "UPDATE `user` SET `name`='$name', `phone`='$phone', `address`='$address' WHERE `id`='$id'";
-        if (mysqli_query($conn, $sql_update)) {
-            // Cập nhật dữ liệu mặc định
-            $row['name'] = $name;
-            $row['phone'] = $phone;
-            $row['address'] = $address;
-        } else {
-            echo "Lỗi: " . mysqli_error($conn);
-        }
+    // Cập nhật dữ liệu vào CSDL
+    $sql_update = "UPDATE `user` SET `name`='$name', `phone`='$phone', `address`='$address' WHERE `id`='$id'";
+    if (mysqli_query($conn, $sql_update)) {
+        // Cập nhật dữ liệu mặc định
+        $row['name'] = $name;
+        $row['phone'] = $phone;
+        $row['address'] = $address;
+    } else {
+        echo "Lỗi: " . mysqli_error($conn);
+    }
+}
+
+// Xử lý khi nhấn nút "Thanh toán ngay"
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['check'])) {
+    // Lấy thông tin địa chỉ người nhận từ form
+    $name = $_POST['name'];
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+
+    // Tạo một đơn hàng mới và lưu vào bảng `order`
+    $sql_order = "INSERT INTO `order` (`user_id`, `name`, `phone`, `address`) VALUES ('{$_SESSION['id']}', '$name', '$phone', '$address')";
+    mysqli_query($conn, $sql_order);
+    $order_id = mysqli_insert_id($conn); // Lấy ID của đơn hàng vừa tạo
+
+    // Lưu thông tin chi tiết đơn hàng vào bảng `orderdetails`
+    foreach ($_SESSION['cart'] as $item) {
+        $product_id = $item['product_id'];
+        $quantity = $item['quantity'];
+        $unitprice = $item['product_price'];
+
+        $sql_order_detail = "INSERT INTO `orderdetails` (`order_id`, `product_id`, `quantity`, `unitprice`) VALUES ('$order_id', '$product_id', '$quantity', '$unitprice')";
+        mysqli_query($conn, $sql_order_detail);
     }
 
-    ?>
+    // Xóa giỏ hàng sau khi đã thanh toán
+    unset($_SESSION['cart']);
 
+    // Chuyển hướng người dùng đến trang cảm ơn hoặc trang xác nhận đơn hàng
+    header("Location: index.php");
+    exit();
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -57,45 +83,105 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 		
     <div class="left">
                 <h3>ĐỊA CHỈ GIAO HÀNG</h3>
-                <input type="submit" name="" value="Chọn địa chỉ từ tài khoản" class="checkout-btn" id="showAddressBtn" style="margin-bottom: 10px;">
-                <form method="POST" action="">
-                    Họ và tên người nhận
-                    <input type="text" name="name" value="<?php echo $row['name']; ?>" placeholder="Nhập họ và tên người nhận" id="name">
-                    Số điện thoại
-                    <input type="text" name="phone" value="<?php echo $row['phone']; ?>" placeholder="Ví dụ: 0934686xxx" id="phone">
-                    Địa chỉ nhận hàng
-                    <input type="text" name="address" value="<?php echo $row['address']; ?>" placeholder="Nhập địa chỉ nhận hàng" id="address">
-                    <input type="submit" name="update" value="Cập nhật" class="checkout-btn" onclick="showUpdateSuccess()">
-                    <script>
-    function showUpdateSuccess() {
-        alert("Cập nhật thành công!");
+                <?php
+                    // Lấy thông tin của người dùng từ CSDL
+                    $id = $_SESSION['id']; // Thay đổi userId theo cách bạn lấy thông tin từ session hoặc cách khác
+                    $sql = "SELECT * FROM `user` WHERE `id` = $id";
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_assoc($result);
+
+                    // Điền thông tin vào các trường
+                    ?>
+                <input type="button" value="Chọn địa chỉ từ tài khoản" class="checkout-btn" id="showAddressBtn" style="margin-bottom: 10px;">
+<form method="POST" id="updateForm">
+    Họ và tên người nhận
+    <input type="text" name="name" value="" placeholder="Nhập họ và tên người nhận" id="name">
+    Số điện thoại
+    <input type="text" name="phone" value="" placeholder="Ví dụ: 0934686xxx" id="phone">
+    Địa chỉ nhận hàng
+    <input type="text" name="address" value="" placeholder="Nhập địa chỉ nhận hàng" id="address">
+    <button type="button" id="updateButton" style="display: none;">Cập nhật làm địa chỉ mặc định</button>
+</form>
+
+<script>
+document.getElementById("showAddressBtn").addEventListener("click", function() {
+    var nameData = "<?php echo $row['name']; ?>";
+    var phoneData = "<?php echo $row['phone']; ?>";
+    var addressData = "<?php echo $row['address']; ?>";
+    
+    // Set the input field value to the user's address
+    document.getElementById("name").value = nameData;
+    document.getElementById("phone").value = phoneData;
+    document.getElementById("address").value = addressData;
+    
+    // Hide the update button
+    document.getElementById("updateButton").style.display = "none";
+
+});
+
+// Function to check if the form data has changed
+function checkForChanges() {
+    var addressInput = document.getElementById("address");
+    var nameInput = document.getElementById("name");
+    var phoneInput = document.getElementById("phone");
+
+    var originalAddress = "<?php echo $row['address']; ?>";
+    var originalPhone = "<?php echo $row['phone']; ?>";
+    var originalName = "<?php echo $row['name']; ?>";
+    
+    // If the address input value is different from the original address, show the update button
+    if (addressInput.value !== originalAddress || nameInput.value !== originalName || phoneInput.value !== originalPhone) {
+        document.getElementById("updateButton").style.display = "inline-block";
+    } else {
+        document.getElementById("updateButton").style.display = "none";
     }
+}
+
+// Listen for changes in the address input field
+document.getElementById("address").addEventListener("input", checkForChanges);
+document.getElementById("name").addEventListener("input", checkForChanges);
+document.getElementById("phone").addEventListener("input", checkForChanges);
+
+function updateDefaultAddress() {
+    // Thu thập giá trị từ các trường input
+    var name = document.getElementById("name").value;
+    var phone = document.getElementById("phone").value;
+    var address = document.getElementById("address").value;
+
+    // Tạo một đối tượng dữ liệu để gửi lên máy chủ
+    var data = {
+        name: name,
+        phone: phone,
+        address: address
+    };
+
+    // Gửi yêu cầu AJAX đến máy chủ
+    fetch('updateinfo.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Cập nhật không thành công');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Xử lý phản hồi từ máy chủ nếu cần
+        alert('Thông tin người nhận đã được cập nhật thành công!');
+    })
+    .catch(error => {
+        console.error('Có lỗi xảy ra:', error);
+    });
+}
+document.getElementById("updateButton").addEventListener("click", function() {
+    // Gọi hàm để thực hiện yêu cầu AJAX
+    updateDefaultAddress();
+});
 </script>
-
-                </form>
-            </div>
-
-           
-            <script>
-                // Lưu giá trị mặc định của các input vào các biến JavaScript
-                var defaultUser = "<?php echo $row['name']; ?>";
-                var defaultPhone = "<?php echo $row['phone']; ?>";
-                var defaultAddress = "<?php echo $row['address']; ?>";
-
-                // Ẩn các giá trị mặc định khi trang được tải lần đầu
-                document.getElementById('name').value = "";
-                document.getElementById('phone').value = "";
-                document.getElementById('address').value = "";
-
-                document.getElementById('showAddressBtn').addEventListener('click', function() {
-                    // Hiển thị giá trị mặc định khi người dùng nhấn nút
-                    document.getElementById('name').value = defaultUser;
-                    document.getElementById('phone').value = defaultPhone;
-                    document.getElementById('address').value = defaultAddress;
-                });
-            </script>
-
-		
 		
     <div class="wrapper1">
         <h3>KIỂM TRA LẠI ĐƠN HÀNG</h3>
@@ -142,11 +228,10 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
         </div>
     </div>
     <?php
-} else {
-    // Hiển thị thông báo khi giỏ hàng trống
-    echo "<p>Giỏ hàng của bạn trống</p>";
-}
+
 ?>
+
+
 <div class="right">
 			<h3>PHƯƠNG THỨC THANH TOÁN</h3>
 			<form>
@@ -158,10 +243,9 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 				<label for="age3">&nbsp;<img src="img/logo/atm.png">&nbsp;&nbsp;ATM</label><br>
 				<input type="radio" id="age4" name="age" value="120">
 				<label for="age3">Thanh toán bằng tiền mặt</label><br>
-			</form>
-		</div>
 
-			
+
+                </div>
 				<div class="fixed-buttons-container">
 					<div class="back-to-cart">
 						<a href="index.php">
@@ -171,17 +255,18 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 							</span>
 							<span>Trở về trang chủ</span>
 						</a>
+
+                    
 					</div>
-					<div class="checkout-button" onclick="myFunction()">
-						<input type="submit" name="" value="THANH TOÁN NGAY!!!" class="checkout-btn">
-					</div>
-					<script>
-						function myFunction() {
-							alert("CẢM ƠN BẠN ĐÃ MUA HÀNG !!!");
-                            window.location.href = 'index.php';
-						}
-					</script>
+                    <button type="submit" name="check" class="checkout-button">THANH TOÁN NGAY!!!</button>
+         
+
+                       
+			
+					
 				</div>
+			</form>
+		
 			
 	    <!-----------------------------------Bắt đầu Footer------------------------------------------->
 		<?php 
@@ -191,3 +276,8 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 	  </body>
 	  
 	  </html>
+
+
+
+
+   

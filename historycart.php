@@ -1,6 +1,17 @@
 <?php
 session_start();
+include("classfunctionPHPdatabase.php");
+$p = new database();
+$conn = $p->connect();
+
+if (!$conn) {
+    die("Kết nối thất bại: " . mysqli_connect_error());
+}
+
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,54 +19,39 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lịch sử mua hàng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/history.css">
+    <link rel="stylesheet" href="css/cart.css">
 </head>
 <body>
     <div class="container">
         <?php include ('page/header.php') ?>
         <div class="wrapper">
             <h1>Lịch sử mua hàng</h1>
-            <?php
-            // Kiểm tra xem session giỏ hàng có tồn tại và không trống không
-            if (isset($_SESSION['order_history']) && !empty($_SESSION['order_history'])) {
-                ?>
-                <div class="row">
-                    <table class="table table-bordered" id="order-history">
-                        <thead>
-                            <tr>
-                                <th>Ngày đặt hàng</th>
-                                <th>Sản phẩm</th>
-                                <th>Giá tiền</th>
-                                <th>Số lượng</th>
-                                <th>Tổng</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            foreach ($_SESSION['order_history'] as $order) {
-                                ?>
-                                <tr>
-                                    <td><?php echo $order['order_date']; ?></td>
-                                    <td><?php echo $order['product_name']; ?></td>
-                                    <td><?php echo $order['product_price']; ?>đ</td>
-                                    <td><?php echo $order['quantity']; ?></td>
-                                    <td><?php echo $order['total']; ?>đ</td>
-                                </tr>
-                                <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-                <?php
-            } else {
-                // Hiển thị thông báo khi không có lịch sử mua hàng
-                echo "<p>Không có dữ liệu lịch sử mua hàng</p>";
-            }
-            ?>
+           
+            <table>
+                <thead>
+                    <tr>
+                        <th>SẢN PHẨM</th>
+                        <th>GIÁ TIỀN</th>
+                        <th>SỐ LƯỢNG</th>
+                        <th>THÀNH TIỀN</th>
+                        <th>ĐỊA CHỈ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+            
         </div>
         <?php include ('page/footer.php') ?>
     </div>
 </body>
 </html>
+
+<?php
+// Giải phóng kết nối
+mysqli_free_result($result);
+mysqli_close($conn);
+?>
