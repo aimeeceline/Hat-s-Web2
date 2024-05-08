@@ -46,6 +46,7 @@ $result = mysqli_query($conn, $sql);
                         <th>SỐ LƯỢNG</th>
                         <th>THÀNH TIỀN</th>
                         <th>ĐỊA CHỈ</th>
+                        <th>THỜI GIAN ĐẶT HÀNG</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +61,7 @@ $result = mysqli_query($conn, $sql);
                             echo "<td>" . $row['quantity'] . "</td>";
                             echo "<td>" . $row['total'] . "</td>";
                             echo "<td>" . $row['address'] . "</td>";
+                            echo "<td>" . $row['order_date'] . "</td>";
                             
                             echo "</tr>";
                         }
