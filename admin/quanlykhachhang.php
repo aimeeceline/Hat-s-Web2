@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = isset($_POST['user']) ? $_POST['user'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $pass = isset($_POST['pass']) ? $_POST['pass'] : '';
-    $id = isset($_POST['id']) ? $_POST['id'] : '';
+    $id = isset($_POST['id']) ? $_POST['id'] : '';  
     $name = isset($_POST['name']) ? $_POST['name'] : '';
     
 
@@ -224,7 +224,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 echo "<td>".$row["email"]."</td>";
                                 echo "<td>".$row["pass"]."</td>";
                                 echo "<td>";
-                                echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row["id"]."\", \"".$row["user"]."\", \"".$row["name"]."\", \"".$row["email"]."\", \"".$row["pass"]."\")'>Sửa</button>";
+                                echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row['id']."\", \"".$row['user']."\", \"".$row['name']."\", \"".$row['email']."\", \"".$row['pass']."\")'>Sửa</button>";
+
                                 if ($row["locked"] == 1) {
                                     // Nếu người dùng đã bị khóa, hiển thị nút "Mở khóa"
                                     echo "<button class='xoanguoidung' onclick='performAction(\"unlock\", \"". $row['id'] ."\")'>Mở khóa</button>";
@@ -365,6 +366,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script>function hienBoxSuaUser(id, user, name, email, pass) {
+    var boxSuaUser = document.getElementById('boxsuauser');
+    var overlay = document.querySelector('.overlay');
+    var form = document.getElementById('suaUserForm');
+
+    // Điền dữ liệu vào form
+    form.elements['id'].value = id;
+    form.elements['user'].value = user;
+    form.elements['name'].value = name;
+    form.elements['email'].value = email;
+    form.elements['pass'].value = pass;
+
+    // Hiển thị form
+    boxSuaUser.style.display = 'block';
+    overlay.classList.add('show-overlay');
+    document.body.classList.add('no-scroll');
+}
+ </script>
 </body>
+
+
 
 </html>
