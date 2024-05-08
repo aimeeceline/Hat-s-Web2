@@ -56,17 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
     addToCart($product_id, $product_img, $product_name, $product_price, $quantity);
 }
 //session_destroy();
-// Kiểm tra trạng thái của session và hiển thị thông tin tương ứng
-$session_status = session_status();
-if ($session_status == PHP_SESSION_DISABLED) {
-    echo "Session đã bị vô hiệu hóa trên máy chủ.";
-} elseif ($session_status == PHP_SESSION_NONE) {
-    echo "Session chưa được khởi tạo.";
-} elseif ($session_status == PHP_SESSION_ACTIVE) {
-    echo "Session đang hoạt động.";
-    // Hiển thị dữ liệu của session ở đây
-    print_r($_SESSION);
-}
+
 
 ?>
 <!DOCTYPE html>
