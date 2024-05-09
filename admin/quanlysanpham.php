@@ -162,12 +162,18 @@ if (!$conn) {
                                 while ($row = $result->fetch_assoc()) {
                                     $category = $row['id_category'];
                                     $img = $row['pro_img1'];
+                                    $img2 = $row['pro_img2'];
+                                    $img3 = $row['pro_img3'];
+
 
                                     // Gọi phương thức để lấy tên loại sản phẩm từ bảng category
                                     $category_name = $p->getCategoryName($category);
 
                                     // Tạo đường dẫn cho ảnh dựa trên loại sản phẩm
                                     $image_path = '../img/product/' . $category_name . '/' . $img;
+                                    $image_path2 = '../img/product/' . $category_name . '/' . $img2;
+                                    $image_path3 = '../img/product/' . $category_name . '/' . $img3;
+
                                     echo "<tr>";
                                     echo "<td>".$row["pro_id"]."</td>";
                                     echo ' <td><img src="' . $image_path . '" alt="' . $name . '"></td>';
@@ -176,7 +182,7 @@ if (!$conn) {
                                     echo "<td>".$row["pro_price"]."</td>";
                                     echo "<td>".$row["pro_quantity"]."</td>";
                                     echo "<td>";
-                                    echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row['pro_id']."\",\"".$row['pro_name']."\",  \"".$row['pro_price']."\",\"".$row['pro_author']."\",\"".$row['pro_publisher']."\",\"".$row['pro_description']."\",\"".$row['pro_quantity']."\")'>Sửa</button>";
+                                    echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row['pro_id']."\",\"".$row['pro_name']."\",  \"".$row['pro_price']."\",\"".$row['pro_author']."\",\"".$row['pro_publisher']."\",\"".$row['pro_description']."\",\"".$row['pro_quantity']."\",\"".$row['id_category']."\",\"".$image_path."\",\"".$image_path2."\",\"".$image_path3."\")'>Sửa</button>";
                                     if ($row["status"] == 1) {
                                     // Nếu người dùng chưa bị khóa, hiển thị nút "Khóa"
                                     echo "<button class='xoanguoidung' onclick='performAction(\"lock\", \"". $row['pro_id'] ."\")'>Xóa</button>";
@@ -250,16 +256,16 @@ if (!$conn) {
 
                                         <div class="form-group">
                                             <label for="email">Mã sản phẩm:</label>
-                                            <input type="text" name="pro_id" id="pro_id" value="KNS49">
+                                            <input type="text" name="pro_id" id="pro_id" value="">
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Tên sản phẩm:</label>
-                                            <input type="text" name="pro_name" id="pro_name" value="Đắc Nhân Tâm">
+                                            <input type="text" name="pro_name" id="pro_name" value="">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="email">Giá:</label>
-                                            <input type="text" name="pro_price" id="pro_price" value="77.400 đ">
+                                            <input type="text" name="pro_price" id="pro_price" value="">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Tác giả:</label>
@@ -267,12 +273,12 @@ if (!$conn) {
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Nhà xuất bản:</label>
-                                            <input type="text" name="pro_publisher" id="pro_publisher" value="Văn Học">
+                                            <input type="text" name="pro_publisher" id="pro_publisher" value="">
                                         </div>
                                         <div class="form-group">
                                             <label for="description">Mô tả:</label>
                                             <textarea
-                                            name="pro_description" id="pro_description">Đắc nhân tâm của Dale Carnegie là quyển sách của mọi thời đại và một hiện tượng đáng kinh ngạc trong ngành xuất bản Hoa Kỳ. Chiếm vị trí số một trong danh mục sách bán chạy nhất và trở thành một sự kiện có một không hai trong lịch sử ngành xuất bản thế giới và được đánh giá là một quyển sách có tầm ảnh hưởng nhất mọi thời đại.</textarea>
+                                            name="pro_description" id="pro_description"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="quatyti">Số lượng tồn kho:</label>
@@ -361,6 +367,8 @@ if (!$conn) {
     document.getElementById('pro_img1').src = pro_img1;
     document.getElementById('pro_img2').src = pro_img2;
     document.getElementById('pro_img3').src = pro_img3;
+            
+
 
     // Điền dữ liệu vào form
     form.elements['pro_id'].value = pro_id;
@@ -389,6 +397,7 @@ if (!$conn) {
     overlay.classList.add('show-overlay');
     document.body.classList.add('no-scroll');
 }
+console.log(pro_img1, pro_img2, pro_img3);
 
  </script>
 
