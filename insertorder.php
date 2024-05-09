@@ -5,6 +5,9 @@ $p = new database();
 $conn = $p->connect();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['check'])) {
+
+    // Lấy phương thức thanh toán từ dữ liệu POST
+    $payment_method = $_POST['payment_method'];
     // Tạo một đơn hàng mới và lưu vào bảng `order`
     $user_id = $_SESSION['id'];
     $total_price = 0;
@@ -15,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['check'])) {
     }
 
     // Thêm đơn hàng vào bảng `order` chỉ với user_id và tổng giá trị
-    $sql_order = "INSERT INTO `order` (`id_user`, `total`) VALUES ('$user_id', '$total_price')";
+    $sql_order = "INSERT INTO `order` (`id_user`, `order_date`, `total`,`pay`) VALUES ('$user_id', NOW(), '$total_price','$payment_method' )";
     if (mysqli_query($conn, $sql_order)) {
         $order_id = mysqli_insert_id($conn); // Lấy ID của đơn hàng vừa tạo
 
