@@ -3,7 +3,7 @@ const productPics = document.querySelectorAll('[id^="product_pic"]');
 const reUserForm = document.getElementById('suaUserForm');
 const reuserBtn = document.getElementById('suanguoidung');
 const boxreuser = document.getElementById('boxsuauser');
-function hienBoxSuaUser1(pro_id, pro_img1, pro_img2, pro_img3, pro_name,pro_author,pro_publisher,pro_description,pro_quantity,pro_price,id_category) {
+function hienBoxSuaUser(pro_id, pro_img1, pro_img2, pro_img3, pro_name,pro_author,pro_publisher,pro_description,pro_quantity,pro_price,id_category) {
     var boxSuaUser = document.getElementById('boxsuauser');
     var overlay = document.querySelector('.overlay');
     var pro_idInput = document.getElementById('pro_id');
