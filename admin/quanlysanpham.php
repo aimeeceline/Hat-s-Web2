@@ -211,14 +211,14 @@ if (!$conn) {
                                         }
                                     </script>
                                     <h2 style="margin-bottom: 10px;">Sửa thông tin sản phẩm  </h2>
-                                    <form id="suaUserForm" action="../admin/suaproduct.php" method="post"> <!--Thêm action và method vào form-->
+                                    <form id="suaUserForm" action="../admin/suaproduct.php" method="post" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label for="image1">Ảnh 1:</label>
                                             <div class="change_img">
                                                 <img src="" id="pro_img1" name="pro_img1">
                                                 <div class="change_action">
                                                     <label for="input_file1" class="change_button">Sửa</label>
-                                                    <input type="file" id="input_file1" class="input_file" accept="image/*">
+                                                    <input type="file" id="input_file1" name="pro_img1" class="input_file" accept="image/*" onchange="previewImage(event)">
                                                     <label class="change_button" onclick="del(this)">Xóa</label>
                                                 </div>
                                             </div>
@@ -230,7 +230,7 @@ if (!$conn) {
                                                 <img src="" id="pro_img2" name="pro_img2">
                                                 <div class="change_action">
                                                     <label for="input_file2" class="change_button">Sửa</label>
-                                                    <input type="file" id="input_file2" class="input_file" accept="image/*">
+                                                    <input type="file" id="input_file2" name="pro_img2" class="input_file" accept="image/*" onchange="previewImage2(event)">
                                                     <label class="change_button" onclick="del(this)">Xóa</label>
                                                 </div>
                                             </div>
@@ -242,7 +242,7 @@ if (!$conn) {
                                                 <img src="" id="pro_img3" name="pro_img3">
                                                 <div class="change_action">
                                                     <label for="input_file3" class="change_button">Sửa</label>
-                                                    <input type="file" id="input_file3" class="input_file" accept="image/*">
+                                                    <input type="file" id="input_file3" name="pro_img3" class="input_file" accept="image/*" onchange="previewImage3(event)">
                                                     <label class="change_button" onclick="del(this)">Xóa</label>
                                                 </div>
                                             </div>
@@ -337,6 +337,49 @@ if (!$conn) {
                             xhr.send("pro_id=" + pro_id);
                         }
                     }
+                }
+                var input1 = document.getElementById('input_file1');
+                var input2 = document.getElementById('input_file2');
+                var input3 = document.getElementById('input_file3');
+
+                var file1 = input1.files[0];
+                var file2 = input2.files[0];
+                var file3 = input3.files[0];
+
+                // Kiểm tra xem người dùng đã chọn file mới hay không
+                if (file1) {
+                    // Nếu có, thực hiện các xử lý tương ứng (ví dụ: hiển thị trước ảnh)
+                }
+                if (file2) {
+                    // Nếu có, thực hiện các xử lý tương ứng (ví dụ: hiển thị trước ảnh)
+                }
+                if (file3) {
+                    // Nếu có, thực hiện các xử lý tương ứng (ví dụ: hiển thị trước ảnh)
+                }
+                function previewImage(event) {
+                        var file = event.target.files[0];
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById('pro_img1').src = e.target.result;
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                function previewImage2(event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('pro_img2').src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+
+                function previewImage3(event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('pro_img3').src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
                 }
                                         </script>
                                 <script src="../js/suaproduct.js"></script>

@@ -10,6 +10,9 @@ if (!$conn) {
 
 // Kiểm tra nếu form được submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+
+    
     // Lấy dữ liệu từ form
     $pro_id = $_POST['pro_id'];
     $pro_img1 = $_POST['pro_img1'];
@@ -22,8 +25,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pro_quantity = $_POST['pro_quantity'];
     $pro_price = $_POST['pro_price'];
     $id_category = $_POST['id_category'];
-
-
+    $category_name = '';
+    switch ($id_category) {
+        case 1:
+            $upload_directory = "C:/xampp/htdocs/Hat-s-Web2/img/product/Kỹ năng sống - Phát triển cá nhân/";
+            break;
+        case 2:
+            $upload_directory = "C:/xampp/htdocs/Hat-s-Web2/img/product/Manga – Comic/";
+            break;
+        case 3:
+            $upload_directory = "C:/xampp/htdocs/Hat-s-Web2/img/product/Nghệ thuật – Văn hóa/";
+            break;
+        default:
+            echo "ID danh mục không hợp lệ.";
+            exit;
+    }
+    
+    // Lấy đường dẫn hình ảnh mới từ các trường input
+    $pro_img1 = $_FILES['pro_img1']['name']; // Tên file ảnh 1
+    $pro_img2 = $_FILES['pro_img2']['name']; // Tên file ảnh 2
+    $pro_img3 = $_FILES['pro_img3']['name']; // Tên file ảnh 3
+    // Di chuyển hình ảnh mới vào thư mục lưu trữ (nếu cần)
+    move_uploaded_file($_FILES['pro_img1']['tmp_name'], $upload_directory . $pro_img1);
+    move_uploaded_file($_FILES['pro_img2']['tmp_name'], $upload_directory . $pro_img2);
+    move_uploaded_file($_FILES['pro_img3']['tmp_name'], $upload_directory . $pro_img3);
     // Khởi tạo mảng để lưu các cặp tên cột và giá trị cần cập nhật
     $update_fields = array();
 
