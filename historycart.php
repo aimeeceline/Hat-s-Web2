@@ -75,12 +75,25 @@ $result_order = mysqli_query($conn, $sql_order);
 <?php endif; ?>
                             </td>
                             <td>Thành tiền: <a class="tong"><?php echo number_format($order['total'], 0, ',', '.') . 'đ'; ?></a></td>
-                           <td>
+                            <td>
+    <?php
+    // Kiểm tra giá trị của trường status và xuất ra chuỗi tương ứng
+    if ($order['status'] == 0) {
+        echo "<p style='color: red;'>Chờ xác nhận</p>";
+    } elseif ($order['status'] == 1) {
+        echo "<p style='color: green;'>Đã giao</p>";
+    } else {
+        echo "Trạng thái không xác định";
+    }
+    ?>
+</td>
+<td>
                            <form action="chitietdonhang.php" method="GET" style="display: inline;">
     <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
     <button type="submit" style="color: blue; font-size: small; background: none; border: none; padding: 0; cursor: pointer;">Xem chi tiết</button>
 </form>
                            </td>
+                           
                         </tr>
                         <?php
                     }

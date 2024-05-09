@@ -95,8 +95,8 @@ if (!$conn) {
                     <button id="adduser"><a href="../admin/themsanpham.php">+ Thêm sản phẩm</a></button>
                     <div class="finder">
                         <select id="searchType" name="searchType" onchange="changeContent()">
-                            <option value="category">Lọc theo danh mục</option>
-                            <option value="publisher">Lọc theo nhà xuất bản</option>
+                            <option value="category">Lọc theo DM</option>
+                            <option value="publisher">Lọc theo NXB</option>
                         </select>
                         <select id="contentBox">
                             <option value="KNS-PTCN">Kỹ năng sống - Phát triển cá nhân</option>
@@ -129,16 +129,12 @@ if (!$conn) {
                     <div><input id="timnguoidung" type="text" placeholder="Tên sản phẩm cần tìm">
                     <button type="button" >Tìm</button></div>
                 </div>
-                <!-- ================ Add Charts JS ================= -->
-                <div class="chartsBx">
-                    <h2>TOP 10 SÁCH CÓ SỐ LƯỢNG BÁN RA CAO NHẤT TRONG NĂM 2023</h2>
-                    <div class="chart"> <canvas id="chart-4"></canvas> </div>
-                </div>
+               
                 <div class="user-table">
                     <table>
                         <thead>
                             <tr>
-                                <td>STT</td>
+                                <td>Mã SP</td>
                                 <td>Ảnh</td>
                                 <td>Tên SP </td>
                                 <td>Danh mục</td>
@@ -178,7 +174,7 @@ if (!$conn) {
                                     echo "<td>".$row["pro_id"]."</td>";
                                     echo ' <td><img src="' . $image_path . '" alt="' . $name . '"></td>';
                                     echo "<td>".$row["pro_name"]."</td>";
-                                    echo "<td>".$row["id_category"]."</td>";
+                                    echo "<td>".$category_name."</td>";
                                     echo "<td>".$row["pro_price"]."</td>";
                                     echo "<td>".$row["pro_quantity"]."</td>";
                                     echo "<td>";
@@ -352,9 +348,7 @@ if (!$conn) {
                 </div>
             </div>
         </div>
-        <!-- ======= Charts JS ====== -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-        <script src="../js/chartsachbanchay.js"></script>
+        
         <!-- ====== ionicons ======= -->
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

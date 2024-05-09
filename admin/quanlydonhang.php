@@ -1,3 +1,24 @@
+<?php
+session_start();
+include ("../classfunctionPHPdatabase.php");
+$p = new database();
+$conn = $p->connect();
+
+if (!$conn) {
+    die("Kết nối thất bại: " . mysqli_connect_error());
+}
+
+
+$sql_order = "SELECT o.*, p.pro_img1, p.pro_name, p.id_category, u.phone, u.name
+              FROM `orders` o
+              INNER JOIN `orderdetails` od ON o.id = od.order_id
+              INNER JOIN `product` p ON od.product_id = p.pro_id
+              INNER JOIN `user` u ON o.id_user = u.id
+              GROUP BY o.id
+              ORDER BY o.`id` DESC";
+$result_order = mysqli_query($conn, $sql_order);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +35,7 @@
 <body>
     <!-- =============== Navigation ================ -->
     <div class="container">
-    <div class="navigation">
+        <div class="navigation">
             <ul>
                 <li>
                     <a href="#">
@@ -44,7 +65,7 @@
                 </li>
 
                 <li>
-                    <a href="../admin/quanlysanpham.php" >
+                    <a href="../admin/quanlysanpham.php">
                         <span class="icon">
                             <ion-icon name="book-outline"></ion-icon>
                         </span>
@@ -53,7 +74,7 @@
                 </li>
 
                 <li>
-                    <a href="../admin/quanlykhachhang.php" >
+                    <a href="../admin/quanlykhachhang.php">
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>
@@ -80,25 +101,9 @@
                 <!-- ================ LÀM BANNER ================= -->
                 <div class="banner">
                     <select id="month">
-                        <option>Tháng 12</option>
-                        <option>Tháng 1</option>
-                        <option>Tháng 2</option>
-                        <option>Tháng 3</option>
-                        <option>Tháng 4</option>
-                        <option>Tháng 5</option>
-                        <option>Tháng 6</option>
-                        <option>Tháng 7</option>
-                        <option>Tháng 8</option>
-                        <option>Tháng 9</option>
-                        <option>Tháng 10</option>
-                        <option>Tháng 11</option>
-                    </select>
-                    <select id="month">
-                        <option>Tình trạng</option>
-                        <option>Chờ xác nhận</option>
-                        <option>Đã giao</option>
-                        <option>Đang giao</option>
-                        <option>Bị hủy</option>
+                        <option>Tất cả</option>
+                        <option>Chưa xử lý</option>
+                        <option>Đã xử lý</option>
                     </select>
                     <select id="chon" onchange="showCustomDate()">
                         <option value="today">Hôm nay</option>
@@ -149,91 +154,64 @@
                             <option>Tìm theo tên người dùng</option>
                         </select>
                         <input id="find" type="text" placeholder="Nhập thông tin cần tìm">
-                        <a href="../html/adminnotfound1.html"><button type="button" style="font-size: larger;">Tìm</button>
-                   </a>
+                        <a href="../html/adminnotfound1.html"><button type="button"
+                                style="font-size: larger;">Tìm</button>
+                        </a>
                     </div>
                 </div>
-                <div class="chartsBx">
-                    <div class="chart"> <canvas id="myChart"></canvas> </div>
-                    <div class="chart"> <canvas id="chart-3"></canvas> </div>
-                </div>
+
                 <div class="order-table">
                     <table>
                         <thead>
                             <tr>
-                                <td>STT</td>
+                                
                                 <td>Mã đơn hàng</td>
                                 <td>Người đặt</td>
                                 <td>SĐT</td>
                                 <td>Tình trạng</td>
                                 <td>Thời gian</td>
-                                <td>Trạng thái</td>
+                                <td>Ghi chú</td>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
-                                <td>thaihien99</td>
-                                <td>0987654321</td>
-                                <td>Chờ xác nhận</td>
-                                <td>14/10/2023</td>
-                                <td>
-                                    <button id="xoanguoidung">Chưa xử lý</button>
-                                </td>
-                            </tr>
+                            <?php
+                            // Kiểm tra xem có đơn hàng nào không
+                            if (mysqli_num_rows($result_order) > 0) {
+                                // Nếu có, lặp qua từng đơn hàng và hiển thị thông tin
+                                while ($order = mysqli_fetch_assoc($result_order)) {
+                                    ?>
+                                    <tr>
 
-                            <tr>
-                                <td>2</td>
-                                <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
-                                <td>thaihien99</td>
-                                <td>0987654321</td>
-                                <td>Chờ xác nhận</td>
-                                <td>14/10/2023</td>
-                                <td>
+                                       
+                                        <td><a href="../chitietdonhang.php"> ĐH <?php echo $order['id']; ?></a></td>
+                                        <td><?php echo $order['id_user']; ?></td>
+                                        <td><?php echo $order['phone']; ?></td>
+                                        <td>
+                                            <?php
+                                            // Kiểm tra giá trị của trường status và xuất ra chuỗi tương ứng
+                                            if ($order['status'] == 0) {
+                                                echo "<p style='color: red;'>Chờ xác nhận</p>";
+                                            } elseif ($order['status'] == 1) {
+                                                echo "<p style='color: green;'>Đã giao</p>";
+                                            } else {
+                                                echo "Trạng thái không xác định";
+                                            }
+                                            ?>
+                                        </td>
+                                        <td><?php echo $order['order_date']; ?></td>
+                                        <td>
+                                            <button id="xoanguoidung">Chưa xử lý</button>
+                                        </td>
+                                    </tr>
+                                    <?php
 
-                                    <button id="xoanguoidung">Chưa xử lý</button>
-                                </td>
-                            </tr>
+                                }
+                            } else {
+                                // Nếu không có đơn hàng nào
+                                echo "<tr><td colspan='6'>Không có đơn hàng nào.</td></tr>";
+                            }
+                            ?>
 
-                            <tr>
-                                <td>3</td>
-                                <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
-                                <td>thaihien99</td>
-                                <td>0987654321</td>
-                                <td>Chờ xác nhận</td>
-                                <td>14/10/2023</td>
-                                <td>
-
-                                    <button id="xoanguoidung">Chưa xử lý</button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>4</td>
-                                <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
-                                <td>thaihien99</td>
-                                <td>0987654321</td>
-                                <td>Đang giao</td>
-                                <td>14/10/2023</td>
-                                <td>
-                                    <button id="suanguoidung">Đã xử lý</button>
-
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>5</td>
-                                <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
-                                <td>thaihien99</td>
-                                <td>0987654321</td>
-                                <td>Đang giao</td>
-                                <td>14/10/2023</td>
-                                <td>
-                                    <button id="suanguoidung">Đã xử lý</button>
-
-                                </td>
-                            </tr>
 
 
 
@@ -242,8 +220,8 @@
                     </table>
                     <div class="pagination">
                         <li class="hientai">1</li>
-                        <li><a href="quanlydonhang1.html" style="color: black;">2</a></li></a> 
-                        <li><a href="quanlydonhang1.html" style="color: black;" >NEXT</a></li>
+                        <li><a href="quanlydonhang1.html" style="color: black;">2</a></li></a>
+                        <li><a href="quanlydonhang1.html" style="color: black;">NEXT</a></li>
                     </div>
                 </div>
 

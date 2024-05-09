@@ -1,3 +1,30 @@
+<?php
+session_start();
+include ("../classfunctionPHPdatabase.php");
+$p = new database();
+$conn = $p->connect();
+
+if (!$conn) {
+    die("Kết nối thất bại: " . mysqli_connect_error());
+}
+$sql_user = "SELECT  id, user, name, email, pass, locked FROM user WHERE id>1
+ ORDER BY id DESC
+ LIMIT 5";
+                      
+
+$sql_order = "SELECT o.*, p.pro_img1, p.pro_name, p.id_category, u.phone, u.name, u.user
+              FROM `orders` o
+              INNER JOIN `orderdetails` od ON o.id = od.order_id
+              INNER JOIN `product` p ON od.product_id = p.pro_id
+              INNER JOIN `user` u ON o.id_user = u.id
+              GROUP BY o.id
+              ORDER BY o.`id` DESC
+              LIMIT 5";
+$result_order = mysqli_query($conn, $sql_order);
+$result_user = mysqli_query($conn, $sql_user);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -75,52 +102,7 @@
                     </label>
                 </div>
             </div>
-            <!-- ======================= Cards ================== -->
-            <div class="cardBox">
-                <div class="card">
-                    <div>
-                        <div class="numbers">3000</div>
-                        <div class="cardName">Lượt truy cập hôm nay</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">694</div>
-                        <div class="cardName">Đơn hàng tháng 12</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="cart-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">284</div>
-                        <div class="cardName">Đánh giá mới</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="chatbubbles-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">10.370.790đ</div>
-                        <div class="cardName">Lợi nhuận tháng 12</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="cash-outline"></ion-icon>
-                    </div>
-                </div>
-            </div>
+           
             
             <h2 style="margin-left: 20px;">Thống kê tình hình kinh doanh</h2>
         
@@ -149,7 +131,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>STT</th>
+                           
                             <th>Mã ĐH</th>
                             <th>Người đặt</th>
                             <th>SĐT</th>
@@ -160,67 +142,24 @@
                     </thead>
 
                     <tbody>
+                    <?php
+            
+            while($row3 = $result_order->fetch_assoc()) {
+                ?>
                         <tr>
-                            <td>1</td>
-                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
-                            <td>thaihien99</td>
-                            <td>0987654321</td>
+                           
+                            <td><a href="../html/chitietdonhang.html"> ĐH <?php echo $row3['id']; ?></a></td>
+                            <td><?php echo $row3['user']; ?></td>
+                            <td><?php echo $row3['phone']; ?></td>
                             <td id="premium">Chờ xác nhận</td>
-                            <td>75.999đ</td>
+                            <td><?php echo $row3['phone']; ?></td>
                             <td>14/10/2023</td>
                             <td><input type="checkbox"></td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
-                            <td>thaihien99</td>
-                            <td>0987654321</td>
-                            <td id="premium">Chờ xác nhận</td>
-                            <td>75.999đ</td>
-                            <td>14/10/2023</td>
-                            <td><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
-                            <td>thaihien99</td>
-                            <td>0987654321</td>
-                            <td id="premium">Chờ xác nhận</td>
-                            <td>75.999đ</td>
-                            <td>14/10/2023</td>
-                            <td><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
-                            <td>thaihien99</td>
-                            <td>0987654321</td>
-                            <td id="basic">Đã giao</td>
-                            <td>75.999đ</td>
-                            <td>14/10/2023</td>
-                            <td><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
-                            <td>thaihien99</td>
-                            <td>0987654321</td>
-                            <td id="basic">Đã giao</td>
-                            <td>75.999đ</td>
-                            <td>14/10/2023</td>
-                            <td><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="../html/chitietdonhang.html"> ĐH 5728319</a></td>
-                            <td>thaihien99</td>
-                            <td>0987654321</td>
-                            <td id="basic">Đã giao</td>
-                            <td>75.999đ</td>
-                            <td>14/10/2023</td>
-                            <td><input type="checkbox"></td>
-                        </tr>
-
+                        <?php
+                            }
+                        
+                            ?>
                     </tbody>
 
                 </table>
@@ -242,60 +181,39 @@
                         <thead>
                             <tr>
                                 <td>MÃ ĐƠN HÀNG</td>
-                                <td>GIÁ</td>
-                                <td>THANH TOÁN</td>
-                                <td>Còn hàng</td>
+                                <td>THÀNH TIỀN</td>
+                                <td>PHƯƠNG THỨC</td>
+                                <td>TÌNH TRẠNG</td>
                             </tr>
                         </thead>
 
                         <tbody>
+                        <?php
+            $result_order->data_seek(0);
+            while($row1 = $result_order->fetch_assoc()) {
+                ?>
                             <tr>
-                                <td><a href="../html/chitietdonhang.html">ĐH 6248937</a></td>
-                                <td>170.070đ</td>
-                                <td>COD</td>
-                                <td><span class="status inProgress">Chờ xác nhận</span></td>
+                                <td><a href="../html/chitietdonhang.html">ĐH <?php echo $row1['id']; ?></a></td>
+                                <td><?php echo number_format($row1['total'], 0, ',', '.') . 'đ'; ?></td>
+                                <td><?php echo $row1['pay']; ?></td>
+                                <td>
+    <?php
+    // Kiểm tra giá trị của trường status và xuất ra chuỗi tương ứng
+    if ($row1['status'] == 0) {
+        echo "<span class='status return'>Chờ xác nhận</span>";
+    } elseif ($row1['status'] == 1) {
+        echo "<span class='status delivered'>Đã giao</span>";
+    } else {
+        echo "Trạng thái không xác định";
+    }
+    ?>
+</td>
+                              
                             </tr>
-
-                            <tr>
-                                <td><a href="../html/chitietdonhang.html">ĐH 7632148</a></td>
-                                <td>80.360đ</td>
-                                <td>BTP</td>
-                                <td><span class="status inProgress">Chờ xác nhận</span></td>
-                            </tr>
-
-                            <tr>
-                                <td><a href="../html/chitietdonhang.html">ĐH 9753814</a></td>
-                                <td>50.000đ</td>
-                                <td>COD</td>
-                                <td><span class="status pending">Đã lấy hàng</span></td>
-                            </tr>
-
-                            <tr>
-                                <td><a href="../html/chitietdonhang.html">ĐH 8553756</a></td>
-                                <td>96.900đ</td>
-                                <td>COD</td>
-                                <td><span class="status pending">Đã lấy hàng</span></td>
-                            </tr>
-
-                            <tr>
-                                <td><a href="../html/chitietdonhang.html">ĐH 4187256</a></td>
-                                <td>120.300đ</td>
-                                <td>COD</td>
-                                <td><span class="status return">Đã trả hàng</span></td>
-                            </tr>
-
-                            <tr>
-                                <td><a href="../html/chitietdonhang.html">ĐH 8196437</a></td>
-                                <td>260.040đ</td>
-                                <td>BTP</td>
-                                <td><span class="status delivered">Đã giao</span></td>
-                            </tr>
-                            <tr>
-                                <td><a href="../html/chitietdonhang.html">ĐH 5379468</a></td>
-                                <td>120.000đ</td>
-                                <td>BTP</td>
-                                <td><span class="status delivered">Đã giao</span></td>
-                            </tr>
+                            <?php
+                            }
+                        
+                            ?>
 
                         </tbody>
                     </table>
@@ -308,59 +226,23 @@
                     </div>
 
                     <table>
+                        <?php
+            
+                            while($row2 = $result_user->fetch_assoc()) {
+                                ?>
                         <tr>
                             <td width="60px">
                                 <div class="imgBx"><img src="../img/banner/avt1.png" alt=""></div>
                             </td>
                             <td>
-                                <h4>aimeeceline00<br> <span>Bạc</span></h4>
+                                <h4><?php echo $row2['name']; ?><br> <span><?php echo $row2['user']; ?></span></h4>
                             </td>
                         </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="../img/banner/avt2.png" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>thaihien99<br> <span>Bạc</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="../img/banner/avt3.png" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>vantuan00<br> <span>Bạc</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="../img/banner/avt4.png" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>myhuong7749<br> <span>Bạc</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="../img/banner/avt5.png" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>hoasenhong404<br> <span>Vàng</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="../img/banner/avt6.png" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>umboumbo11<br> <span>Vàng</span></h4>
-                            </td>
-                        </tr>
+<?php
+                            }
+                        
+                            ?>
+                        
 
                     </table>
                 </div>

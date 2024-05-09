@@ -37,10 +37,10 @@
 /* Style for table cells */
 .order-table td {
   margin-top: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #999898;
   padding: 8px;
   text-align: left;
-  border-bottom: 10px solid #e1ecf6;
+  border-bottom: 10px solid #4b4d4e;
 }
 
 /* Style for the image inside table cell */

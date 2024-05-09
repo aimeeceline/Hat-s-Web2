@@ -177,15 +177,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <select id="option">
                         <option>Tất cả</option>
-                        <option>Bạc</option>
-                        <option>Vàng</option>
-                        <option>Kim cương</option>
-                        <option>Đã khóa</option>
+                        <option>Hoạt động</option>
+                        <option>Bị khóa</option>
                     </select>
-                    <select id="option">
-                        <option>Mới nhất</option>
-                        <option>Cũ nhất</option>
-                    </select>
+                
                    <div>
                     <input id="timnguoidung" type="text" placeholder="Tên người dùng ...">
                     
@@ -200,6 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <td>Họ và tên</td>
                                 <td>Email</td>
                                 <td>Password</td>
+                                <td>Tình trạng</td>
                                 <td>Ghi chú</td>
                             </tr>
                         </thead>
@@ -223,6 +219,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 echo "<td>".$row["name"]."</td>";
                                 echo "<td>".$row["email"]."</td>";
                                 echo "<td>".$row["pass"]."</td>";
+                               
+                                if ($row["locked"] == 0) {
+                                    echo "<td style='color: green;'>Hoạt động</td>";
+
+                                } else {
+                                    echo "<td style='color: grey;'>Bị khóa</td>";
+                                }
+                                
+                                echo "</td>";
                                 echo "<td>";
                                 echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row['id']."\", \"".$row['user']."\", \"".$row['name']."\", \"".$row['email']."\", \"".$row['pass']."\")'>Sửa</button>";
 
@@ -352,17 +357,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li><a href="quanlykhachhang1.html" style="color: black;">2</a></li></a> 
                     <li><a href="quanlykhachhang1.html" style="color: black;" >NEXT</a></li>
                 </div>
-            <!-- ================ Add Charts JS ================= -->
-            <div class="chartsBx">
-                <h2>THỐNG KÊ LƯỢNG ĐĂNG KÝ NĂM 2023</h2>
-                <div class="chart"> <canvas id="chart-2"></canvas> </div>
-            </div>
+            
             </div>
         </div>
     </div>
-    <!-- ======= Charts JS ====== -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-    <script src="../js/chartuser.js"></script>
+
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
