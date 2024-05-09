@@ -28,17 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
     }
 }
 
-// Kiểm tra trạng thái của session và hiển thị thông tin tương ứng
-$session_status = session_status();
-if ($session_status == PHP_SESSION_DISABLED) {
-    echo "Session đã bị vô hiệu hóa trên máy chủ.";
-} elseif ($session_status == PHP_SESSION_NONE) {
-    echo "Session chưa được khởi tạo.";
-} elseif ($session_status == PHP_SESSION_ACTIVE) {
-    echo "Session đang hoạt động.";
-    // Hiển thị dữ liệu của session ở đây
-    print_r($_SESSION);
-}
 ?>
 
 <!DOCTYPE html>
@@ -215,29 +204,34 @@ document.getElementById("updateButton").addEventListener("click", function() {
 
 
 <div class="right">
-			<h3>PHƯƠNG THỨC THANH TOÁN</h3>
-			<form>
-				
-            <input type="radio"  name="payment_method" value="ATM">
-<label for="age3">&nbsp;<img src="img/logo/atm.png">&nbsp;&nbsp;ATM</label><br>
-<input type="radio"  name="payment_method" value="cash">
-<label for="age4">Thanh toán bằng tiền mặt</label><br>
-
-                </form> <!-- Kết thúc form hiện tại -->
-<div class="fixed-buttons-container">
-    <div class="back-to-cart">
-        <a href="index.php">
-            <span>
-                <img src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/btn_back.svg?q=10354">
-            </span>
-            <span>Trở về trang chủ</span>
-        </a>
-    </div>
+    <h3>PHƯƠNG THỨC THANH TOÁN</h3>
     <form method="POST" action="insertorder.php">
-        <!-- Các trường dữ liệu -->
-        <button type="submit" name="check" class="checkout-button">THANH TOÁN NGAY!!!</button>
-    </form>
+    <select name="payment_method" id="payment_method">
+        <option value="ATM">ATM</option>
+        <option value="COD">Thanh toán bằng tiền mặt</option>
+    </select>
+    <!-- Các trường dữ liệu khác -->
+    <button type="submit" name="check" class="checkout-button">THANH TOÁN NGAY!!!</button>
+</form>
+
+   
+
+    <div class="fixed-buttons-container">
+        <div class="back-to-cart">
+            <a href="index.php">
+                <span>
+                    <img src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/btn_back.svg?q=10354">
+                </span>
+                <span>Trở về trang chủ</span>
+            </a>
+        </div>
+        
+    </div>
 </div>
+
+
+
+
 
                     
          

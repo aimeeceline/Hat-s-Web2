@@ -1,0 +1,231 @@
+.lichsumuahang{
+  display: flex;
+}
+.content-left img{
+  width: 20%;
+  margin-bottom: 10px;
+}
+.options{
+  display: flex;
+  list-style: none;
+  border: 15px solid rgb(0, 0, 0);
+  background-color: rgb(0, 0, 0);
+  font-size: large;
+}
+.options li a{
+  text-decoration: none;
+  transition: 0.5s;
+  color: black;
+  margin: 10px 40px;
+  color: white;
+}
+
+.options li:first-child{
+  border-bottom: 2px solid rgb(255, 255, 255);
+}
+.options a:hover {
+  color: red;
+}
+/* Reset styles for the table */
+.order-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px;
+  
+}
+
+/* Style for table cells */
+.order-table td {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  border-bottom: 10px solid #e1ecf6;
+}
+
+/* Style for the image inside table cell */
+.order-table img {
+  width: 50px; /* Adjust the width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Style for the 'Đã giao' status */
+.update {
+  color: green; /* Change the color as needed */
+}
+
+/* Style for the 'Đánh giá' button */
+.rate {
+  background-color: #ff0000; /* Change the background color */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.tong{
+  color: red;
+  
+}
+.update{
+  color: green;
+}
+
+  .rate:hover{
+    background-color: brown;
+  }
+
+#banner {
+    font-size: 20px;
+    background-color: black;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+}
+#address{
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.progress-bar {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+    margin: 20px;
+    margin-left: auto;
+    width: 80%;
+}
+.step .step-text {
+    color: #2dc258;
+}
+.step {
+    position: relative;
+  }
+  
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 26%;
+    left: 29px; /* Khoảng cách giữa các bước */
+    transform: translateY(-50%);
+    height: 3px; /* Chiều cao của đường line */
+    width: 222px; /* Độ dài của đường line */
+    background-color: #2dc258; /* Màu sắc của đường line */
+  }
+
+.step-text{
+    padding: 5px;
+    margin-left: -40%;
+}
+
+.step .step-icon {
+    background-color: #2dc258;
+    color: white;
+}
+
+.step-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ddd;
+    line-height: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: #666;
+}
+.diachigiaohang{
+    display: flex;
+    gap: 100px;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+.thongtinnguoimua{
+    width: 30%;
+}
+
+
+.delivery-status {
+    border-left: 2px solid #ccc;
+    padding-left: 10px;
+}
+
+.status {
+    margin-bottom: 20px;
+}
+
+p {
+    margin: 5px 0;
+}
+#time{
+    color: #2dc258;
+}
+.chitietsanpham table tbody  tr td  img{
+    width: 70%;
+    margin-top: 4px;
+    margin-left: 6px;
+}
+.chitietsanpham table tbody  tr td:first-child{
+    width: 10%;
+    align-items: center;
+}
+.chitietsanpham table tbody  tr td:first-child{
+    width: 10%;
+    align-items: center;
+}
+.chitietsanpham table tbody  tr td{
+    font-size: 16px;
+}
+#price{
+    color: red;
+    text-align: right;
+    padding: 25px;
+}
+.chitietsanpham table{
+  margin-left: 20px;
+}
+.chitietsanpham table:first-child{
+    width: 95%;
+    border-collapse: collapse;
+    border: 2px groove rgb(222, 219, 219);  
+}
+.chitietsanpham table:nth-child(2){
+    width: 95%;
+    border-collapse: collapse;
+    
+    border: 2px groove rgb(222, 219, 219);
+    border-top: none;
+    
+}
+.chitietsanpham table:nth-child(2) tbody tr td:first-child{
+    width: 80%;
+}
+.chitietsanpham table:nth-child(2) tbody tr td:nth-child(2){
+    padding: 10px;   
+}
+.chitietsanpham table:nth-child(2) tbody tr td{
+    text-align: right;
+}
+.chon button{
+    width: 200px;
+    height: 40px;
+    font-size: 15px;
+    background-color: #fff;
+    font-weight: bold;
+    border: 2px solid #ca2929;
+    border-radius: 8px;
+    display: block;
+    color: #ca2929;
+    margin: 20px;
+    cursor: pointer;
+    margin-right: auto;
+}
+.chon button:nth-child(1):hover{
+    background-color: #C92127;
+    border: #ca2929;
+    color: #fff;
+}

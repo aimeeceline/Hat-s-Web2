@@ -8,17 +8,24 @@ if (!$conn) {
     die("Kết nối thất bại: " . mysqli_connect_error());
 }
 
-// Truy vấn để lấy dữ liệu từ bảng `order` và `orderdetails`
-$sql = "SELECT `order`.`id`, `order`.`order_date`, `order`.`total`, `product`.`pro_name` AS product_name, `orderdetails`.`quantity`, `orderdetails`.`unitprice`, `user`.`address`
-        FROM `order`
-        INNER JOIN `orderdetails` ON `order`.`id` = `orderdetails`.`order_id`
-        INNER JOIN `user` ON `order`.`id_user` = `user`.`id`
-        INNER JOIN `product` ON `orderdetails`.`product_id` = `product`.`pro_id`";
-   
+// Lấy tên người dùng từ CSDL
+$id = $_SESSION['id']; 
+$sql_user = "SELECT name FROM `user` WHERE `id` = $id";
+$result_user = mysqli_query($conn, $sql_user);
+$row_user = mysqli_fetch_assoc($result_user);
+$userName = $row_user['name'];
 
-$result = mysqli_query($conn, $sql);
+$sql_order = "SELECT o.*, p.pro_img1, p.pro_name, p.id_category, COUNT(*) AS num_products 
+              FROM `orders` o
+              INNER JOIN `orderdetails` od ON o.id = od.order_id
+              INNER JOIN `product` p ON od.product_id = p.pro_id
+              WHERE o.`id_user` = $id
+              GROUP BY o.id
+              ORDER BY o.`id` DESC";
+$result_order = mysqli_query($conn, $sql_order);
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,57 +36,75 @@ $result = mysqli_query($conn, $sql);
     <title>Lịch sử mua hàng</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="css/lichsumuahang.css">
+
 </head>
 <body>
     <div class="container">
         <?php include ('page/header.php') ?>
-        <div class="wrapper">
-            <h1>Lịch sử mua hàng</h1>
+        <h1>Lịch sử mua hàng:</h1>
+        <div class="lichsumuahang">
+            <div class="content-left">
+                <img src="img/banner/user.png">
+                <p><?php echo $userName; ?></p>
+            </div>
+            <table class="order-table">
            
-            <table>
-                <thead>
-                    <tr>
+                <?php
+                // Kiểm tra xem có đơn hàng nào không
+                if (mysqli_num_rows($result_order) > 0) {
+                    // Nếu có, lặp qua từng đơn hàng và hiển thị thông tin
+                    while ($order = mysqli_fetch_assoc($result_order)) {
+                        $category = $order['id_category'];
+                        $img = $order['pro_img1'];
+                        // Gọi phương thức để lấy tên loại sản phẩm từ bảng category
+                        $category_name = $p->getCategoryName($category);
+
+                        // Tạo đường dẫn cho ảnh dựa trên loại sản phẩm
+                        $image_path = 'img/product/' . $category_name . '/' . $order['pro_img1'];
+                        ?>
+                        <tr>
+                            <td><?php echo $order['order_date']; ?></td>
                         
-                        <th>SẢN PHẨM</th>
-                        <th>GIÁ TIỀN</th>
-                        <th>SỐ LƯỢNG</th>
-                        <th>THÀNH TIỀN</th>
-                        <th>ĐỊA CHỈ</th>
-                        <th>THỜI GIAN ĐẶT HÀNG</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    // Hiển thị dữ liệu từ kết quả truy vấn
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo "<tr>";
-                            echo "<td><img src='" . $row['pro_img'] . "' alt='" . $row['product_name'] . "'></td>";
-                            
-                            echo "<td>" . $row['unitprice'] . "</td>";
-                            echo "<td>" . $row['quantity'] . "</td>";
-                            echo "<td>" . $row['total'] . "</td>";
-                            echo "<td>" . $row['address'] . "</td>";
-                            echo "<td>" . $row['order_date'] . "</td>";
-                            
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='5'>Không có dữ liệu</td></tr>";
+                            <td><img src="<?php echo $image_path; ?>"></td>
+                            <td>
+                                <div class="name">
+                                    <?php echo $order['pro_name']; ?><br>
+                                    <?php if ($order['num_products']-1 > 0): ?>
+    <a style="color: gray; font-size: small;">Còn <?php echo $order['num_products'] - 1; ?> sản phẩm</a>
+<?php endif; ?>
+                            </td>
+                            <td>Thành tiền: <a class="tong"><?php echo number_format($order['total'], 0, ',', '.') . 'đ'; ?></a></td>
+                           <td>
+                           <form action="chitietdonhang.php" method="GET" style="display: inline;">
+    <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
+    <button type="submit" style="color: blue; font-size: small; background: none; border: none; padding: 0; cursor: pointer;">Xem chi tiết</button>
+</form>
+                           </td>
+                        </tr>
+                        <?php
                     }
-                    ?>
-                </tbody>
+                } else {
+                    // Nếu không có đơn hàng nào
+                    echo "<tr><td colspan='6'>Không có đơn hàng nào.</td></tr>";
+                }
+                ?>
             </table>
-            
         </div>
-        <?php include ('page/footer.php') ?>
-    </div>
-</body>
-</html>
+       
+    
+      <!-----------------------------------Bắt đầu Footer------------------------------------------->
+		<?php 
+      include("page/footer.php");
+    ?>
+	  </div> 
+	  </body>
+	  
+	  </html>
 
 <?php
 // Giải phóng kết nối và kết quả truy vấn
-mysqli_free_result($result);
+mysqli_free_result($result_user);
+mysqli_free_result($result_order);
 mysqli_close($conn);
 ?>
