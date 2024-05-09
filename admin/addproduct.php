@@ -9,12 +9,16 @@ if (!$conn) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['pro_name'], $_POST['id_category'], $_POST['pro_price'], $_FILES['pro_img1'], $_FILES['pro_img2'], $_FILES['pro_img3']) &&
-        !empty($_POST['pro_name']) && !empty($_POST['id_category']) && !empty($_POST['pro_price'])) {
+    if (isset($_POST['pro_name'], $_POST['id_category'], $_POST['pro_price'], $_POST['pro_author'], $_POST['pro_publisher'], $_POST['pro_description'], $_FILES['pro_img1'], $_FILES['pro_img2'], $_FILES['pro_img3']) &&
+        !empty($_POST['pro_name']) && !empty($_POST['id_category']) && !empty($_POST['pro_price']) && !empty($_POST['pro_author']) && !empty($_POST['pro_publisher'])&& !empty($_POST['pro_description'])) {
 
         $pro_name = $_POST['pro_name'];
         $id_category = $_POST['id_category'];
         $pro_price = $_POST['pro_price'];
+        $pro_author = $_POST['pro_author'];
+        $pro_publisher = $_POST['pro_publisher'];
+        $pro_description = $_POST['pro_description'];
+
         $allowed_types = array('jpg', 'jpeg', 'png', 'gif');
 
         // Xác định thư mục đích dựa trên ID danh mục   
@@ -64,8 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        $stmt = $conn->prepare("INSERT INTO product (`pro_name`, `id_category`, `pro_price`, `pro_img1`, `pro_img2`, `pro_img3`) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssss", $pro_name, $id_category, $pro_price, $image_paths[0], $image_paths[1], $image_paths[2]);
+        $stmt = $conn->prepare("INSERT INTO product (`pro_name`, `id_category`, `pro_price`, `pro_author`, `pro_publisher`, `pro_description`, `pro_img1`, `pro_img2`, `pro_img3`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? )");
+        $stmt->bind_param("sssssssss", $pro_name, $id_category, $pro_price, $pro_author, $pro_publisher, $pro_description, $image_paths[0], $image_paths[1], $image_paths[2]);
 
         if ($stmt->execute()) {
             echo "New record created successfully";

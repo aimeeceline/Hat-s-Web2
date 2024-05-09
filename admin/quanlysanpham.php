@@ -176,10 +176,10 @@ if (!$conn) {
                                     echo "<td>".$row["pro_price"]."</td>";
                                     echo "<td>".$row["pro_quantity"]."</td>";
                                     echo "<td>";
-                                    echo "<button id='suanguoidung' onclick='hienBoxSuaUser1(\"".$row['pro_id']."\", \"".$row['pro_img1']."\", \"".$row['pro_img2']."\", \"".$row['pro_img3']."\", \"".$row['pro_name']."\", \"".$row['pro_price']."\",\"".$row['pro_author']."\",\"".$row['pro_publisher']."\",\"".$row['pro_description']."\",\"".$row['pro_quantity']."\")'>Sửa</button>";
+                                    echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row['pro_id']."\",\"".$row['pro_name']."\",  \"".$row['pro_price']."\",\"".$row['pro_author']."\",\"".$row['pro_publisher']."\",\"".$row['pro_description']."\",\"".$row['pro_quantity']."\")'>Sửa</button>";
                                     if ($row["status"] == 1) {
                                     // Nếu người dùng chưa bị khóa, hiển thị nút "Khóa"
-                                    echo "<button class='xoanguoidung' onclick='performAction(\"lock\", \"". $row['id'] ."\")'>Xóa</button>";
+                                    echo "<button class='xoanguoidung' onclick='performAction(\"lock\", \"". $row['pro_id'] ."\")'>Xóa</button>";
                                 }
                                 
                                 echo "</td>";
@@ -213,7 +213,7 @@ if (!$conn) {
                                         <div class="form-group">
                                             <label for="image1">Ảnh 1:</label>
                                             <div class="change_img">
-                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 1.jpg" id="pro_img1" name="pro_img1">
+                                                <img src="" id="pro_img1" name="pro_img1">
                                                 <div class="change_action">
                                                     <label for="input_file1" class="change_button">Sửa</label>
                                                     <input type="file" id="input_file1" class="input_file" accept="image/*">
@@ -225,7 +225,7 @@ if (!$conn) {
                                         <div class="form-group">
                                             <label for="image2">Ảnh 2:</label>
                                             <div class="change_img">
-                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 2.jpg" id="pro_img2" name="pro_img2">
+                                                <img src="" id="pro_img2" name="pro_img2">
                                                 <div class="change_action">
                                                     <label for="input_file2" class="change_button">Sửa</label>
                                                     <input type="file" id="input_file2" class="input_file" accept="image/*">
@@ -237,7 +237,7 @@ if (!$conn) {
                                         <div class="form-group">
                                             <label for="image3">Ảnh 3:</label>
                                             <div class="change_img">
-                                                <img src="../img/product/Kỹ năng sống - Phát triển cá nhân/Đắc Nhân Tâm 3.jpg" id="pro_img3" name="pro_img3">
+                                                <img src="" id="pro_img3" name="pro_img3">
                                                 <div class="change_action">
                                                     <label for="input_file3" class="change_button">Sửa</label>
                                                     <input type="file" id="input_file3" class="input_file" accept="image/*">
@@ -281,9 +281,9 @@ if (!$conn) {
                                         <div class="form-group">
                                             <label for="goi">Danh mục:</label>
                                             <select id="goi" name="id_category">
-                                                <option>Kỹ năng sống - Phát triển cá nhân</option>
-                                                <option>Manga-Comic</option>
-                                                <option>Nghệ thuật-Văn hóa</option>
+                                                <option value="1">Kỹ năng sống - Phát triển cá nhân</option>
+                                                <option value="2">Manga-Comic</option>
+                                                <option value="3">Nghệ thuật-Văn hóa</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -317,7 +317,25 @@ if (!$conn) {
                                         console.error('Error:', error);
                                     });
                                 });
-                                
+                                ///////////////////
+                                function performAction(action, pro_id) {
+                             if (action === 'lock') {
+                             if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
+                            // Gửi yêu cầu xóa sản phẩm thông qua AJAX
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST", "xoasanpham.php", true);
+                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState === 4 && xhr.status === 200) {
+                                    // Xử lý kết quả nếu cần
+                                    // Ví dụ: Cập nhật giao diện người dùng sau khi xóa
+                                    location.reload(); // Tải lại trang sau khi xóa thành công
+                                }
+                            };
+                            xhr.send("pro_id=" + pro_id);
+                        }
+                    }
+                }
                                         </script>
                                 <script src="../js/suaproduct.js"></script>
                 </div>
@@ -335,28 +353,43 @@ if (!$conn) {
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
         <script>
-        function hienBoxSuaUser1(pro_id,pro_name,pro_author,pro_publisher,pro_description,pro_quantity,pro_price,id_category) {
-
+        function hienBoxSuaUser( pro_id, pro_name, pro_price, pro_author, pro_publisher, pro_description, pro_quantity, id_category,pro_img1, pro_img2, pro_img3) {
     var boxSuaUser = document.getElementById('boxsuauser');
     var overlay = document.querySelector('.overlay');
     var form = document.getElementById('suaUserForm');
+    // Thiết lập đường dẫn ảnh cho các thẻ <img>
+    document.getElementById('pro_img1').src = pro_img1;
+    document.getElementById('pro_img2').src = pro_img2;
+    document.getElementById('pro_img3').src = pro_img3;
 
     // Điền dữ liệu vào form
     form.elements['pro_id'].value = pro_id;
+    form.elements['pro_name'].value = pro_name;
+    form.elements['pro_price'].value = pro_price;
     form.elements['pro_author'].value = pro_author;
     form.elements['pro_publisher'].value = pro_publisher;
     form.elements['pro_description'].value = pro_description;
     form.elements['pro_quantity'].value = pro_quantity;
-    form.elements['pro_price'].value = pro_price;
-    form.elements['id_category'].value = id_category;
-    form.elements['pro_name'].value = pro_name;
 
+    
+
+    // Lấy tất cả các options trong select danh mục
+    var selectCategory = form.elements['id_category'].options;
+
+    // Duyệt qua từng option để chọn option tương ứng với id_category
+    for (var i = 0; i < selectCategory.length; i++) {
+        if (selectCategory[i].value === id_category) {
+            selectCategory[i].selected = true; // Chọn option có value là id_category
+            break;
+        }
+    }
 
     // Hiển thị form
     boxSuaUser.style.display = 'block';
     overlay.classList.add('show-overlay');
     document.body.classList.add('no-scroll');
 }
+
  </script>
 
 </body>
