@@ -15,14 +15,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = isset($_POST['user']) ? $_POST['user'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $pass = isset($_POST['pass']) ? $_POST['pass'] : '';
-    $id = isset($_POST['id']) ? $_POST['id'] : '';  
+    
     $name = isset($_POST['name']) ? $_POST['name'] : '';
+    $phone = isset($_POST['phone']) ? $_POST['phone'] : '';  
+    $address = isset($_POST['address']) ? $_POST['address'] : '';
     
 
     // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
 
     // Tiến hành thêm dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO user ( `user`, `email`,  `pass`, `id` , `name` ) VALUES ('$user', '$email',  '$pass', '$id' , '$name')";
+    $sql = "INSERT INTO user ( `user`, `email`,  `pass` , `name`,  `address` , `phone` ) VALUES ('$user', '$email',  '$pass', '$name', '$address', '$phone' )";
     if ($conn->query($sql) === TRUE) {
         // Chuyển hướng người dùng về trang index hoặc trang khác tùy vào yêu cầu của bạn
         header("Location: http://localhost/HAT-s-web2/admin/quanlykhachhang.php");
@@ -135,7 +137,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <input type="email" name="email" id="email" placeholder="lelananh02@gmail.com">
                             </div>
                             <div class="form-group">
-                                
+                            <label for="address">Địa chỉ:</label>
+                                <input type="text" name="address" id="address" placeholder="Quận 5, TPHCM">
+                            </div>
+                            <div class="form-group">
+                            <label for="phone">Sđt:</label>
+                                <input type="text" name="phone" id="phone" placeholder="079xxxxxxx">
                             </div>
                             <div class="form-group">
                                 <label for="password">Mật khẩu mặc định:</label>

@@ -14,14 +14,14 @@ $whereConditions = [];
 // Xử lý tìm kiếm theo thể loại
 if (isset($_POST['theloai']) && !empty($_POST['theloai'])) {
     $theloai = $_POST['theloai'][0];
-    var_dump($theloai);
+    //var_dump($theloai);
     $whereConditions[] = "id_category = ($theloai)";
 }
 
 // Xử lý tìm kiếm theo giá bán
 if (isset($_POST['giaban']) && !empty($_POST['giaban'])) {
     $giaban = $_POST['giaban'];
-    var_dump($giaban);
+    //var_dump($giaban);
     $priceConditions = [];
     foreach ($giaban as $value) {
         switch ($value) {
@@ -39,11 +39,11 @@ if (isset($_POST['giaban']) && !empty($_POST['giaban'])) {
     $whereConditions[] = "(" . implode(" OR ", $priceConditions) . ")";
 }
 
-$sql = "SELECT * FROM product";
+$sql = "SELECT * FROM product WHERE status=1";
 if (!empty($whereConditions)) {
-    $sql .= " WHERE " . implode(" AND ", $whereConditions);
+    $sql .= " AND " . implode(" AND ", $whereConditions);
 }
-echo $sql;
+//echo $sql;
 // Thực thi truy vấn
 $result = $conn->query($sql);
 

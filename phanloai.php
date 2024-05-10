@@ -26,7 +26,8 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($current_page - 1) * $item_per_page;
 
 // Tạo câu truy vấn SQL để lấy các sản phẩm thuộc id_category đã chọn và thực hiện truy vấn để lấy kết quả
-$query = "SELECT * FROM product WHERE id_category = $id_category LIMIT $item_per_page OFFSET $offset";
+$query = "SELECT * FROM product 
+            WHERE id_category = $id_category And status = 1 LIMIT $item_per_page OFFSET $offset";
 $result = mysqli_query($conn, $query);
 
 // Hiển thị các sản phẩm

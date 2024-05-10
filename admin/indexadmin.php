@@ -148,11 +148,13 @@ $result_user = mysqli_query($conn, $sql_user);
                 ?>
                         <tr>
                            
-                            <td><a href="../html/chitietdonhang.html"> ĐH <?php echo $row3['id']; ?></a></td>
+                        <td><!-- Sử dụng JavaScript để gọi hàm khi nhấp vào liên kết -->
+                                            <a href="#" onclick="submitForm('<?php echo $row3['id']; ?>')">ĐH <?php echo $row3['id']; ?></a>
+                                        </td>
                             <td><?php echo $row3['user']; ?></td>
                             <td><?php echo $row3['phone']; ?></td>
                             <td id="premium">Chờ xác nhận</td>
-                            <td><?php echo $row3['phone']; ?></td>
+                            <td><?php echo number_format($row3['total'], 0, ',', '.') . 'đ'; ?></td>
                             <td>14/10/2023</td>
                             <td><input type="checkbox"></td>
                         </tr>
@@ -175,7 +177,7 @@ $result_user = mysqli_query($conn, $sql_user);
                 <div class="recentOrders">
                     <div class="cardHeader">
                         <h2>Đơn hàng gần đây</h2>
-                        <a href="../html/quanlydonhang.html" class="btn">Xem chi tiết</a>
+                        <a href="../admin/quanlydonhang.php" class="btn">Xem chi tiết</a>
                     </div>
                     <table>
                         <thead>
@@ -193,7 +195,9 @@ $result_user = mysqli_query($conn, $sql_user);
             while($row1 = $result_order->fetch_assoc()) {
                 ?>
                             <tr>
-                                <td><a href="../html/chitietdonhang.html">ĐH <?php echo $row1['id']; ?></a></td>
+                            <td><!-- Sử dụng JavaScript để gọi hàm khi nhấp vào liên kết -->
+                                            <a href="#" onclick="submitForm('<?php echo $row1['id']; ?>')">ĐH <?php echo $row1['id']; ?></a>
+                                        </td>
                                 <td><?php echo number_format($row1['total'], 0, ',', '.') . 'đ'; ?></td>
                                 <td><?php echo $row1['pay']; ?></td>
                                 <td>
@@ -267,6 +271,20 @@ $result_user = mysqli_query($conn, $sql_user);
                     }
                       
             </script>
+            <form id="orderForm" action="orderdetails.php" method="post" style="display: none;">
+    <!-- Trường input ẩn để chứa ID -->
+    <input type="hidden" id="orderIdInput" name="orderId">
+</form>
+
+<script>
+function submitForm(orderId) {
+    // Đặt giá trị ID vào trường input
+    document.getElementById('orderIdInput').value = orderId;
+    // Submit biểu mẫu
+    document.getElementById('orderForm').submit();
+}
+</script>
+
             </div>
     </div>
     <!-- ====== ionicons ======= -->

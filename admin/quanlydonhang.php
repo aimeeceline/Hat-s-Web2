@@ -9,7 +9,7 @@ if (!$conn) {
 }
 
 
-$sql_order = "SELECT o.*, p.pro_img1, p.pro_name, p.id_category, u.phone, u.name
+$sql_order = "SELECT o.*, p.pro_img1, p.pro_name, p.id_category, u.phone, u.name, u.user
               FROM `orders` o
               INNER JOIN `orderdetails` od ON o.id = od.order_id
               INNER JOIN `product` p ON od.product_id = p.pro_id
@@ -30,6 +30,7 @@ $result_order = mysqli_query($conn, $sql_order);
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="../css/indexadmin.css">
     <link rel="stylesheet" href="../css/quanlydonhang.css">
+
 </head>
 
 <body>
@@ -164,11 +165,11 @@ $result_order = mysqli_query($conn, $sql_order);
                     <table>
                         <thead>
                             <tr>
-                                
+
                                 <td>Mã đơn hàng</td>
                                 <td>Người đặt</td>
                                 <td>SĐT</td>
-                                <td>Tình trạng</td>
+                                <td>Thành tiền</td>
                                 <td>Thời gian</td>
                                 <td>Ghi chú</td>
                             </tr>
@@ -182,26 +183,29 @@ $result_order = mysqli_query($conn, $sql_order);
                                     ?>
                                     <tr>
 
-                                       
-                                        <td><a href="../chitietdonhang.php"> ĐH <?php echo $order['id']; ?></a></td>
-                                        <td><?php echo $order['id_user']; ?></td>
+
+                                        <td><!-- Sử dụng JavaScript để gọi hàm khi nhấp vào liên kết -->
+                                            <a href="#" onclick="submitForm('<?php echo $order['id']; ?>')">ĐH <?php echo $order['id']; ?></a>
+                                        </td>
+
+                                        
+                                        <td><?php echo $order['id_user']; ?> - <?php echo $order['user']; ?></td>
                                         <td><?php echo $order['phone']; ?></td>
-                                        <td>
-                                            <?php
-                                            // Kiểm tra giá trị của trường status và xuất ra chuỗi tương ứng
-                                            if ($order['status'] == 0) {
-                                                echo "<p style='color: red;'>Chờ xác nhận</p>";
-                                            } elseif ($order['status'] == 1) {
-                                                echo "<p style='color: green;'>Đã giao</p>";
-                                            } else {
-                                                echo "Trạng thái không xác định";
-                                            }
-                                            ?>
-                                        </td>
+                                        <td><?php echo number_format($order['total'], 0, ',', '.') . 'đ'; ?></td>
                                         <td><?php echo $order['order_date']; ?></td>
-                                        <td>
-                                            <button id="xoanguoidung">Chưa xử lý</button>
-                                        </td>
+                                        <?php if ($order['status'] == 0) : ?>
+    <!-- Hiển thị nút "Chưa xử lý" -->
+    <td>
+        <button id="xoanguoidung" onclick="markProcessed(<?php echo $order['id']; ?>)">Chưa xử lý</button>
+    </td>
+<?php else: ?>
+    <!-- Hiển thị nút "Đã xử lý" -->
+    <td>
+                                    <p id="suanguoidung">Đã xử lý</p>
+
+                                </td>
+<?php endif; ?>
+                                        
                                     </tr>
                                     <?php
 
@@ -212,8 +216,53 @@ $result_order = mysqli_query($conn, $sql_order);
                             }
                             ?>
 
+<form id="orderForm" action="orderdetails.php" method="post" style="display: none;">
+    <!-- Trường input ẩn để chứa ID -->
+    <input type="hidden" id="orderIdInput" name="orderId">
+</form>
 
-
+<script>
+function submitForm(orderId) {
+    // Đặt giá trị ID vào trường input
+    document.getElementById('orderIdInput').value = orderId;
+    // Submit biểu mẫu
+    document.getElementById('orderForm').submit();
+}
+</script>
+<script>
+    function markProcessed(orderId) {
+        // Xác nhận người dùng muốn đánh dấu đã xử lý
+        var confirmMsg = confirm("BẠN CÓ CHẮC ĐÃ XỬ LÝ ĐƠN HÀNG NÀY?");
+        if (confirmMsg) {
+            // Gửi yêu cầu cập nhật trạng thái bằng Ajax
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // Xử lý phản hồi từ máy chủ
+                        var response = xhr.responseText;
+                        if (response === 'success') {
+                            // Cập nhật thành công, có thể thực hiện các hành động khác nếu cần
+                            alert("Đã cập nhật trạng thái đơn hàng thành công.");
+                            // Tải lại trang để cập nhật danh sách đơn hàng
+                            location.reload();
+                        } else {
+                            // Cập nhật thất bại, hiển thị thông báo lỗi nếu cần
+                            alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
+                        }
+                    } else {
+                        // Xử lý lỗi khi gửi yêu cầu
+                        alert("Có lỗi khi gửi yêu cầu đến máy chủ.");
+                    }
+                }
+            };
+            // Mở kết nối và gửi yêu cầu đến file xử lý
+            xhr.open("POST", "updatestatus.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send("orderId=" + orderId);
+        }
+    }
+</script>
 
 
                         </tbody>
@@ -233,9 +282,7 @@ $result_order = mysqli_query($conn, $sql_order);
             </div>
         </div>
     </div>
-    <!-- ======= Charts JS ====== -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-    <script src="../js/chartdonhang.js"></script>
+
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

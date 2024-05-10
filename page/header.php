@@ -69,10 +69,10 @@ document.getElementById("searchInput").addEventListener("input", function() {
             <a href="logout.php"><button>Đăng xuất</button></a>
         </span>
     <?php } else {?>
-        <span class="tooltip">
+        
             <a href="signin.php"><button>Đăng nhập</button></a>
             <a href="signup.php"><button>Đăng ký</button></a>
-        </span>
+        
     <?php } ?>
 </div>
 </div>

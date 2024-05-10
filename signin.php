@@ -73,11 +73,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 <a href="index.php"><img src="img/banner/logoo.png" width="130px"></a>
                 <h1>Tạo tài khoản</h1>
                 <input type="text" name="user" placeholder="Tên đăng nhập" required/>
+                <input type="password" name="pass" placeholder="Mật khẩu" required/>
+                <input type="name" name="name" placeholder="Họ và tên" required/>
+                <input type="phone" name="phone" placeholder="Số điện thoại" required/>
                 <input type="email" name="email" placeholder="Email" required/>
-                <input type="password" name="pass" placeholder="Password" required/>
-                <input type="address" name="address" placeholder="Address" required/>
-                <input type="name" name="name" placeholder="Name" required/>
-                
+                <input type="address" name="address" placeholder="Địa chỉ" required/>
                 <button  type="submit">Đăng kí</button>
             </form>
         </div>
@@ -85,13 +85,10 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             <form action="signin.php" method="post">
             <a href="index.html"><img src="img/banner/logoo.png" width="130px"></a>
                 <h1>Đăng nhập</h1>
-                <label for="username"></label>
                 <input type="text" id="username" name="username" placeholder="Tên đăng nhập" required />
-                
-                <label for="password"></label>
                 <input type="password" id="password" name="password" placeholder="Mật khẩu" required />
                 
-                <a href="#">Quên Mật Khẩu?</a>
+                
                 
                 <button type="submit">Đăng Nhập</button>
 
