@@ -15,8 +15,8 @@
 
           </div>
         </li>
-        <li><a href="index.php?quanly=sachmoi">SÁCH MỚI</li></a>
-        <li><a href="index.php?quanly=khuyenmai">KHUYẾN MÃI</li></a>
+        <li><a href="sachmoi.php">SÁCH MỚI</li></a>
+        <li><a href="khuyenmai.php">BÁN CHẠY</li></a>
       </ul>
       <div class="box">
       <form action="search.php" method="post">
