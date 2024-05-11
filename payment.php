@@ -42,6 +42,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
 	<link rel="stylesheet" href="css/index.css">
 	<link rel="stylesheet" href="css/cart.css">
 	<link rel="stylesheet" href="css/payment.css">
+
+    <style>
+        .checkout-button,
+#showAddressBtn {
+    color: white; /* Thiết lập màu chữ thành trắng */
+    background-color: black; /* Thiết lập màu nền thành đen */
+    border: none; /* Xóa viền */
+    padding: 10px 20px; /* Tùy chỉnh padding */
+    border-radius: 5px; /* Bo tròn góc */
+    cursor: pointer; /* Biến con trỏ thành hình bàn tay khi hover */
+}
+
+.checkout-button:hover,
+#showAddressBtn:hover {
+    background-color: #333; /* Thay đổi màu nền khi hover */
+}
+
+#payment_method {
+
+ 
+    padding: 10px 20px; /* Tùy chỉnh padding */
+    border-radius: 8px; /* Bo tròn góc */
+    cursor: pointer; /* Biến con trỏ thành hình bàn tay khi hover */
+}
+    </style>
 </head>
 
 <body>
@@ -211,7 +236,7 @@ document.getElementById("updateButton").addEventListener("click", function() {
         <option value="COD">Thanh toán bằng tiền mặt</option>
     </select>
     <!-- Các trường dữ liệu khác -->
-    <button type="submit" name="check" class="checkout-button">THANH TOÁN NGAY!!!</button>
+    <button type="submit" name="check" class="checkout-button" >THANH TOÁN NGAY!!!</button>
 </form>
 
    
