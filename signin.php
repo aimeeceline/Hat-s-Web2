@@ -86,12 +86,8 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             <a href="index.html"><img src="img/banner/logoo.png" width="130px"></a>
                 <h1>Đăng nhập</h1>
                 <input type="text" id="username" name="username" placeholder="Tên đăng nhập" required />
-                <input type="password" id="password" name="password" placeholder="Mật khẩu" required />
-                
-                
-                
+                <input type="password" id="password" name="password" placeholder="Mật khẩu" required />            
                 <button type="submit">Đăng Nhập</button>
-
             </form>
         </div>
         <div class="toggle-container">

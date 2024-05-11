@@ -92,14 +92,6 @@ if ($result) {
           <?php echo $publisher; ?>
           <br><br><?php echo $description; ?>
         </div>
-        <div class="rating">
-          <span class="star">&#9733;</span>
-          <span class="star">&#9733;</span>
-          <span class="star">&#9733;</span>
-          <span class="star">&#9733;</span>
-          <span class="star">&#9734;</span>
-          <span class="nbuy">(205)</span>
-        </div>
         <div id="buy-amount">
           <button class="minus-btn" onclick="handleMinus()">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

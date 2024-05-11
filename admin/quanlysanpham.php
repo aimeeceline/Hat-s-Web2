@@ -150,7 +150,7 @@ if (!$conn) {
                             // Truy vấn dữ liệu từ cơ sở dữ liệu
                            
 
-                            $sql = "SELECT * FROM product";
+                            $sql = "SELECT * FROM product where status=1";
                             $result = $conn->query($sql);
         
                             // Kiểm tra nếu có dữ liệu trả về từ truy vấn
@@ -182,7 +182,7 @@ if (!$conn) {
                                     echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row['pro_id']."\",\"".$row['pro_name']."\",  \"".$row['pro_price']."\",\"".$row['pro_author']."\",\"".$row['pro_publisher']."\",\"".$row['pro_description']."\",\"".$row['pro_quantity']."\",\"".$row['id_category']."\",\"".$image_path."\",\"".$image_path2."\",\"".$image_path3."\")'>Sửa</button>";
                                     if ($row["status"] == 1) {
                                     // Nếu người dùng chưa bị khóa, hiển thị nút "Khóa"
-                                    echo "<button class='xoanguoidung' onclick='performAction(\"lock\", \"". $row['pro_id'] ."\")'>Xóa</button>";
+                                    echo "<button id='xoanguoidung' data-proid='" . $row['pro_id'] . "' onclick='performAction(this)'>Xóa</button>";                                   
                                 }
                                 
                                 echo "</td>";
@@ -212,7 +212,7 @@ if (!$conn) {
                                         }
                                     </script>
                                     <h2 style="margin-bottom: 10px;">Sửa thông tin sản phẩm  </h2>
-                                    <form id="suaUserForm" action="../admin/suaproduct.php" method="post" enctype="multipart/form-data">
+                                    <form id="suaUserForm" action="suaproduct.php" method="post" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label for="image1">Ảnh 1:</label>
                                             <div class="change_img">
@@ -321,24 +321,7 @@ if (!$conn) {
                                     });
                                 });
                                 ///////////////////
-                                function performAction(action, pro_id) {
-                             if (action === 'lock') {
-                             if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
-                            // Gửi yêu cầu xóa sản phẩm thông qua AJAX
-                            var xhr = new XMLHttpRequest();
-                            xhr.open("POST", "xoasanpham.php", true);
-                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                            xhr.onreadystatechange = function() {
-                                if (xhr.readyState === 4 && xhr.status === 200) {
-                                    // Xử lý kết quả nếu cần
-                                    // Ví dụ: Cập nhật giao diện người dùng sau khi xóa
-                                    location.reload(); // Tải lại trang sau khi xóa thành công
-                                }
-                            };
-                            xhr.send("pro_id=" + pro_id);
-                        }
-                    }
-                }
+                                
                 var input1 = document.getElementById('input_file1');
                 var input2 = document.getElementById('input_file2');
                 var input3 = document.getElementById('input_file3');
@@ -385,6 +368,42 @@ if (!$conn) {
                                         </script>
                                 <script src="../js/suaproduct.js"></script>
                 </div>
+                <script>
+   function performAction(button) {
+    // Xác nhận người dùng muốn đánh dấu đã xử lý
+    var proId = button.getAttribute('data-proid'); // Thay đổi 'proId' thành 'data-proid'
+    var confirmMsg = confirm("BẠN CÓ CHẮC MUỐN XÓA SẢN PHẨM NÀY?");
+    if (confirmMsg) {
+        // Gửi yêu cầu cập nhật trạng thái bằng Ajax
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Xử lý phản hồi từ máy chủ
+                    var response = xhr.responseText;
+                    if (response === 'success') {
+                        // Cập nhật thành công, có thể thực hiện các hành động khác nếu cần
+                        alert("ĐÃ XÓA THÀNH CÔNG!!.");
+                        // Tải lại trang để cập nhật danh sách đơn hàng
+                        location.reload();
+                    } else {
+                        // Cập nhật thất bại, hiển thị thông báo lỗi nếu cần
+                        alert("CÓ LỖI KHI XÓA SẢN PHẨM");
+                    }
+                } else {
+                    // Xử lý lỗi khi gửi yêu cầu
+                    alert("Có lỗi khi gửi yêu cầu đến máy chủ.");
+                }
+            }
+        };
+        // Mở kết nối và gửi yêu cầu đến file xử lý
+        xhr.open("POST", "xoasp.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("orderId=" + proId); // Thay đổi 'proId' thành 'data-proid'
+    }
+}
+
+</script>
                 <div class="pagination">
                     <li class="hientai">1</li>
                     <li><a href="quanlysanpham1.html" style="color: black;">2</a></li></a>
@@ -393,6 +412,7 @@ if (!$conn) {
             </div>
         </div>
         
+
         <!-- ====== ionicons ======= -->
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

@@ -52,14 +52,8 @@ $conn->close();
             <form action="signin.php" method="post"> <!-- Thay đổi action thành tên tập lệnh xử lý dữ liệu -->
                 <a href="index.html"><img src="img/banner/logoo.png" width="130px"></a>
                 <h1>Đăng nhập</h1>
-                <label for="username"></label>
-                <input type="text" id="username" name="username" placeholder="Username" required />
-                
-                <label for="password"></label>
-                <input type="password" id="password" name="password" placeholder="Password" required />
-                
-                <a href="#">Quên Mật Khẩu?</a>
-                
+                <input type="text" id="username" name="username" placeholder="Tên đăng nhập" required />
+                <input type="password" id="password" name="password" placeholder="Mật khẩu" required />            
                 <button type="submit">Đăng Nhập</button>
 
             </form>
@@ -69,15 +63,13 @@ $conn->close();
             <form action="signup.php" method="post">
             <a href="index.html"><img src="img/banner/logoo.png" width="130px"></a>
             <h1>Tạo tài khoản</h1>
-                
-                <input type="text" name="user" placeholder="Username" required/>
+                <input type="text" name="user" placeholder="Tên đăng nhập" required/>
+                <input type="password" name="pass" placeholder="Mật khẩu" required/>
+                <input type="name" name="name" placeholder="Họ và tên" required/>
+                <input type="phone" name="phone" placeholder="Số điện thoại" required/>
                 <input type="email" name="email" placeholder="Email" required/>
-                <input type="password" name="pass" placeholder="Password" required/>
-                <input type="address" name="address" placeholder="Address" required/>
-                <input type="name" name="name" placeholder="Name" required/>
-                
-                
-                <button type="submit">Đăng kí</button>
+                <input type="address" name="address" placeholder="Địa chỉ" required/>
+                <button  type="submit">Đăng kí</button>
             </form>
         </div>
         <div class="toggle-container">

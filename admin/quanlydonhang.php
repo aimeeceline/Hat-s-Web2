@@ -226,8 +226,6 @@ function submitForm(orderId) {
     // Submit biểu mẫu
     document.getElementById('orderForm').submit();
 }
-</script>
-<script>
     function markProcessed(orderId) {
         // Xác nhận người dùng muốn đánh dấu đã xử lý
         var confirmMsg = confirm("BẠN CÓ CHẮC ĐÃ XỬ LÝ ĐƠN HÀNG NÀY?");
