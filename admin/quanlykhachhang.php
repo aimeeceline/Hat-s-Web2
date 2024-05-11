@@ -199,7 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             document.querySelector('.user-table tbody').innerHTML = this.responseText;
         }
     };
-    xhttp.open("GET", "../admin/get_users.php?option=" + selectedOption, true);
+    xhttp.open("GET", "get_users.php?option=" + selectedOption, true);
     xhttp.send();
 }
                        </script>
@@ -230,7 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             // Truy vấn dữ liệu từ cơ sở dữ liệu
                            
 
-                        $sql = "SELECT  id, user, name, email, pass, locked FROM user WHERE id>1";
+                        $sql = "SELECT  * FROM user WHERE id>1";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {

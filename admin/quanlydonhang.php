@@ -7,14 +7,7 @@ $conn = $p->connect();
 if (!$conn) {
     die("Kết nối thất bại: " . mysqli_connect_error());
 }
-$sql_order = "SELECT o.*, p.pro_img1, p.pro_name, p.id_category, u.phone, u.name, u.user
-              FROM `orders` o
-              INNER JOIN `orderdetails` od ON o.id = od.order_id
-              INNER JOIN `product` p ON od.product_id = p.pro_id
-              INNER JOIN `user` u ON o.id_user = u.id
-              GROUP BY o.id
-              ORDER BY o.`id` DESC";
-$result_order = mysqli_query($conn, $sql_order);
+
 
 ?>
 <!DOCTYPE html>
@@ -99,11 +92,29 @@ $result_order = mysqli_query($conn, $sql_order);
             <div class="order">
                 <!-- ================ LÀM BANNER ================= -->
                 <div class="banner">
-                    <select id="month">
-                        <option>Tất cả</option>
-                        <option>Chưa xử lý</option>
-                        <option>Đã xử lý</option>
+                    <select id="month" onchange="LocXuLy()">
+                        <option value="all">Tất cả</option>
+                        <option value="notchange">Chưa xử lý</option>
+                        <option value="change">Đã xử lý</option>
                     </select>
+                    <script>
+                        function LocXuLy() {
+    var selectBox = document.getElementById('month');
+    var selectedOption = selectBox.options[selectBox.selectedIndex].value;
+    console.log("Selected Option: ", selectedOption);
+
+    // Gửi request AJAX để lấy dữ liệu tương ứng với tùy chọn đã chọn
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.querySelector('.order-table tbody').innerHTML = this.responseText;
+        }
+    };
+    // Sửa thành sử dụng selectedOption thay vì month
+    xhttp.open("GET", "get_order.php?month=" + selectedOption, true);
+    xhttp.send();
+}
+</script>
                     <select id="chon" onchange="showCustomDate()">
                         <option value="today">Hôm nay</option>
                         <option value="yesterday">Hôm qua</option>
@@ -169,11 +180,19 @@ $result_order = mysqli_query($conn, $sql_order);
                                 <td>SĐT</td>
                                 <td>Thành tiền</td>
                                 <td>Thời gian</td>
-                                <td>Ghi chú</td>
+                                <td>Ghi chú</td>    
                             </tr>
                         </thead>
                         <tbody>
                             <?php
+                            $sql_order = "SELECT o.*, p.pro_img1, p.pro_name, p.id_category, u.phone, u.name, u.user
+                            FROM `orders` o
+                            INNER JOIN `orderdetails` od ON o.id = od.order_id
+                            INNER JOIN `product` p ON od.product_id = p.pro_id
+                            INNER JOIN `user` u ON o.id_user = u.id
+                            GROUP BY o.id
+                            ORDER BY o.`id` DESC";
+              $result_order = mysqli_query($conn, $sql_order);
                             // Kiểm tra xem có đơn hàng nào không
                             if (mysqli_num_rows($result_order) > 0) {
                                 // Nếu có, lặp qua từng đơn hàng và hiển thị thông tin
