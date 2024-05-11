@@ -7,8 +7,6 @@ $conn = $p->connect();
 if (!$conn) {
     die("Kết nối thất bại: " . mysqli_connect_error());
 }
-
-
 $sql_order = "SELECT o.*, p.pro_img1, p.pro_name, p.id_category, u.phone, u.name, u.user
               FROM `orders` o
               INNER JOIN `orderdetails` od ON o.id = od.order_id

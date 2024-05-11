@@ -61,6 +61,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['order_id'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/lichsumuahang.css">
+
+    <style>
+        /* CSS for Địa chỉ Đơn hàng section */
+#address {
+    font-size: 18px; /* Adjust the font size as needed */
+    font-weight: bold; /* Make the text bold */
+    margin-top: 20px; /* Add some top margin */
+}
+
+.diachigiaohang {
+    border: 1px solid #000; /* Add a border */
+    padding: 10px; /* Add some padding */
+    margin-top: 10px; /* Add some top margin */
+    background-color: none; /* Add a background color */
+    width: 1350px;
+}
+
+.thongtinnguoimua {
+    font-size: 16px; /* Adjust the font size as needed */
+}
+
+.thongtinnguoimua p {
+    margin: 5px 0; /* Add some margin between paragraphs */
+}
+
+    </style>
 </head>
 <body>
     <div class="container">

@@ -236,7 +236,13 @@ document.getElementById("updateButton").addEventListener("click", function() {
         <option value="COD">Thanh toán bằng tiền mặt</option>
     </select>
     <!-- Các trường dữ liệu khác -->
-    <button type="submit" name="check" class="checkout-button" >THANH TOÁN NGAY!!!</button>
+    <button type="submit" name="check" class="checkout-button" onclick="showThankYouMessage()">THANH TOÁN NGAY!!!</button>
+    <script>
+    // Function to show thank you message
+    function showThankYouMessage() {
+        alert('Cảm ơn bạn đã mua hàng!');
+    }
+</script>              
 </form>
 
    

@@ -9,6 +9,7 @@ if (!$conn) {
 }
 
 
+
 // Kiểm tra xem có dữ liệu được gửi từ form không
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Lấy dữ liệu từ form
@@ -22,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 
     // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
-
     // Tiến hành thêm dữ liệu vào cơ sở dữ liệu
     $sql = "INSERT INTO user ( `user`, `email`,  `pass` , `name`,  `address` , `phone` ) VALUES ('$user', '$email',  '$pass', '$name', '$address', '$phone' )";
     if ($conn->query($sql) === TRUE) {
@@ -181,13 +181,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             window.location.href = 'http://localhost/HAT-s-web2/admin/quanlykhachhang.php';
                         });
                     </script>
+                    
+                    <select id="option" onchange="filterUsers()">
+    <option value="all">Tất cả</option>
+    <option value="active">Hoạt động</option>
+    <option value="locked">Bị khóa</option>
+</select>
+                       <script>
+                        function filterUsers() {
+    var selectBox = document.getElementById('option');
+    var selectedOption = selectBox.options[selectBox.selectedIndex].value;
 
-                    <select id="option">
-                        <option>Tất cả</option>
-                        <option>Hoạt động</option>
-                        <option>Bị khóa</option>
-                    </select>
-                
+    // Gửi request AJAX để lấy dữ liệu tương ứng với tùy chọn đã chọn
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.querySelector('.user-table tbody').innerHTML = this.responseText;
+        }
+    };
+    xhttp.open("GET", "../admin/get_users.php?option=" + selectedOption, true);
+    xhttp.send();
+}
+                       </script>
                    <div>
                     <input id="timnguoidung" type="text" placeholder="Tên người dùng ...">
                     
