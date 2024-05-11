@@ -18,8 +18,7 @@ if (isset($_POST['search'])) {
     $result = $stmt->get_result();
 }
 
-// Đóng kết nối sau khi sử dụng
-$conn->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -44,9 +43,27 @@ $conn->close();
         
         <div class="onmain">
             <?php
+            $results_per_page = 6;
+
+            if (isset($result)) {
+                $total_results = $result->num_rows;
+                $total_pages = ceil($total_results / $results_per_page);
+            } else {
+                $total_pages = 0;
+            }
+
+            // Lấy trang hiện tại, mặc định là trang 1
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+// Tính chỉ số bắt đầu của kết quả trên trang hiện tại
+$start_index = ($current_page - 1) * $results_per_page;
+
             // Hiển thị kết quả tìm kiếm nếu có
             if (isset($result) && $result->num_rows > 0) {
+                $counter = 0;
                 while ($row = $result->fetch_assoc()) {
+                    $counter++;
+                    if ($counter > $start_index && $counter <= ($start_index + $results_per_page)) {
                     $id = $row['pro_id'];
                     $name = $row['pro_name'];
                     $category = $row['id_category'];
@@ -73,17 +90,35 @@ $conn->close();
                 </a>
                 
             </div>';
-                }
+                }}
             } else {
                 echo '0 results found';
+                
             }
             ?>
         </div>
         </div>
         <!-- Hiển thị nút phân trang -->
+        <?php 
+        echo '<div class="pagination">';
+        if ($total_pages > 1) {
+            for ($i = 1; $i <= $total_pages; $i++) {
+                echo '<a href="?page=' . $i . '"';
+                if ($i == $current_page) {
+                    echo ' class="active"';
+                }
+                echo '>' . $i . '</a>';
+            }
+        }
+        echo '</div>';
+        ?>
         
         <?php include("page/footer.php"); ?>
     </div>
 </body>
 
 </html>
+<?php
+    // Đóng kết nối sau khi sử dụng
+    $conn->close();
+?>
