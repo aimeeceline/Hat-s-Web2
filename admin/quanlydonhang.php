@@ -128,7 +128,9 @@ if (!$conn) {
                         function sDate() {
     var selectBox = document.getElementById('ngaymua');
     var selectedOption = selectBox.options[selectBox.selectedIndex].value;
-
+    if (selectedOption === 'custom') {
+            showCustomDate();
+        }
     // Gửi request AJAX để lấy dữ liệu tương ứng với tùy chọn đã chọn
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -153,30 +155,31 @@ if (!$conn) {
                     </div>
 
                     <script>
-                        function showCustomDate() {
-                            const select = document.getElementById('ngaymua');
-                            const customDate = document.getElementById('customDate');
+    function showCustomDate() {
+        const select = document.getElementById('ngaymua');
+        const customDate = document.getElementById('customDate');
 
-                            if (select.value === 'custom') {
-                                customDate.style.display = 'block';
-                            } else {
-                                customDate.style.display = 'none';
-                            }
-                        }
+        if (select.value === 'custom') {
+            customDate.style.display = 'block';
+        } else {
+            customDate.style.display = 'none';
+        }
+    }
 
-                        function gui() {
-                            const fromDate = document.getElementById('fromDate').value;
-                            const toDate = document.getElementById('toDate').value;
-                            const customDate = document.getElementById('customDate');
+    function gui() {
+        const fromDate = document.getElementById('fromDate').value;
+        const toDate = document.getElementById('toDate').value;
+        const customDate = document.getElementById('customDate');
 
-                            if (fromDate !== '' && toDate !== '') {
-                                alert(`Đã cập nhật các đơn hàng từ ${fromDate} đến ${toDate}`);
-                                customDate.style.display = 'none'; // Ẩn box khi nhấn OK trên alert
-                            } else {
-                                alert("Vui lòng nhập đầy đủ thông tin ngày");
-                            }
-                        }
-                    </script>
+        if (fromDate !== '' && toDate !== '') {
+            alert(`Đã cập nhật các đơn hàng từ ${fromDate} đến ${toDate}`);
+            customDate.style.display = 'none'; // Ẩn box khi nhấn OK trên alert
+        } else {
+            alert("Vui lòng nhập đầy đủ thông tin ngày");
+        }
+    }
+</script>
+
 
                     <div class="finder">
                         <select id="find">
