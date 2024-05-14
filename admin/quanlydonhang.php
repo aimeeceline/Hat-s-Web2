@@ -117,11 +117,12 @@ if (!$conn) {
 }
 </script>
                     <select id="ngaymua" onchange="sDate()">
+                    <option value="alltime">Tất cả</option>
                         <option value="today">Hôm nay</option>
                         <option value="yesterday">Hôm qua</option>
                         <option value="last7days">7 ngày trước</option>
                         <option value="last30days">30 ngày trước</option>
-                        <option value="custom">Tùy chọn</option>
+                        <option value="custom" onchange="showCustomDate()" >Tùy chọn</option>
                     </select>
                     <script>
                         function sDate() {
@@ -153,7 +154,7 @@ if (!$conn) {
 
                     <script>
                         function showCustomDate() {
-                            const select = document.getElementById('chon');
+                            const select = document.getElementById('ngaymua');
                             const customDate = document.getElementById('customDate');
 
                             if (select.value === 'custom') {

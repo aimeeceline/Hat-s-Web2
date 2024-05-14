@@ -18,18 +18,18 @@ if ($option == "today") {
     $sql_order = "SELECT orders.id, orders.id_user, user.user, user.phone, orders.total, orders.order_date, orders.status 
     FROM orders 
     INNER JOIN user ON id_user = user.id 
-    WHERE status = 1 AND DATE(order_date) = DATE_SUB(CURDATE(), INTERVAL 1 DAY)";
-} elseif ($option == "7days") {
+    WHERE DATE(order_date) = DATE_SUB(CURDATE(), INTERVAL 1 DAY)";
+} elseif ($option == "last7days") {
     $sql_order = "SELECT orders.id, orders.id_user, user.user, user.phone, orders.total, orders.order_date, orders.status 
     FROM orders 
     INNER JOIN user ON id_user = user.id 
     WHERE order_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 6 DAY) AND CURDATE()";
-} elseif ($option == "30days") {
+} elseif ($option == "last30days") {
     $sql_order = "SELECT orders.id, orders.id_user, user.user, user.phone, orders.total, orders.order_date, orders.status 
     FROM orders 
     INNER JOIN user ON id_user = user.id 
     WHERE order_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 29 DAY) AND CURDATE()";
-} else {
+} elseif ($option == "alltime") {
     // Default query if no option is selected
     $sql_order = "SELECT orders.id, orders.id_user, user.user, user.phone, orders.total, orders.order_date, orders.status 
     FROM orders 
