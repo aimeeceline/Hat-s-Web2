@@ -101,27 +101,47 @@ if (!$conn) {
                         function LocXuLy() {
     var selectBox = document.getElementById('month');
     var selectedOption = selectBox.options[selectBox.selectedIndex].value;
-    console.log("Selected Option: ", selectedOption);
 
     // Gửi request AJAX để lấy dữ liệu tương ứng với tùy chọn đã chọn
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            // Cập nhật nội dung của tbody trong table với dữ liệu từ phản hồi AJAX
             document.querySelector('.order-table tbody').innerHTML = this.responseText;
         }
     };
-    // Sửa thành sử dụng selectedOption thay vì month
-    xhttp.open("GET", "get_order.php?month=" + selectedOption, true);
+    // Sử dụng phương thức GET và truyền tham số 'month'
+    xhttp.open("GET", "get_orders.php?month=" + selectedOption, true);
     xhttp.send();
+
 }
 </script>
-                    <select id="chon" onchange="showCustomDate()">
+                    <select id="ngaymua" onchange="sDate()">
                         <option value="today">Hôm nay</option>
                         <option value="yesterday">Hôm qua</option>
                         <option value="last7days">7 ngày trước</option>
                         <option value="last30days">30 ngày trước</option>
                         <option value="custom">Tùy chọn</option>
                     </select>
+                    <script>
+                        function sDate() {
+    var selectBox = document.getElementById('ngaymua');
+    var selectedOption = selectBox.options[selectBox.selectedIndex].value;
+
+    // Gửi request AJAX để lấy dữ liệu tương ứng với tùy chọn đã chọn
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // Cập nhật nội dung của tbody trong table với dữ liệu từ phản hồi AJAX
+            document.querySelector('.order-table tbody').innerHTML = this.responseText;
+        }
+    };
+    // Sử dụng phương thức GET và truyền tham số 'month'
+    xhttp.open("GET", "get_date.php?ngaymua=" + selectedOption, true);
+    xhttp.send();
+
+}
+</script>
 
                     <div id="customDate" style="display: none;">
                         <label for="fromDate">Từ ngày:</label>
