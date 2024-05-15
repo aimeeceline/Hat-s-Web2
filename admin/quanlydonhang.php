@@ -235,17 +235,44 @@ if (!$conn) {
                                         <td><?php echo number_format($order['total'], 0, ',', '.') . 'đ'; ?></td>
                                         <td><?php echo $order['order_date']; ?></td>
                                         <?php if ($order['status'] == 0) : ?>
-    <!-- Hiển thị nút "Chưa xử lý" -->
-    <td>
-        <button id="xoanguoidung" onclick="markProcessed(<?php echo $order['id']; ?>)">Chưa xử lý</button>
+    <!-- Hiển thị select box cho trạng thái -->
+    <td> 
+        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)">
+            <option value="0" selected>Chưa xử lý</option>
+            <option value="1">Đã xử lý</option>
+            <option value="2">Đã giao</option>
+            <option value="3">Đã hủy</option>
+        </select>
     </td>
-<?php else: ?>
-    <!-- Hiển thị nút "Đã xử lý" -->
+<?php elseif ($order['status'] == 1) : ?>
     <td>
-                                    <p id="suanguoidung">Đã xử lý</p>
-
-                                </td>
+        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)">
+            <option value="1" selected>Đã xử lý</option>
+            <option value="0" >Chưa xử lý</option>
+            <option value="2">Đã giao</option>
+            <option value="3">Đã hủy</option>
+        </select>
+    </td>
+<?php elseif ($order['status'] == 2) : ?>
+    <td>
+        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)">
+            <option value="2" selected>Đã giao</option>
+            <option value="0" >Chưa xử lý</option>
+            <option value="1">Đã xử lý</option>
+            <option value="3">Đã hủy</option>
+        </select>
+    </td>
+<?php elseif ($order['status'] == 3) : ?>
+    <td>
+        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)">
+            <option value="3" selected>Đã hủy</option>
+            <option value="0" >Chưa xử lý</option>
+            <option value="1">Đã xử lý</option>
+            <option value="2">Đã giao</option>
+        </select>
+    </td>
 <?php endif; ?>
+
                                         
                                     </tr>
                                     <?php
@@ -263,45 +290,36 @@ if (!$conn) {
 </form>
 
 <script>
-function submitForm(orderId) {
-    // Đặt giá trị ID vào trường input
-    document.getElementById('orderIdInput').value = orderId;
-    // Submit biểu mẫu
-    document.getElementById('orderForm').submit();
-}
-    function markProcessed(orderId) {
-        // Xác nhận người dùng muốn đánh dấu đã xử lý
-        var confirmMsg = confirm("BẠN CÓ CHẮC ĐÃ XỬ LÝ ĐƠN HÀNG NÀY?");
-        if (confirmMsg) {
-            // Gửi yêu cầu cập nhật trạng thái bằng Ajax
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        // Xử lý phản hồi từ máy chủ
-                        var response = xhr.responseText;
-                        if (response === 'success') {
-                            // Cập nhật thành công, có thể thực hiện các hành động khác nếu cần
-                            alert("Đã cập nhật trạng thái đơn hàng thành công.");
-                            // Tải lại trang để cập nhật danh sách đơn hàng
-                            location.reload();
-                        } else {
-                            // Cập nhật thất bại, hiển thị thông báo lỗi nếu cần
-                            alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
-                        }
+    function updateStatus(orderId, status) {
+        // Gửi yêu cầu cập nhật trạng thái bằng Ajax
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Xử lý phản hồi từ máy chủ
+                    var response = xhr.responseText;
+                    if (response === 'success') {
+                        // Cập nhật thành công, có thể thực hiện các hành động khác nếu cần
+                        alert("Đã cập nhật trạng thái đơn hàng thành công.");
+                        // Tải lại trang để cập nhật danh sách đơn hàng
+                        location.reload();
                     } else {
-                        // Xử lý lỗi khi gửi yêu cầu
-                        alert("Có lỗi khi gửi yêu cầu đến máy chủ.");
+                        // Cập nhật thất bại, hiển thị thông báo lỗi nếu cần
+                        alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
                     }
+                } else {
+                    // Xử lý lỗi khi gửi yêu cầu
+                    alert("Có lỗi khi gửi yêu cầu đến máy chủ.");
                 }
-            };
-            // Mở kết nối và gửi yêu cầu đến file xử lý
-            xhr.open("POST", "updatestatus.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.send("orderId=" + orderId);
-        }
+            }
+        };
+        // Mở kết nối và gửi yêu cầu đến file xử lý
+        xhr.open("POST", "updatestatus.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("orderId=" + orderId + "&status=" + status);
     }
 </script>
+
 
 
                         </tbody>

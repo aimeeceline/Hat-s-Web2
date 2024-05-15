@@ -79,9 +79,13 @@ $result_order = mysqli_query($conn, $sql_order);
     <?php
     // Kiểm tra giá trị của trường status và xuất ra chuỗi tương ứng
     if ($order['status'] == 0) {
-        echo "<p style='color: red;'>Chờ xác nhận</p>";
+        echo "<p style='color: red;'>Chưa xác nhận</p>";
     } elseif ($order['status'] == 1) {
-        echo "<p style='color: green;'>Đã giao</p>";
+        echo "<p style='color: green;'>Đã xác nhận</p>";
+    }elseif ($order['status'] == 2) {
+        echo "<p style='color: blue;'>Đã giao</p>";
+    }elseif ($order['status'] == 3) {
+        echo "<p style='color: grey;'>Đã hủy</p>";
     } else {
         echo "Trạng thái không xác định";
     }
