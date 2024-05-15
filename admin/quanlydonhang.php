@@ -91,7 +91,7 @@ if (!$conn) {
     <option value="all">Tất cả</option>
     <option value="notchange">Chưa xử lý</option>
     <option value="change">Đã xử lý</option>
-</select>
+</select>   
 
 <script>
 function LocXuLy() {
@@ -107,7 +107,7 @@ function LocXuLy() {
         }
     };
     // Sử dụng phương thức GET và truyền tham số 'month'
-    xhttp.open("GET", "get_orders.php?month=" + selectedOption, true);
+    xhttp.open("GET", "get_orders.php?locxuly=" + selectedOption, true);
     xhttp.send();
 }
 </script>
