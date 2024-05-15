@@ -87,16 +87,15 @@ if (!$conn) {
             <div class="order">
                 <!-- ================ LÀM BANNER ================= -->
                 <div class="banner">
-                    <select id="locxuly" onchange="LocXuLy()">
-                        <option value="all">Tất cả</option>
-                        <option value="chuaxl">Chưa xử lý</option>
-                        <option value="daxuly">Đã xử lý</option>
-                        <option value="dagiao">Đã giao</option>
-                        <option value="dahuy">Đã hủy</option>
-                    </select>
-                    <script>
-                        function LocXuLy() {
-                            var selectBox = document.getElementById('locxuly');
+                <select id="month" onchange="LocXuLy()">
+    <option value="all">Tất cả</option>
+    <option value="notchange">Chưa xử lý</option>
+    <option value="change">Đã xử lý</option>
+</select>   
+
+<script>
+function LocXuLy() {
+    var selectBox = document.getElementById('month');
     var selectedOption = selectBox.options[selectBox.selectedIndex].value;
 
     // Gửi request AJAX để lấy dữ liệu tương ứng với tùy chọn đã chọn
@@ -110,10 +109,8 @@ if (!$conn) {
     // Sử dụng phương thức GET và truyền tham số 'month'
     xhttp.open("GET", "get_oders.php?locxuly=" + selectedOption, true);
     xhttp.send();
-
 }
 </script>
-
                     <select id="ngaymua" onchange="sDate()">
                     <option value="alltime">Tất cả</option>
                         <option value="today">Hôm nay</option>
