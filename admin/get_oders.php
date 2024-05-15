@@ -6,8 +6,8 @@ if (!$conn) {
     die("Kết nối thất bại: " . mysqli_connect_error());
 }
 
-// Kiểm tra xem tham số 'status' có tồn tại không
-$option = $_GET['month'];
+// Kiểm tra xem tham số 'month' có tồn tại không
+$option = isset($_GET['month']) ? $_GET['month'] : 'all';
 
 // Xây dựng truy vấn dựa trên tùy chọn được chọn
 $sql_order = "";

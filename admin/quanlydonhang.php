@@ -87,13 +87,14 @@ if (!$conn) {
             <div class="order">
                 <!-- ================ LÀM BANNER ================= -->
                 <div class="banner">
-                    <select id="month" onchange="LocXuLy()">
-                        <option value="all">Tất cả</option>
-                        <option value="notchange">Chưa xử lý</option>
-                        <option value="change">Đã xử lý</option>
-                    </select>
-                    <script>
-                        function LocXuLy() {
+                <select id="month" onchange="LocXuLy()">
+    <option value="all">Tất cả</option>
+    <option value="notchange">Chưa xử lý</option>
+    <option value="change">Đã xử lý</option>
+</select>
+
+<script>
+function LocXuLy() {
     var selectBox = document.getElementById('month');
     var selectedOption = selectBox.options[selectBox.selectedIndex].value;
 
@@ -108,10 +109,8 @@ if (!$conn) {
     // Sử dụng phương thức GET và truyền tham số 'month'
     xhttp.open("GET", "get_orders.php?month=" + selectedOption, true);
     xhttp.send();
-
 }
 </script>
-
                     <select id="ngaymua" onchange="sDate()">
                     <option value="alltime">Tất cả</option>
                         <option value="today">Hôm nay</option>
