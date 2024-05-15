@@ -34,6 +34,15 @@ if ($option == "today") {
     $sql_order = "SELECT orders.id, orders.id_user, user.user, user.phone, orders.total, orders.order_date, orders.status 
     FROM orders 
     INNER JOIN user ON id_user = user.id";
+}   elseif ($option == "custom") {
+    // Xử lý trường hợp khi chọn tùy chọn "Tùy chọn"
+    $fromDate = $_GET['fromDate'];
+    $toDate = $_GET['toDate'];
+    // Thực hiện truy vấn dữ liệu đơn hàng trong khoảng ngày từ fromDate đến toDate
+    $sql_order = "SELECT orders.id, orders.id_user, user.user, user.phone, orders.total, orders.order_date, orders.status 
+    FROM orders 
+    INNER JOIN user ON id_user = user.id 
+    WHERE DATE(order_date) BETWEEN '$fromDate' AND '$toDate'";
 }
 
 // Execute the SQL query
