@@ -19,6 +19,6 @@
                         <label><input type="checkbox" name="giaban[]" value="6">500.000 đ - 1.000.000 đ</label>
                     </div>
                     <!-- Nút Áp dụng -->
-                    <button type="submit" class="apply-button">Áp dụng</button>
+                    <button type="submit" name="apply-button">Áp dụng</button>
                 </div>
             </form>

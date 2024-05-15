@@ -75,7 +75,6 @@ if (isset($_POST['search'])) {
                 $counter = 0;
                 while ($row = $result->fetch_assoc()) {
                     $counter++;
-                    // Kiểm tra xem $counter có trong phạm vi của trang hiện tại không
                     if ($counter > $start_index && $counter <= ($start_index + $results_per_page)) {
                         $id = $row['pro_id'];
                         $name = $row['pro_name'];
@@ -109,17 +108,6 @@ if (isset($_POST['search'])) {
             }
             ?>
         </div>
-<<<<<<< Updated upstream
-        </div>
-        <!-- Hiển thị nút phân trang -->
-        <div class="pagination">
-    <?php
-    if ($total_pages > 1) {
-        for ($i = 1; $i <= $total_pages; $i++) {
-            echo '<a href="?page=' . $i . '"';
-            if ($i == $current_page) {
-                echo ' class="active"';
-=======
     </div>
     <div class="pagination">
         <?php
@@ -142,20 +130,9 @@ if (isset($_POST['search'])) {
             // Hiển thị nút Next
             if ($current_page < $total_pages) {
                 echo '<li><a href="?page=' . ($current_page + 1) . $searchQuery . '">SAU</a></li>';
->>>>>>> Stashed changes
             }
-            echo '>' . $i . '</a>';
         }
-<<<<<<< Updated upstream
-    }
-    ?>
-</div>
-
-        
-        <?php include("page/footer.php"); ?>
-=======
         ?>
->>>>>>> Stashed changes
     </div>
     <?php include("page/footer.php"); ?>
 </body>

@@ -37,10 +37,24 @@ if (isset($_POST['giaban']) && !empty($_POST['giaban'])) {
     $whereConditions[] = "(" . implode(" OR ", $priceConditions) . ")";
 }
 
-// Tạo điều kiện truy vấn từ mảng $whereConditions
-$searchQuery = '';
-if (!empty($whereConditions)) {
-    $searchQuery = '?' . http_build_query(array('search' => implode(' AND ', $whereConditions)));
+// Kiểm tra xem người dùng đã nhấn nút "Áp dụng" hay chưa
+if (isset($_POST['apply-button'])) {
+    // Tạo điều kiện truy vấn từ mảng $whereConditions
+    $searchQuery = '';
+    if (!empty($whereConditions)) {
+        $searchQuery = '?' . http_build_query(array('search' => implode(' AND ', $whereConditions)));
+    }
+
+    // Lưu dữ liệu tìm kiếm vào sessionStorage
+    $_SESSION['searchData'] = json_encode($whereConditions);
+} else {
+    // Đây là trường hợp khi người dùng chưa nhấn nút "Áp dụng"
+    // Lấy dữ liệu tìm kiếm từ sessionStorage nếu có
+    $searchConditions = isset($_SESSION['searchData']) ? json_decode($_SESSION['searchData'], true) : [];
+    // Tạo điều kiện truy vấn từ dữ liệu tìm kiếm
+    if (!empty($searchConditions)) {
+        $whereConditions = $searchConditions;
+    }
 }
 
 // Thực hiện truy vấn tìm kiếm
@@ -50,8 +64,14 @@ if (!empty($whereConditions)) {
 }
 $result = $conn->query($sql);
 
-// Lưu dữ liệu tìm kiếm vào sessionStorage
-$_SESSION['searchData'] = $searchQuery;
+// Lấy tổng số trang
+$total_pages = ($result) ? ceil($result->num_rows / 6) : 0;
+
+// Lấy trang hiện tại, mặc định là trang 1
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+// Tính chỉ số bắt đầu của kết quả trên trang hiện tại
+$start_index = ($current_page - 1) * 6;
 
 // Đóng kết nối sau khi sử dụng
 $conn->close();
@@ -73,14 +93,19 @@ $conn->close();
 <body>
     <div class="container">
         <?php include("page/header.php");
+                echo "<h2 id='head'>KẾT QUẢ TÌM KIẾM:</h2>";
+
         include("page/searchform.php");
         ?>
     
             <div class="onmain">
-                <?php
-                // Hiển thị kết quả tìm kiếm nếu có
-                if (isset($result) && $result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
+            <?php
+            // Hiển thị kết quả tìm kiếm nếu có
+            if (isset($result) && $result->num_rows > 0) {
+                $counter = 0;
+                while ($row = $result->fetch_assoc()) {
+                    $counter++;
+                    if ($counter > $start_index && $counter <= ($start_index + 6)) {
                         $id = $row['pro_id'];
                         $name = $row['pro_name'];
                         $category = $row['id_category'];
@@ -107,42 +132,32 @@ $conn->close();
                             </a>
                         </div>';
                     }
-                } else {
-                    echo '0 results found';
                 }
-                ?>
-            </div>
-        </div>
-         <!-- Hiển thị nút phân trang -->
-         <div class="pagination">
-            <?php
-            if (isset($result)) {
-                $results_per_page = 6;
-                $total_results = $result->num_rows;
-                $total_pages = ceil($total_results / $results_per_page);
-
-                // Lấy trang hiện tại, mặc định là trang 1
-                $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-
-                // Hiển thị nút Previous
-                if ($current_page > 1) {
-                    echo '<a href="?page=' . ($current_page - 1) . '">Previous</a>';
-                }
-
-                // Hiển thị nút phân trang
-                for ($i = 1; $i <= $total_pages; $i++) {
-                    // Kiểm tra xem có phải trang hiện tại không
-                    $current_class = ($i == $current_page) ? ' class="active"' : '';
-                    echo '<a href="?page=' . $i . '"' . $current_class . '>' . $i . '</a>';
-                }
-
-                // Hiển thị nút Next
-                if ($current_page < $total_pages) {
-                    echo '<a href="?page=' . ($current_page + 1) . '">Next</a>';
-                }
+            } else {
+                echo '0 results found';
             }
             ?>
-        
+        </div>
+    </div>
+    <div class="pagination">
+        <?php
+        // Hiển thị nút Previous
+        if ($current_page > 1) {
+            echo '<li><a href="?page=' . ($current_page - 1) . '">TRC</a></li>';
+        }
+
+        // Hiển thị nút phân trang
+        for ($i = 1; $i <= $total_pages; $i++) {
+            // Kiểm tra xem có phải trang hiện tại không
+            $current_class = ($i == $current_page) ? ' class="hientai"' : '';
+            echo '<li' . $current_class . '><a href="?page=' . $i . '">' . $i . '</a></li>';
+        }
+
+        // Hiển thị nút Next
+        if ($current_page < $total_pages) {
+            echo '<li><a href="?page=' . ($current_page + 1) . '">SAU</a></li>';
+        }
+        ?>
     </div>
         <?php include("page/footer.php"); ?>
     </div>
