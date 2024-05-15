@@ -14,14 +14,12 @@ $whereConditions = [];
 // Xử lý tìm kiếm theo thể loại
 if (isset($_POST['theloai']) && !empty($_POST['theloai'])) {
     $theloai = $_POST['theloai'][0];
-    //var_dump($theloai);
     $whereConditions[] = "id_category = ($theloai)";
 }
 
 // Xử lý tìm kiếm theo giá bán
 if (isset($_POST['giaban']) && !empty($_POST['giaban'])) {
     $giaban = $_POST['giaban'];
-    //var_dump($giaban);
     $priceConditions = [];
     foreach ($giaban as $value) {
         switch ($value) {
@@ -39,13 +37,21 @@ if (isset($_POST['giaban']) && !empty($_POST['giaban'])) {
     $whereConditions[] = "(" . implode(" OR ", $priceConditions) . ")";
 }
 
+// Tạo điều kiện truy vấn từ mảng $whereConditions
+$searchQuery = '';
+if (!empty($whereConditions)) {
+    $searchQuery = '?' . http_build_query(array('search' => implode(' AND ', $whereConditions)));
+}
+
+// Thực hiện truy vấn tìm kiếm
 $sql = "SELECT * FROM product WHERE status=1";
 if (!empty($whereConditions)) {
     $sql .= " AND " . implode(" AND ", $whereConditions);
 }
-//echo $sql;
-// Thực thi truy vấn
 $result = $conn->query($sql);
+
+// Lưu dữ liệu tìm kiếm vào sessionStorage
+$_SESSION['searchData'] = $searchQuery;
 
 // Đóng kết nối sau khi sử dụng
 $conn->close();
@@ -107,7 +113,37 @@ $conn->close();
                 ?>
             </div>
         </div>
-        <!-- Hiển thị nút phân trang -->
+         <!-- Hiển thị nút phân trang -->
+         <div class="pagination">
+            <?php
+            if (isset($result)) {
+                $results_per_page = 6;
+                $total_results = $result->num_rows;
+                $total_pages = ceil($total_results / $results_per_page);
+
+                // Lấy trang hiện tại, mặc định là trang 1
+                $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+                // Hiển thị nút Previous
+                if ($current_page > 1) {
+                    echo '<a href="?page=' . ($current_page - 1) . '">Previous</a>';
+                }
+
+                // Hiển thị nút phân trang
+                for ($i = 1; $i <= $total_pages; $i++) {
+                    // Kiểm tra xem có phải trang hiện tại không
+                    $current_class = ($i == $current_page) ? ' class="active"' : '';
+                    echo '<a href="?page=' . $i . '"' . $current_class . '>' . $i . '</a>';
+                }
+
+                // Hiển thị nút Next
+                if ($current_page < $total_pages) {
+                    echo '<a href="?page=' . ($current_page + 1) . '">Next</a>';
+                }
+            }
+            ?>
+        
+    </div>
         <?php include("page/footer.php"); ?>
     </div>
 </body>

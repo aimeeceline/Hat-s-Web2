@@ -37,13 +37,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['check'])) {
             $sql_order_detail = "INSERT INTO `orderdetails` (`order_id`, `product_id`, `quantity`, `unitprice`) VALUES ('$order_id', '$product_id', '$quantity', '$unitprice')";
             mysqli_query($conn, $sql_order_detail);
         }
-
+header("Location: chitietdonhang.php?order_id=$order_id");
         // Xóa giỏ hàng sau khi đã thanh toán
         unset($_SESSION['cart']);
 
         // Chuyển hướng người dùng đến trang cảm ơn hoặc trang xác nhận đơn hàng
-        echo json_encode(array("message" => "Cảm ơn bạn đã mua hàng!!!"));
-        header("Location: index.php");
+    
+        
         exit();
     } else {
         echo "Lỗi: " . mysqli_error($conn);
