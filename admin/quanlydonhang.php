@@ -87,15 +87,16 @@ if (!$conn) {
             <div class="order">
                 <!-- ================ LÀM BANNER ================= -->
                 <div class="banner">
-                <select id="month" onchange="LocXuLy()">
-    <option value="all">Tất cả</option>
-    <option value="notchange">Chưa xử lý</option>
-    <option value="change">Đã xử lý</option>
-</select>   
-
-<script>
-function LocXuLy() {
-    var selectBox = document.getElementById('month');
+                <select id="locxuly" onchange="LocXuLy()">
+                        <option value="all">Tất cả</option>
+                        <option value="chuaxl">Chưa xử lý</option>
+                        <option value="daxuly">Đã xử lý</option>
+                        <option value="dagiao">Đã giao</option>
+                        <option value="dahuy">Đã hủy</option>
+                    </select>
+                    <script>
+                        function LocXuLy() {
+                            var selectBox = document.getElementById('locxuly');
     var selectedOption = selectBox.options[selectBox.selectedIndex].value;
 
     // Gửi request AJAX để lấy dữ liệu tương ứng với tùy chọn đã chọn
