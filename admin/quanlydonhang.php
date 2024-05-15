@@ -25,6 +25,7 @@ if (!$conn) {
 </head>
 
 <body>
+   
     <!-- =============== Navigation ================ -->
     <div class="container">
         <div class="navigation">
@@ -223,9 +224,9 @@ if (!$conn) {
                                         <td><?php echo number_format($order['total'], 0, ',', '.') . 'đ'; ?></td>
                                         <td><?php echo $order['order_date']; ?></td>
                                         <?php if ($order['status'] == 0) : ?>
-    <!-- Hiển thị select box cho trạng thái -->
+    <!-- Nếu đơn hàng chưa xử lý -->
     <td> 
-        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)">
+        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)" style="background-color: #f0f0f0; color: black;">
             <option value="0" selected>Chưa xử lý</option>
             <option value="1">Đã xử lý</option>
             <option value="2">Đã giao</option>
@@ -233,28 +234,31 @@ if (!$conn) {
         </select>
     </td>
 <?php elseif ($order['status'] == 1) : ?>
+    <!-- Nếu đơn hàng đã xử lý -->
     <td>
-        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)">
+        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)" style="background-color: #c9ffd1; color: black;">
             <option value="1" selected>Đã xử lý</option>
-            <option value="0" >Chưa xử lý</option>
+            <option value="0">Chưa xử lý</option>
             <option value="2">Đã giao</option>
             <option value="3">Đã hủy</option>
         </select>
     </td>
 <?php elseif ($order['status'] == 2) : ?>
+    <!-- Nếu đơn hàng đã giao -->
     <td>
-        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)">
+        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)" style="background-color: #add8e6; color: black;">
             <option value="2" selected>Đã giao</option>
-            <option value="0" >Chưa xử lý</option>
+            <option value="0">Chưa xử lý</option>
             <option value="1">Đã xử lý</option>
             <option value="3">Đã hủy</option>
         </select>
     </td>
 <?php elseif ($order['status'] == 3) : ?>
+    <!-- Nếu đơn hàng đã hủy -->
     <td>
-        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)">
+        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)" style="background-color: #ffcccc; color: black;">
             <option value="3" selected>Đã hủy</option>
-            <option value="0" >Chưa xử lý</option>
+            <option value="0">Chưa xử lý</option>
             <option value="1">Đã xử lý</option>
             <option value="2">Đã giao</option>
         </select>
