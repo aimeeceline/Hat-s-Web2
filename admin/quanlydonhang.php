@@ -108,7 +108,7 @@ if (!$conn) {
         }
     };
     // Sử dụng phương thức GET và truyền tham số 'month'
-    xhttp.open("GET", "get_orders.php?locxuly=" + selectedOption, true);
+    xhttp.open("GET", "get_oders.php?locxuly=" + selectedOption, true);
     xhttp.send();
 
 }
@@ -154,15 +154,15 @@ if (!$conn) {
 
                     <script>
     function showCustomDate() {
-        const select = document.getElementById('ngaymua');
-        const customDate = document.getElementById('customDate');
+    const select = document.getElementById('ngaymua');
+    const customDate = document.getElementById('customDate');
 
-        if (select.value === 'custom') {
-            customDate.style.display = 'block';
-        } else {
-            customDate.style.display = 'none';
-        }
+    if (select.value === 'custom') {
+        customDate.style.display = 'block';
+    } else {
+        customDate.style.display = 'none';
     }
+}
 
     function gui() {
         const fromDate = document.getElementById('fromDate').value;
@@ -172,6 +172,8 @@ if (!$conn) {
         if (fromDate !== '' && toDate !== '') {
             alert(`Đã cập nhật các đơn hàng từ ${fromDate} đến ${toDate}`);
             customDate.style.display = 'none'; // Ẩn box khi nhấn OK trên alert
+                    console.log(`Từ ngày: ${fromDate}, Đến ngày: ${toDate}`);
+
         } else {
             alert("Vui lòng nhập đầy đủ thông tin ngày");
         }
