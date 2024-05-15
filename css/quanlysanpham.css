@@ -51,14 +51,14 @@
     z-index: 1001;
     overflow: auto;
   }
-  .boxsuauser button
-  {
+  .boxsuauser button {
     margin-left: 450px;
-    border: 2px solid grey;
-    font-size: larger;
-    border-radius: 100%;
-    width: 30px; /* Độ rộng của nút tròn */
-    height: 30px;
+    padding: 10px;
+    color: #fff;
+  background-color: #000000;
+  border: 2px solid black;
+  border-radius: 10px;
+  
     cursor: pointer;
   
   }
