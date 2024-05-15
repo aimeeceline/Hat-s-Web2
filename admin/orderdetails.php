@@ -188,6 +188,10 @@ while ($row = mysqli_fetch_assoc($result_order)) {
         <div class="chon">
             <button onclick="markProcessed(<?php echo $order_id ?>)">Đánh dấu đã xử lý</button>
         </div>
+        <?php else: ?>
+            
+            <button>Đơn hàng đã được xử lý</button>
+        
     <?php endif; ?>
                 <?php endif; ?>
                 

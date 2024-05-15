@@ -491,4 +491,13 @@ footer a {
   color: white;
   cursor: pointer;
 }
-
+.intro{
+  display: flex;
+}
+.intro img{
+  height: 400px;
+  width: 300px;
+}
+.content{
+  margin: 50px;
+}
