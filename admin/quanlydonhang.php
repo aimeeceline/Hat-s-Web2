@@ -87,7 +87,7 @@ if (!$conn) {
             <div class="order">
                 <!-- ================ LÀM BANNER ================= -->
                 <div class="banner">
-                    <select id="month" onchange="LocXuLy()">
+                    <select id="locxuly" onchange="LocXuLy()">
                         <option value="all">Tất cả</option>
                         <option value="chuaxl">Chưa xử lý</option>
                         <option value="daxuly">Đã xử lý</option>
@@ -96,7 +96,7 @@ if (!$conn) {
                     </select>
                     <script>
                         function LocXuLy() {
-                            var selectBox = document.getElementById('month');
+                            var selectBox = document.getElementById('locxuly');
     var selectedOption = selectBox.options[selectBox.selectedIndex].value;
 
     // Gửi request AJAX để lấy dữ liệu tương ứng với tùy chọn đã chọn
@@ -108,7 +108,7 @@ if (!$conn) {
         }
     };
     // Sử dụng phương thức GET và truyền tham số 'month'
-    xhttp.open("GET", "get_orders.php?month=" + selectedOption, true);
+    xhttp.open("GET", "get_orders.php?locxuly=" + selectedOption, true);
     xhttp.send();
 
 }
