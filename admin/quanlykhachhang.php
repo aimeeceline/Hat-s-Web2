@@ -109,12 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="hello">
                     <p>CHÀO MỪNG QUẢN TRỊ CỦA HAT !!!</p>
                 </div>
-                <div class="search">
-                    <label>
-                        <input type="text" placeholder="Tìm kiếm chức năng quản trị">
-                        <a href="../html/adminnotfound.html"><ion-icon name="search-outline"></ion-icon></a>
-                    </label>
-                </div>
+               
             </div>
 
             <!-- ================ LÀM QUẢN LÝ KHÁCH HÀNG Ở ĐÂY ================= -->
@@ -203,11 +198,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     xhttp.send();
 }
                        </script>
-                   <div>
-                    <input id="timnguoidung" type="text" placeholder="Tên người dùng ...">
-                    
-                        <button type="button" >Tìm</button>
-                   </div>
+                   
                 </div>
                 <div class="user-table">
                     <table>
@@ -251,7 +242,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 
                                 echo "</td>";
                                 echo "<td>";
-                                echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row['id']."\", \"".$row['user']."\", \"".$row['name']."\", \"".$row['email']."\", \"".$row['pass']."\")'>Sửa</button>";
+                                echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row['id']."\", \"".$row['user']."\", \"".$row['name']."\", \"".$row['email']."\", \"".$row['address']."\", \"".$row['phone']."\", \"".$row['pass']."\")'>Sửa</button>";
 
                                 if ($row["locked"] == 1) {
                                     // Nếu người dùng đã bị khóa, hiển thị nút "Mở khóa"
@@ -337,6 +328,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <input type="email" id="email" name="email"  >
                                 </div>
                                 <div class="form-group">
+                            <label for="address">Địa chỉ:</label>
+                                <input type="text" name="address" id="address">
+                            </div>
+                            <div class="form-group">
+                            <label for="phone">Sđt:</label>
+                                <input type="text" name="phone" id="phone">
+                            </div>
+                                <div class="form-group">
                                     <label for="pass">Mật khẩu:</label>
                                     <input type="password" id="pass" name="pass" >
                                 </div>
@@ -374,11 +373,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         </script>
                                 <script src="../js/suasanpham.js"></script>
                 </div>
-                <div class="pagination">
-                    <li class="hientai">1</li>
-                    <li><a href="quanlykhachhang1.html" style="color: black;">2</a></li></a> 
-                    <li><a href="quanlykhachhang1.html" style="color: black;" >NEXT</a></li>
-                </div>
+        
             
             </div>
         </div>
@@ -387,7 +382,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-<script>function hienBoxSuaUser(id, user, name, email, pass) {
+<script>function hienBoxSuaUser(id, user, name, email,address, phone, pass) {
     var boxSuaUser = document.getElementById('boxsuauser');
     var overlay = document.querySelector('.overlay');
     var form = document.getElementById('suaUserForm');
@@ -397,6 +392,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     form.elements['user'].value = user;
     form.elements['name'].value = name;
     form.elements['email'].value = email;
+    form.elements['address'].value = address;
+    form.elements['phone'].value = phone;
     form.elements['pass'].value = pass;
 
     // Hiển thị form

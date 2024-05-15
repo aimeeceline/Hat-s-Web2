@@ -81,12 +81,7 @@ if (!$conn) {
                 <div class="hello">
                     <p>CHÀO MỪNG QUẢN TRỊ CỦA HAT !!!</p>
                 </div>
-                <div class="search">
-                    <label>
-                        <input type="text" placeholder="Tìm kiếm chức năng quản trị">
-                        <a href="../html/adminnotfound.html"><ion-icon name="search-outline"></ion-icon></a>
-                    </label>
-                </div>
+                
             </div>
             <!-- ================ LÀM QUẢN LÝ ĐƠN HÀNG Ở ĐÂY ================= -->
             <div class="order">
@@ -116,6 +111,7 @@ if (!$conn) {
 
 }
 </script>
+
                     <select id="ngaymua" onchange="sDate()">
                     <option value="alltime">Tất cả</option>
                         <option value="today">Hôm nay</option>
@@ -181,17 +177,7 @@ if (!$conn) {
 </script>
 
 
-                    <div class="finder">
-                        <select id="find">
-                            <option>Tìm theo mã đơn hàng</option>
-                            <option>Tìm theo SĐT</option>
-                            <option>Tìm theo tên người dùng</option>
-                        </select>
-                        <input id="find" type="text" placeholder="Nhập thông tin cần tìm">
-                        <a href="../html/adminnotfound1.html"><button type="button"
-                                style="font-size: larger;">Tìm</button>
-                        </a>
-                    </div>
+                    
                 </div>
 
                 <div class="order-table">
@@ -288,8 +274,14 @@ if (!$conn) {
     <!-- Trường input ẩn để chứa ID -->
     <input type="hidden" id="orderIdInput" name="orderId">
 </form>
-
 <script>
+function submitForm(orderId) {
+    // Đặt giá trị ID vào trường input
+    document.getElementById('orderIdInput').value = orderId;
+    // Submit biểu mẫu
+    document.getElementById('orderForm').submit();
+}
+
     function updateStatus(orderId, status) {
         // Gửi yêu cầu cập nhật trạng thái bằng Ajax
         var xhr = new XMLHttpRequest();
@@ -324,11 +316,7 @@ if (!$conn) {
 
                         </tbody>
                     </table>
-                    <div class="pagination">
-                        <li class="hientai">1</li>
-                        <li><a href="quanlydonhang1.html" style="color: black;">2</a></li></a>
-                        <li><a href="quanlydonhang1.html" style="color: black;">NEXT</a></li>
-                    </div>
+                    
                 </div>
 
 

@@ -7,7 +7,7 @@ h1{
 }
 /* Giao diện của các form group */
 .form-group {
-    margin-bottom: 15px;
+    margin: 15px;
     display: flex;
 }
 

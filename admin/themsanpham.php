@@ -12,7 +12,20 @@
 
     <link rel="stylesheet" href="../css/themsanpham.css">
 </head>
+<style>
+        .fa-solid-fa-download {
+    color: white; /* Thiết lập màu chữ thành trắng */
+    background-color: black; /* Thiết lập màu nền thành đen */
+    border: none; /* Xóa viền */
+    padding: 10px 20px; /* Tùy chỉnh padding */
+    border-radius: 5px; /* Bo tròn góc */
+    cursor: pointer; /* Biến con trỏ thành hình bàn tay khi hover */
+}
 
+.fa-solid-fa-download:hover {
+    background-color: #333; /* Thay đổi màu nền khi hover */
+}
+</style>
 <body>
     <!-- =============== Navigation ================ -->
     <div class="container">
@@ -93,21 +106,33 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="image1">Ảnh 1:</label>
-            <input type="file" id="image1" name="pro_img1" accept="image/*">
-        </div>
-        <div class="form-group">
-            <label for="image2">Ảnh 2:</label>
-            <input type="file" id="image2" name="pro_img2" accept="image/*">
-        </div>
-        <div class="form-group">
-            <label for="image3">Ảnh 3:</label>
-            <input type="file" id="image3" name="pro_img3" accept="image/*">
-        </div>
-        <div class="form-group">
-            <label for="name">Mã sản phẩm:</label>
-            <input type="text" id="name" name="pro_id" placeholder="KNS49">
-        </div>
+    <label for="image1">Ảnh 1:</label>
+    <input type="file" id="image1" name="pro_img1" accept="image/*" onchange="previewImage(event, 'preview1')">
+    
+</div><img id="preview1" src="#" alt="Ảnh xem trước" style="margin-left: 300px; max-width: 100px; max-height: 100px; display: none;">
+<div class="form-group">
+    <label for="image2">Ảnh 2:</label>
+    <input type="file" id="image2" name="pro_img2" accept="image/*" onchange="previewImage(event, 'preview2')">
+</div>    <img id="preview2" src="#" alt="Ảnh xem trước" style="margin-left: 300px; max-width: 100px; max-height: 100px; display: none;">
+
+<div class="form-group">
+    <label for="image3">Ảnh 3:</label>
+    <input type="file" id="image3" name="pro_img3" accept="image/*" onchange="previewImage(event, 'preview3')">
+</div>    <img id="preview3" src="#" alt="Ảnh xem trước" style="margin-left: 300px; max-width: 100px; max-height: 100px; display: none;">
+
+
+<script>
+    function previewImage(event, previewId) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var preview = document.getElementById(previewId);
+            preview.src = reader.result;
+            preview.style.display = "block";
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+        
         <div class="form-group">
             <label for="name">Tên sản phẩm:</label>
             <input type="text" id="name" name="pro_name" placeholder="Đắc Nhân Tâm">
@@ -132,11 +157,16 @@
             <label for="quantity">Số lượng tồn kho:</label>
             <input type="text" id="quantity" name="pro_quantity" placeholder="1000">
         </div>
-        <button type="submit"><i class="fa-solid fa-download"></i>Thêm sản phẩm</button>
+        <button type="submit" class="fa-solid-fa-download" onclick="themsanpham()">Thêm sản phẩm</button>
     </form>
 </div>
         </div>
     </div>
+    <script>
+        function themsanpham(){
+            alert("Sản phẩm đã được thêm thành công!!")
+        }
+    </script>
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

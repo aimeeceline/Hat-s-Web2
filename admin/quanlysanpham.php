@@ -83,52 +83,13 @@ if (!$conn) {
                 <div class="hello">
                     <p>CHÀO MỪNG QUẢN TRỊ CỦA HAT !!!</p>
                 </div>
-                <div class="search">
-                    <label>
-                        <input type="text" placeholder="Tìm kiếm chức năng quản trị">
-                        <a href="../html/adminnotfound.html"><ion-icon name="search-outline"></ion-icon></a>
-                    </label>
-                </div>
+                
             </div>
             <!-- ================ LÀM QUẢN LÝ SẢN PHẨM Ở ĐÂY ================= -->
             <div class="user">
                 <div class="banner">
                     <button id="adduser"><a href="../admin/themsanpham.php">+ Thêm sản phẩm</a></button>
-                    <div class="finder">
-                        <select id="searchType" name="searchType" onchange="changeContent()">
-                            <option value="category">Lọc theo DM</option>
-                            <option value="publisher">Lọc theo NXB</option>
-                        </select>
-                        <select id="contentBox">
-                            <option value="KNS-PTCN">Kỹ năng sống - Phát triển cá nhân</option>
-                            <option value="MG-CM">Manga-Comic</option>
-                            <option value="NT-VH">Nghệ thuật-Văn hóa</option>
-                        </select>
-                    </div>
-                    <script>
-                        function changeContent() {
-                            const selectedValue = document.getElementById('searchType').value;
-                            const contentBox = document.getElementById('contentBox');
-
-                            if (selectedValue === 'category') {
-                                contentBox.innerHTML = `
-                                    <option value="KNS-PTCN">Kỹ năng sống-Phát triển cá nhân</option>
-                                    <option value="MG-CM">Manga-Comic</option>
-                                    <option value="NT-VH">Nghệ thuật-Văn hóa</option>
-                                `;
-                            } else if (selectedValue === 'publisher') {
-                                contentBox.innerHTML = `
-                                    <option value="Publisher1">Nhà xuất bản Kim Đồng</option>
-                                    <option value="Publisher2">Nhà xuất bản Lao Động</option>
-                                    <option value="Publisher3">Nhà xuất bản Trẻ</option>
-                                `;
-                            } else {
-                                contentBox.innerHTML = '';
-                            }
-                        }
-                    </script>
-                    <div><input id="timnguoidung" type="text" placeholder="Tên sản phẩm cần tìm">
-                    <button type="button" >Tìm</button></div>
+                    
                 </div>
                
                 <div class="user-table">
@@ -179,7 +140,7 @@ if (!$conn) {
                                     echo "<td>".$row["pro_price"]."</td>";
                                     echo "<td>".$row["pro_quantity"]."</td>";
                                     echo "<td>";
-                                    echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row['pro_id']."\",\"".$row['pro_name']."\",  \"".$row['pro_price']."\",\"".$row['pro_author']."\",\"".$row['pro_publisher']."\",\"".$row['pro_description']."\",\"".$row['pro_quantity']."\",\"".$row['id_category']."\",\"".$image_path."\",\"".$image_path2."\",\"".$image_path3."\")'>Sửa</button>";
+                                    echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row['pro_name']."\",  \"".$row['pro_price']."\",\"".$row['pro_author']."\",\"".$row['pro_publisher']."\",\"".$row['pro_description']."\",\"".$row['id_category']."\",\"".$image_path."\",\"".$image_path2."\",\"".$image_path3."\")'>Sửa</button>";
                                     if ($row["status"] == 1) {
                                     // Nếu người dùng chưa bị khóa, hiển thị nút "Khóa"
                                     echo "<button id='xoanguoidung' data-proid='" . $row['pro_id'] . "' onclick='performAction(this)'>Xóa</button>";                                   
@@ -220,7 +181,6 @@ if (!$conn) {
                                                 <div class="change_action">
                                                     <label for="input_file1" class="change_button">Sửa</label>
                                                     <input type="file" id="input_file1" name="pro_img1" class="input_file" accept="image/*" onchange="previewImage(event)">
-                                                    <label class="change_button" onclick="del(this)">Xóa</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -232,7 +192,6 @@ if (!$conn) {
                                                 <div class="change_action">
                                                     <label for="input_file2" class="change_button">Sửa</label>
                                                     <input type="file" id="input_file2" name="pro_img2" class="input_file" accept="image/*" onchange="previewImage2(event)">
-                                                    <label class="change_button" onclick="del(this)">Xóa</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -244,17 +203,13 @@ if (!$conn) {
                                                 <div class="change_action">
                                                     <label for="input_file3" class="change_button">Sửa</label>
                                                     <input type="file" id="input_file3" name="pro_img3" class="input_file" accept="image/*" onchange="previewImage3(event)">
-                                                    <label class="change_button" onclick="del(this)">Xóa</label>
                                                 </div>
                                             </div>
                                         </div>
                                         
 
 
-                                        <div class="form-group">
-                                            <label for="email">Mã sản phẩm:</label>
-                                            <input type="text" name="pro_id" id="pro_id" value="">
-                                        </div>
+                                       
                                         <div class="form-group">
                                             <label for="name">Tên sản phẩm:</label>
                                             <input type="text" name="pro_name" id="pro_name" value="">
@@ -277,10 +232,7 @@ if (!$conn) {
                                             <textarea
                                             name="pro_description" id="pro_description"></textarea>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="quatyti">Số lượng tồn kho:</label>
-                                            <input type="text" name="pro_quantity" id="quatyti" value="1000">
-                                        </div>
+                                       
                                         <div class="form-group">
                                             <label for="goi">Danh mục:</label>
                                             <select id="goi" name="id_category">
@@ -404,11 +356,7 @@ if (!$conn) {
 }
 
 </script>
-                <div class="pagination">
-                    <li class="hientai">1</li>
-                    <li><a href="quanlysanpham1.html" style="color: black;">2</a></li></a>
-                    <li><a href="quanlysanpham1.html" style="color: black;">NEXT</a></li>
-                </div>
+               
             </div>
         </div>
         
@@ -417,7 +365,7 @@ if (!$conn) {
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
         <script>
-        function hienBoxSuaUser( pro_id, pro_name, pro_price, pro_author, pro_publisher, pro_description, pro_quantity, id_category,pro_img1, pro_img2, pro_img3) {
+        function hienBoxSuaUser(pro_name, pro_price, pro_author, pro_publisher, pro_description, id_category,pro_img1, pro_img2, pro_img3) {
     var boxSuaUser = document.getElementById('boxsuauser');
     var overlay = document.querySelector('.overlay');
     var form = document.getElementById('suaUserForm');
@@ -428,14 +376,13 @@ if (!$conn) {
             
 
 
-    // Điền dữ liệu vào form
-    form.elements['pro_id'].value = pro_id;
+  
     form.elements['pro_name'].value = pro_name;
     form.elements['pro_price'].value = pro_price;
     form.elements['pro_author'].value = pro_author;
     form.elements['pro_publisher'].value = pro_publisher;
     form.elements['pro_description'].value = pro_description;
-    form.elements['pro_quantity'].value = pro_quantity;
+
 
     
 
