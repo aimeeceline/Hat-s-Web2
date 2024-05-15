@@ -103,21 +103,12 @@ $result_user = mysqli_query($conn, $sql_user);
         
             <form method="POST" action="thongke.php">
     <div class="filter">
-        <div class="flex">
-            <span><input type="radio" name="chon" value="ten" id="ten" onclick="checkTen()" checked>Theo tên sản phẩm</span>
-            <span><input type="radio" name="chon" value="loai" id="loai" onclick="checkLoai()">Theo loại sản phẩm</span>
-            <input type="text" name="tenSp" id="tenSp" placeholder="Tên sản phẩm">
-            <select name="loaiSp" id="loaiSp">
-                <option value="1">Kỹ năng sống - Phát triển bản thân</option>
-                <option value="2">Manga-Comic</option>
-                <option value="3">Nghệ thuật-Văn hóa</option>
-            </select>
-        </div>
         <div class="date">
-            <label for="start">Từ ngày: </label>
-            <input type="date" id="start" name="start" value="">
-            <label for="end">đến </label>
-            <input type="date" id="end" name="end" value="">
+        <label for="start_date">Từ ngày:</label>
+    <input type="date" id="start_date" name="start_date">
+    <label for="end_date">Đến ngày:</label>
+    <input type="date" id="end_date" name="end_date">
+    <button type="submit" class="thongke" name="submit">Thống kê</button>
         </div>
         <script>
         // Lấy ngày hôm nay
@@ -125,10 +116,9 @@ $result_user = mysqli_query($conn, $sql_user);
         // Định dạng ngày theo chuẩn yyyy-mm-dd
         const formattedDate = today.toISOString().split('T')[0];
         // Đặt giá trị cho input
-        document.getElementById('start').value = formattedDate;
-        document.getElementById('end').value = formattedDate;
+        document.getElementById('start_date').value = formattedDate;
+        document.getElementById('end_date').value = formattedDate;
     </script>
-        <button type="submit" class="thongke">Xem thống kê</button>
     </div>
 </form>
 
