@@ -439,24 +439,20 @@ width: 90%;
   padding: 3px;
 }
 
-.filter select{
-display: none;
 
-}
 
 .filter .date{
   margin: 20px 0;
 }
-.thongke{
-  padding: 10px;
-  background-color: #000000;
-  border: 2px solid black;
-  border-radius: 3px;
+.thongke {
+  color: white; /* Thiết lập màu chữ thành trắng */
+  background-color: black; /* Thiết lập màu nền thành đen */
+  border: none; /* Xóa viền */
+  padding: 10px 20px; /* Tùy chỉnh padding */
+  border-radius: 5px; /* Bo tròn góc */
+  cursor: pointer; /* Biến con trỏ thành hình bàn tay khi hover */
 }
-.thongke a{
-  color: #fff;
-}
-.thongke:hover{
-  background-color: #C92127;
-  border: 2px solid #C92127;
+
+.thongke:hover {
+  background-color: #333; /* Thay đổi màu nền khi hover */
 }
