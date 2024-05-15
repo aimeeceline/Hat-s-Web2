@@ -104,73 +104,40 @@ $result_user = mysqli_query($conn, $sql_user);
             </div>
            
             
-            <h2 style="margin-left: 20px;">Thống kê tình hình kinh doanh</h2>
+            <h2 style="margin-left: 20px; padding: 10px; background-color: black; color: white;">Thống kê tình hình kinh doanh</h2>
         
-            <div class="filter">
-                <div class="flex">
-                <span><input type="radio" name="chon" value="ten" id="ten" onclick="checkTen()" checked>Theo tên sản phẩm</span>
-                <span><input type="radio" name="chon" value="loai" id="loai" onclick="checkLoai()">Theo loại sản phẩm</span>
-                <input type="text" name="tenSp" id="tenSp" placeholder="Tên sản phẩm">
-                <select name="loaiSp" id="loaiSp">
-                    <option value="Kỹ năng sống - Phát triển bản thân">Kỹ năng sống - Phát triển bản thân</option>
-                    <option value="Manga-Comic">Manga-Comic</option>
-                    <option value="Nghệ thuật-Văn hóa">Nghệ thuật-Văn hóa</option>
-                </select>
-                </div>
-                <div class="date">
-                    <label for="start">Từ ngày: </label>
-                    <input type="date" id="start" name="start" value="2023-11-24" min="2018-01-01" max="2023-12-31">
-                    <label for="start">đến </label>
-                    <input type="date" id="end" name="end" value="2023-11-30" min="2018-01-01" max="2023-12-31">
-                </div>
-                <button class="thongke"><a href="../html/thongke.html">Thống kê</a></button>
-            </div>
+            <form method="POST" action="thongke.php">
+    <div class="filter">
+        <div class="flex">
+            <span><input type="radio" name="chon" value="ten" id="ten" onclick="checkTen()" checked>Theo tên sản phẩm</span>
+            <span><input type="radio" name="chon" value="loai" id="loai" onclick="checkLoai()">Theo loại sản phẩm</span>
+            <input type="text" name="tenSp" id="tenSp" placeholder="Tên sản phẩm">
+            <select name="loaiSp" id="loaiSp">
+                <option value="1">Kỹ năng sống - Phát triển bản thân</option>
+                <option value="2">Manga-Comic</option>
+                <option value="3">Nghệ thuật-Văn hóa</option>
+            </select>
+        </div>
+        <div class="date">
+            <label for="start">Từ ngày: </label>
+            <input type="date" id="start" name="start" value="">
+            <label for="end">đến </label>
+            <input type="date" id="end" name="end" value="">
+        </div>
+        <script>
+        // Lấy ngày hôm nay
+        const today = new Date();
+        // Định dạng ngày theo chuẩn yyyy-mm-dd
+        const formattedDate = today.toISOString().split('T')[0];
+        // Đặt giá trị cho input
+        document.getElementById('start').value = formattedDate;
+        document.getElementById('end').value = formattedDate;
+    </script>
+        <button type="submit" class="thongke">Xem thống kê</button>
+    </div>
+</form>
 
-            <div id="reportResult">
-                
-                <table>
-                    <thead>
-                        <tr>
-                           
-                            <th>Mã ĐH</th>
-                            <th>Người đặt</th>
-                            <th>SĐT</th>
-                            <th>Tình trạng</th>
-                            <th>Thành tiền</th>
-                            <th>Ngày</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                    <?php
             
-            while($row3 = $result_order->fetch_assoc()) {
-                ?>
-                        <tr>
-                           
-                        <td><!-- Sử dụng JavaScript để gọi hàm khi nhấp vào liên kết -->
-                                            <a href="#" onclick="submitForm('<?php echo $row3['id']; ?>')">ĐH <?php echo $row3['id']; ?></a>
-                                        </td>
-                            <td><?php echo $row3['user']; ?></td>
-                            <td><?php echo $row3['phone']; ?></td>
-                            <td id="premium">Chờ xác nhận</td>
-                            <td><?php echo number_format($row3['total'], 0, ',', '.') . 'đ'; ?></td>
-                            <td>14/10/2023</td>
-                            <td><input type="checkbox"></td>
-                        </tr>
-                        <?php
-                            }
-                        
-                            ?>
-                    </tbody>
-
-                </table>
-                <div class="pagination">
-                    <li class="hientai">1</li>
-                    <li><a href="trangchuadmin1.html" style="color: black;">2</a></li></a> 
-                    <li><a href="trangchuadmin1.html" style="color: black;" >NEXT</a></li>
-                </div>
-            </div>
 
             <!-- ================ Order Details List ================= -->
             <div class="details">

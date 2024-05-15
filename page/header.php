@@ -4,7 +4,7 @@
         <a href="index.php"><img src="img/banner/logoo.png" alt="Logo" height="120px" width="120px"></a>
       </div>
       <ul>
-        <li><a href="tacgia.php">TÁC GIẢ</li></a>
+        <li><a href="intro.php">GIỚI THIỆU</li></a>
         <li class="theloai"><a href="#">THỂ LOẠI</a>
           <div class="menuu">
           <ul>
@@ -16,7 +16,7 @@
           </div>
         </li>
         <li><a href="sachmoi.php">SÁCH MỚI</li></a>
-        <li><a href="khuyenmai.php">BÁN CHẠY</li></a>
+        <li><a href="bestseller.php">BÁN CHẠY</li></a>
       </ul>
       <div class="box">
       <form action="search.php" method="post">

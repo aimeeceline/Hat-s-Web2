@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
 
     <style>
         .checkout-button,
-#showAddressBtn {
+#showAddressBtn,#updateButton {
     color: white; /* Thiết lập màu chữ thành trắng */
     background-color: black; /* Thiết lập màu nền thành đen */
     border: none; /* Xóa viền */
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
 }
 
 .checkout-button:hover,
-#showAddressBtn:hover {
+#showAddressBtn:hover, #updateButton:hover {
     background-color: #333; /* Thay đổi màu nền khi hover */
 }
 
