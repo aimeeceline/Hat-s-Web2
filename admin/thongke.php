@@ -8,53 +8,33 @@ if (!$conn) {
     die("Kết nối thất bại: " . mysqli_connect_error());
 }
 
-// Lấy giá trị từ biểu mẫu
-$filter_name = isset($_POST['tenSp']) ? $_POST['tenSp'] : '';
-$filter_category = isset($_POST['loaiSp']) ? $_POST['loaiSp'] : 0;
-$start_date = isset($_POST['start']) ? $_POST['start'] : '';
-$end_date = isset($_POST['end']) ? $_POST['end'] : '';
+
+$start_date = isset($_POST['start_date']) ? $_POST['start_date'] : '';
+$end_date = isset($_POST['end_date']) ? $_POST['end_date'] : '';
 
 // Xây dựng câu truy vấn SQL
 $sql = "SELECT 
-            o.id,
-            u.name AS user,
+            u.id AS user_id,
+            u.name AS user_name,
             u.phone,
+            o.id AS order_id,
             o.status,
             o.total,
             o.order_date,
-            SUM(od.quantity) AS total_quantity
+            COUNT(o.id) AS total_orders
         FROM 
-            orders o
+            user u
         JOIN 
-            orderdetails od ON o.id = od.order_id
-        JOIN 
-            product p ON od.product_id = p.pro_id
-        JOIN 
-            user u ON o.id_user = u.id
+            orders o ON o.id_user = u.id
         WHERE 
-            ('$filter_name' = '' OR p.pro_name LIKE ?) AND
-            ($filter_category = 0 OR p.id_category = ?)";
-
-// Nếu người dùng đã chọn ngày, thêm điều kiện ngày vào truy vấn
-if (!empty($start_date) && !empty($end_date)) {
-    $sql .= " AND o.order_date BETWEEN ? AND ?";
-}
-
-// Thêm GROUP BY vào cuối truy vấn
-$sql .= " GROUP BY o.id";
+            o.order_date BETWEEN '$start_date' AND '$end_date'
+        GROUP BY 
+            u.id, u.name, u.phone, o.id, o.status, o.total, o.order_date
+        ORDER BY 
+        u.id, o.total DESC, o.order_date DESC";
 
 // Chuẩn bị câu lệnh
 $stmt = $conn->prepare($sql);
-
-// Gán các tham số cho câu lệnh
-if (!empty($start_date) && !empty($end_date)) {
-    $filter_name = '%' . $filter_name . '%';
-    $stmt->bind_param("siss", $filter_name, $filter_category, $start_date, $end_date);
-} else {
-    $filter_name = '%' . $filter_name . '%';
-    $stmt->bind_param("si", $filter_name, $filter_category);
-}
-
 $stmt->execute();
 $result_order = $stmt->get_result();
 ?>
@@ -116,6 +96,7 @@ $result_order = $stmt->get_result();
             </ul>
         </div>
         <div class="main">
+<<<<<<< HEAD
             <div class="topbar">
                 <div class="hello">
                     <p>CHÀO MỪNG QUẢN TRỊ CỦA HAT !!!</p>
@@ -217,8 +198,68 @@ $result_order = $stmt->get_result();
                     loaiSp.style.display = "block";
                 }
             </script>
+=======
+    <div class="topbar">
+        <div class="hello">
+            <p>CHÀO MỪNG QUẢN TRỊ CỦA HAT !!!</p>
+>>>>>>> ad488d5364ac8c45b6f76c292bce11e6d8ef978f
         </div>
     </div>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core@5.4.1/dist/ionic/ionic.js"></script>
+    <h2 style="margin-left: 20px; padding: 10px; background-color: black; color: white;">Thống kê tình hình kinh doanh</h2>
+    <form method="POST" action="thongke.php">
+        <div class="filter">
+            <label for="start_date">Từ ngày:</label>
+            <input type="date" id="start_date" name="start_date" value="<?= isset($_POST['start_date']) ? $_POST['start_date'] : ''; ?>">
+            <label for="end_date">Đến ngày:</label>
+            <input type="date" id="end_date" name="end_date" value="<?= isset($_POST['end_date']) ? $_POST['end_date'] : ''; ?>">
+            <button type="submit" class="thongke" name="submit">Thống kê</button>
+        </div>
+    </form>
+    <div id="reportResult">
+        <table>
+            <thead>
+                <tr>
+                    <th>Mã ĐH</th>
+                    <th>Người đặt</th>
+                    <th>SĐT</th>
+                    <th>Tình trạng</th>
+                    <th>Thành tiền</th>
+                    <th>Ngày</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $total_products = 0; // Khởi tạo biến $total_products
+                while ($row3 = $result_order->fetch_assoc()) {
+                    $total_products += $row3['total_quantity'];
+                ?>
+                <tr>
+                    <td>
+                        <a href="#" onclick="submitForm('<?php echo $row3['order_id']; ?>')">ĐH <?php echo $row3['order_id']; ?></a>
+                    </td>
+                    <td><?php echo $row3['user_name']; ?></td>
+                    <td><?php echo $row3['phone']; ?></td>
+                    <?php if ($row3['status'] == 0) : ?>
+                    <td>
+                        <p id="premium">Chờ xác nhận</p>
+                    </td>
+                    <?php else : ?>
+                    <td>
+                        <p id="basic">Đã giao</p>
+                    </td>
+                    <?php endif; ?>
+                    <td><?php echo number_format($row3['total'], 0, ',', '.') . 'đ'; ?></td>
+                    <td><?php echo $row3['order_date']; ?></td>
+                </tr>
+                <?php
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
