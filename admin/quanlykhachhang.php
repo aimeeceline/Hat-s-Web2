@@ -63,6 +63,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 button[type="submit"]:hover {
     background-color: #333;
 }
+  #closeAddUserForm {
+    margin-left: 780px;
+    padding: 10px;
+    color: #fff;
+    background-color: #000000;
+    border: 2px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+  }
 </style>
 
 <body>
@@ -131,7 +140,9 @@ button[type="submit"]:hover {
                 <div class="banner">
                     <button id="adduser">+ Thêm người dùng</button>
                     <div class="boxadduser" id="boxadduser">
+                    <button id="closeAddUserForm">X</button>
                         <h2>Thêm người dùng mới</h2>
+                    
                         <form action="quanlykhachhang.php" method="post" id="addUserForm">
                             <div class="form-group">
                                 <label for="user">Tên đăng nhập:</label>
@@ -160,6 +171,16 @@ button[type="submit"]:hover {
                             <button type="submit">Thêm</button>
                         </form>
                     </div>
+                    <script>
+    const closeAddUserFormBtn = document.getElementById('closeAddUserForm');
+    closeAddUserFormBtn.addEventListener('click', function() {
+        const boxadduser = document.getElementById('boxadduser');
+        const overlay = document.querySelector('.overlay');
+        boxadduser.style.display = 'none';
+        overlay.classList.remove('show-overlay');
+        document.body.classList.remove('no-scroll');
+    });
+</script>
 
                     <script>
 

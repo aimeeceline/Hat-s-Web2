@@ -25,6 +25,16 @@
 .fa-solid-fa-download:hover {
     background-color: #333; /* Thay đổi màu nền khi hover */
 }
+
+#closeAddUserForm {
+    margin-left: 1235px;
+    padding: 10px;
+    color: #fff;
+    background-color: #000000;
+    border: 2px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+  }
 </style>
 <body>
     <!-- =============== Navigation ================ -->
@@ -95,6 +105,7 @@
 
             <!-- ================ LÀM QUẢN LÝ SẢN PHẨM Ở ĐÂY ================= -->
             <div class="addproduct">
+            <button id="closeAddUserForm">X</button> 
     <h1>------------------------------ Thêm sản phẩm mới ------------------------------</h1>
     <form id="suaUserForm" action="../admin/addproduct.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
@@ -120,7 +131,13 @@
     <input type="file" id="image3" name="pro_img3" accept="image/*" onchange="previewImage(event, 'preview3')">
 </div>    <img id="preview3" src="#" alt="Ảnh xem trước" style="margin-left: 300px; max-width: 100px; max-height: 100px; display: none;">
 
+<script>
+const closeAddUserFormBtn = document.getElementById('closeAddUserForm');
+closeAddUserFormBtn.addEventListener('click', function() {
+    window.location.href = "../admin/quanlysanpham.php"; // Chuyển hướng về trang quản lý sản phẩm
+});
 
+</script>
 <script>
     function previewImage(event, previewId) {
         var reader = new FileReader();

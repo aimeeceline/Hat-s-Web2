@@ -214,7 +214,7 @@ if (!$conn) {
 
 
                                         <td><!-- Sử dụng JavaScript để gọi hàm khi nhấp vào liên kết -->
-                                            <a href="#" onclick="submitForm('<?php echo $order['id']; ?>')">ĐH <?php echo $order['id']; ?></a>
+                                            <a href="#" onclick="submitForm('<?php echo  $order['id']; ?>')">ĐH <?php echo $order['id']; ?></a>
                                         </td>
 
                                         
