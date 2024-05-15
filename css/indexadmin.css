@@ -449,14 +449,9 @@ display: none;
 }
 .thongke{
   padding: 10px;
+  color:white;
   background-color: #000000;
   border: 2px solid black;
   border-radius: 3px;
 }
-.thongke a{
-  color: #fff;
-}
-.thongke:hover{
-  background-color: #C92127;
-  border: 2px solid #C92127;
-}
+

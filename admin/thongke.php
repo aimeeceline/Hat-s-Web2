@@ -199,11 +199,7 @@ $result_order = $stmt->get_result();
                         </tr>
                     </thead>
                 </table>
-                <div class="pagination">
-                    <li class="hientai">1</li>
-                    <li><a href="trangchuadmin1.html" style="color: black;">2</a></li>
-                    <li><a href="trangchuadmin1.html" style="color: black;">NEXT</a></li>
-                </div>
+               
             </div>
             <script>
                 ten = document.getElementById("ten");

@@ -1,4 +1,6 @@
-
+<style>
+  
+</style>
 <nav>
       <div class="logo">
         <a href="index.php"><img src="img/banner/logoo.png" alt="Logo" height="120px" width="120px"></a>

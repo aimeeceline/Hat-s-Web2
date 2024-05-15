@@ -50,6 +50,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../css/quanlykhachhang.css">
     <link rel="stylesheet" href="../css/quanlysanpham.css">
 </head>
+<style>
+    button[type="submit"] {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button[type="submit"]:hover {
+    background-color: #333;
+}
+</style>
 
 <body>
     <!-- =============== Navigation ================ -->

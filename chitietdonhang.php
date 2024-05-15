@@ -136,9 +136,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['order_id'])) {
                         <td>Thành tiền:</td>
                         <td><?php echo number_format($order_info['total'], 0, ',', '.') . 'đ'; ?></td>
                     </tr>
+
                     <tr>
                         <td>Phương thức thanh toán:</td>
                         <td><?php echo $order_info['pay']; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Trạng thái</td>
+                        <td>
+    <?php
+    // Kiểm tra giá trị của trường status và xuất ra chuỗi tương ứng
+    if ($order['status'] == 0) {
+        echo "<p style='color: red;'>Chưa xác nhận</p>";
+    } elseif ($order['status'] == 1) {
+        echo "<p style='color: green;'>Đã xác nhận</p>";
+    } elseif ($order['status'] == 2) {
+        echo "<p style='color: blue;'>Đã giao</p>";
+    } elseif ($order['status'] == 3) {
+        echo "<p style='color: grey;'>Đã hủy</p>";
+    } else {
+        echo "Trạng thái không xác định";
+    }
+    ?>
+</td>
+
                     </tr>
                 </tbody>
             </table>
