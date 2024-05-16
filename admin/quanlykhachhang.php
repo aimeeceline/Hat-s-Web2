@@ -256,7 +256,7 @@ button[type="submit"]:hover {
                             // Truy vấn dữ liệu từ cơ sở dữ liệu
                            
 
-                        $sql = "SELECT  * FROM user WHERE id>1";
+                        $sql = "SELECT  * FROM user WHERE id>1 ORDER BY id DESC";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {

@@ -37,6 +37,12 @@ if (isset($_POST['giaban']) && !empty($_POST['giaban'])) {
     $whereConditions[] = "(" . implode(" OR ", $priceConditions) . ")";
 }
 
+// Xử lý tìm kiếm theo tên sản phẩm
+if (isset($_POST['productName']) && !empty($_POST['productName'])) {
+    $productName = mysqli_real_escape_string($conn, $_POST['productName']);
+    $whereConditions[] = "pro_name LIKE '%$productName%'";
+}
+
 // Kiểm tra xem người dùng đã nhấn nút "Áp dụng" hay chưa
 if (isset($_POST['apply-button'])) {
     // Tạo điều kiện truy vấn từ mảng $whereConditions
@@ -92,13 +98,11 @@ $conn->close();
 
 <body>
     <div class="container">
-        <?php include("page/header.php");
-                echo "<h2 id='head'>KẾT QUẢ TÌM KIẾM:</h2>";
+        <?php include("page/header.php"); ?>
+        <h2 id='head'>KẾT QUẢ TÌM KIẾM:</h2>
+        <?php include("page/searchform.php"); ?>
 
-        include("page/searchform.php");
-        ?>
-    
-            <div class="onmain">
+        <div class="onmain">
             <?php
             // Hiển thị kết quả tìm kiếm nếu có
             if (isset($result) && $result->num_rows > 0) {
@@ -139,6 +143,7 @@ $conn->close();
             ?>
         </div>
     </div>
+
     <div class="pagination">
         <?php
         // Hiển thị nút Previous
@@ -159,8 +164,8 @@ $conn->close();
         }
         ?>
     </div>
-        <?php include("page/footer.php"); ?>
-    </div>
+    <?php include("page/footer.php"); ?>
+</div>
 </body>
 
 </html>

@@ -364,4 +364,14 @@
   .no-scroll {
     overflow: hidden;
   }
-  
+  .restore-btn {
+    padding: 4px;
+    background-color: #FFC100;
+    color: black;
+    border-radius: 4px;
+    border-color: #FFC100;
+}
+
+.restore-btn:hover {
+    background-color: #ffeb3b; /* Màu nền khi hover */
+}

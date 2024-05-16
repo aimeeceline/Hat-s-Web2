@@ -14,7 +14,7 @@ if (isset($_POST['search'])) {
     $search = $_POST['search'];
     $_SESSION['searchData'] = $search;
 
-    $sql = "SELECT * FROM product WHERE pro_name LIKE CONCAT('%', ?, '%')";
+    $sql = "SELECT * FROM product WHERE pro_name LIKE CONCAT('%', ?, '%') and status=1";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $search);
     $stmt->execute();
@@ -22,7 +22,7 @@ if (isset($_POST['search'])) {
 } elseif (isset($_SESSION['searchData'])) {
     // Nếu có dữ liệu tìm kiếm trong session, thực hiện truy vấn từ dữ liệu đó
     $search = $_SESSION['searchData'];
-    $sql = "SELECT * FROM product WHERE pro_name LIKE CONCAT('%', ?, '%')";
+    $sql = "SELECT * FROM product WHERE pro_name LIKE CONCAT('%', ?, '%') and status=1";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $search);
     $stmt->execute();

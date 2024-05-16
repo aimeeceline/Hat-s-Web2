@@ -55,7 +55,47 @@ while ($row = mysqli_fetch_assoc($result_order)) {
     }
 }
 ?>
+<style>
+    /* CSS cho nút */
+button {
+    margin: 20px;
+    padding: 8px 16px; /* Kích thước nút */
+    background-color: #4CAF50; /* Màu nền */
+    color: white; /* Màu chữ */
+    border: none; /* Không có viền */
+    border-radius: 4px; /* Bo góc */
+    cursor: pointer; /* Con trỏ chuột khi di chuột qua */
+    margin-right: 5px; /* Khoảng cách phải giữa các nút */
+}
 
+/* Hover effect */
+button:hover {
+    background-color: #45a049; /* Màu nền khi di chuột qua */
+}
+/* CSS cho nút màu đỏ */
+button.confirm {
+    background-color: #FF0000; /* Màu nền đỏ */
+    color: #FFFFFF; /* Màu chữ trắng */
+}
+
+/* CSS cho nút màu xanh lá cây */
+button.cancel {
+    background-color: #00FF00; /* Màu nền xanh lá cây */
+    color: #000000; /* Màu chữ đen */
+}
+
+/* CSS cho nút màu xanh dương */
+button.shipped {
+    background-color: #0000FF; /* Màu nền xanh dương */
+    color: #FFFFFF; /* Màu chữ trắng */
+}
+
+/* CSS cho nút màu xám */
+button.delete {
+    background-color: #808080; /* Màu nền xám */
+    color: #FFFFFF; /* Màu chữ trắng */
+}
+</style>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -178,25 +218,33 @@ while ($row = mysqli_fetch_assoc($result_order)) {
                             <tr>
                 <td>Trạng thái:</td>
                 <td>
-                    <?php
-                    // Kiểm tra giá trị của trường status và xuất ra chuỗi tương ứng
-                    if ($order_info['status'] == 0) {
-                        echo "<p style='color: red;'>Chưa xác nhận</p>";
-                    } elseif ($order_info['status'] == 1) {
-                        echo "<p style='color: green;'>Đã xác nhận</p>";
-                    }elseif ($order_info['status'] == 2) {
-                        echo "<p style='color: blue;'>Đã giao</p>";
-                    }elseif ($order_info['status'] == 3) {
-                        echo "<p style='color: grey;'>Đã hủy</p>";
-                    } else {
-                        echo "Trạng thái không xác định";
-                    }
-                                        ?>
+                <?php
+    // Kiểm tra giá trị của trường status và xuất ra chuỗi tương ứng
+    if ($order_info['status'] == 0) {
+        echo "<p style='color: red;'>Chưa xác nhận</p>";
+    } elseif ($order_info['status'] == 1) {
+        echo "<p style='color: green;'>Đã xác nhận</p>";
+    } elseif ($order_info['status'] == 2) {
+        echo "<p style='color: blue;'>Đã giao</p>";
+    } elseif ($order_info['status'] == 3) {
+        echo "<p style='color: grey;'>Đã hủy</p>";
+    } else {
+        echo "Trạng thái không xác định";
+    }
+?>
                 </td>
             </tr>
                         </tbody>
                     </table>
-                  
+                    <?php
+    if ($order_info['status'] == 0) {
+        echo "<button class='confirm' onclick='updateStatus(" . $order_id . ", 1)'>Xác nhận đã xử lý</button>";
+    } elseif ($order_info['status'] == 1) {
+        echo "<button class='cancel' onclick='updateStatus(" . $order_id . ", 0)'>Hoàn đơn</button>";
+        echo "<button class='shipped' onclick='updateStatus(" . $order_id . ", 2)'>Xác nhận đã giao</button>";
+        echo "<button class='delete' onclick='updateStatus(" . $order_id. ", 3)'>Hủy đơn</button>";
+    }
+?>
                 <?php endif; ?>
                 
             </div>
@@ -204,38 +252,43 @@ while ($row = mysqli_fetch_assoc($result_order)) {
         </div>
         </div>
         <script>
-    function markProcessed(orderId) {
-        // Xác nhận người dùng muốn đánh dấu đã xử lý
-        var confirmMsg = confirm("BẠN CÓ CHẮC ĐÃ XỬ LÝ ĐƠN HÀNG NÀY?");
-        if (confirmMsg) {
-            // Gửi yêu cầu cập nhật trạng thái bằng Ajax
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        // Xử lý phản hồi từ máy chủ
-                        var response = xhr.responseText;
-                        if (response === 'success') {
-                            // Cập nhật thành công, có thể thực hiện các hành động khác nếu cần
-                            alert("Đã cập nhật trạng thái đơn hàng thành công.");
-                            // Tải lại trang để cập nhật danh sách đơn hàng
-                            location.reload();
-                        } else {
-                            // Cập nhật thất bại, hiển thị thông báo lỗi nếu cần
-                            alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
-                        }
-                    } else {
-                        // Xử lý lỗi khi gửi yêu cầu
-                        alert("Có lỗi khi gửi yêu cầu đến máy chủ.");
-                    }
-                }
-            };
-            // Mở kết nối và gửi yêu cầu đến file xử lý
-            xhr.open("POST", "updatestatus.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.send("orderId=" + orderId);
-        }
-    }
+    function updateStatus(orderId, status) {
+                                    // Xác nhận với người dùng trước khi thực hiện cập nhật
+                                    var confirmation = confirm("Bạn có chắc chắn muốn thay đổi trạng thái đơn hàng?");
+
+                                    // Nếu người dùng đã xác nhận
+                                    if (confirmation) {
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.onreadystatechange = function () {
+                                            if (xhr.readyState === XMLHttpRequest.DONE) {
+                                                if (xhr.status === 200) {
+                                                    // Xử lý phản hồi từ máy chủ
+                                                    var response = xhr.responseText;
+                                                    if (response === 'success') {
+                                                        // Cập nhật thành công, có thể thực hiện các hành động khác nếu cần
+                                                        alert("Đã cập nhật trạng thái đơn hàng thành công.");
+                                                        // Tải lại trang để cập nhật danh sách đơn hàng
+                                                        location.reload();
+                                                    } else {
+                                                        // Cập nhật thất bại, hiển thị thông báo lỗi nếu cần
+                                                        alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
+                                                    }
+                                                } else {
+                                                    // Xử lý lỗi khi gửi yêu cầu
+                                                    alert("Có lỗi khi gửi yêu cầu đến máy chủ.");
+                                                }
+                                            }
+                                        };
+                                        // Mở kết nối và gửi yêu cầu đến file xử lý
+                                        xhr.open("POST", "updatestatus.php", true);
+                                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                        xhr.send("orderId=" + orderId + "&status=" + status);
+                                    }
+                                    else {
+                                        window.location.reload();
+                                    }
+                                }
+
 </script>
 <!-- ====== ionicons ======= -->
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

@@ -72,6 +72,9 @@ if (mysqli_num_rows($result) > 0) {
         echo "<td>" . $order['order_date'] . "</td>";
         echo "<td>";
 ?>
+ <form id="orderForm" action="orderdetails.php" method="post" style="display: none;">
+    <input type="hidden" id="orderIdInput" name="orderId">
+</form>
 <select id="statusSelect_<?php echo $order['id']; ?>" class="custom-select" style="background-color: <?php 
    if ($order['status'] == 0) { echo '#ffcccc'; } // Màu do cho đã xử lý
     elseif ($order['status'] == 1) { echo '#c9ffd1'; } // Màu xanh lá cây cho đã xử lý
@@ -81,8 +84,8 @@ if (mysqli_num_rows($result) > 0) {
 ?>" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)">
     <option value="0" <?php echo ($order['status'] == 0) ? 'selected' : ''; ?>>Chưa xử lý</option>
     <option value="1" <?php echo ($order['status'] == 1) ? 'selected' : ''; ?>>Đã xử lý</option>
-    <option value="2" <?php echo ($order['status'] == 2) ? 'selected' : ''; ?>>Đã giao</option>
-    <option value="3" <?php echo ($order['status'] == 3) ? 'selected' : ''; ?>>Đã hủy</option>
+    <option value="2" <?php echo ($order['status'] == 2) ? 'selected' : ''; ?>>Thành công</option>
+    <option value="3" <?php echo ($order['status'] == 3) ? 'selected' : ''; ?>>Bị hủy</option>
 </select>
 <?php
         echo "</td>";

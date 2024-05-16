@@ -17,7 +17,7 @@
             <form method="POST" action="searchadvance.php">
                 <div id="accordion">
                     <div class="cap">Tìm kiếm nâng cao</div>
-                    
+                    <input type="text" name="productName" placeholder="Nhập tên sản phẩm cần tìm" style="width: 90%; padding: 10px; border-radius: 8px; margin: 8px;">
                     <!-- Thể loại -->
                     <div class="cap1">Thể loại:</div>
                     <div class="ct">
