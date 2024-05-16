@@ -444,16 +444,6 @@ width: 90%;
 .filter .date{
   margin: 20px 0;
 }
-<<<<<<< HEAD
-.thongke{
-  padding: 10px;
-  color:white;
-  background-color: #000000;
-  border: 2px solid black;
-  border-radius: 3px;
-}
-
-=======
 .thongke {
   color: white; /* Thiết lập màu chữ thành trắng */
   background-color: black; /* Thiết lập màu nền thành đen */
@@ -466,4 +456,3 @@ width: 90%;
 .thongke:hover {
   background-color: #333; /* Thay đổi màu nền khi hover */
 }
->>>>>>> ad488d5364ac8c45b6f76c292bce11e6d8ef978f

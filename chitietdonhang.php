@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['order_id'])) {
     $sql_order = "SELECT 
         orders.total,
         orders.pay,
+        orders.status,
         user.name,
         user.phone,
         user.address,
@@ -75,7 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['order_id'])) {
     padding: 10px; /* Add some padding */
     margin-top: 10px; /* Add some top margin */
     background-color: none; /* Add a background color */
-    width: 1350px;
 }
 
 .thongtinnguoimua {
@@ -130,40 +130,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['order_id'])) {
             <?php endforeach; ?>
 
             <?php if (isset($order_info)): ?>
-            <table id="thanhtoan">
-                <tbody>
-                    <tr>
-                        <td>Thành tiền:</td>
-                        <td><?php echo number_format($order_info['total'], 0, ',', '.') . 'đ'; ?></td>
-                    </tr>
+    <table id="thanhtoan">
+        <tbody>
+            <tr>
+                <td>Thành tiền:</td>
+                <td><?php echo number_format($order_info['total'], 0, ',', '.') . 'đ'; ?></td>
+            </tr>
+            <tr>
+                <td>Phương thức thanh toán:</td>
+                <td><?php echo $order_info['pay']; ?></td>
+            </tr>
+            <tr>
+                <td>Trạng thái:</td>
+                <td>
+                    <?php
+                    // Kiểm tra giá trị của trường status và xuất ra chuỗi tương ứng
+                    if ($order_info['status'] == 0) {
+                        echo "<p style='color: red;'>Chưa xác nhận</p>";
+                    } elseif ($order_info['status'] == 1) {
+                        echo "<p style='color: green;'>Đã xác nhận</p>";
+                    }elseif ($order_info['status'] == 2) {
+                        echo "<p style='color: blue;'>Đã giao</p>";
+                    }elseif ($order_info['status'] == 3) {
+                        echo "<p style='color: grey;'>Đã hủy</p>";
+                    } else {
+                        echo "Trạng thái không xác định";
+                    }
+                                        ?>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+<?php endif; ?>
 
-                    <tr>
-                        <td>Phương thức thanh toán:</td>
-                        <td><?php echo $order_info['pay']; ?></td>
-                    </tr>
-                    <tr>
-                        <td>Trạng thái</td>
-                        <td>
-    <?php
-    // Kiểm tra giá trị của trường status và xuất ra chuỗi tương ứng
-    if ($order['status'] == 0) {
-        echo "<p style='color: red;'>Chưa xác nhận</p>";
-    } elseif ($order['status'] == 1) {
-        echo "<p style='color: green;'>Đã xác nhận</p>";
-    } elseif ($order['status'] == 2) {
-        echo "<p style='color: blue;'>Đã giao</p>";
-    } elseif ($order['status'] == 3) {
-        echo "<p style='color: grey;'>Đã hủy</p>";
-    } else {
-        echo "Trạng thái không xác định";
-    }
-    ?>
-</td>
-
-                    </tr>
-                </tbody>
-            </table>
-            <?php endif; ?>
         </div>
     </div>
     <?php 

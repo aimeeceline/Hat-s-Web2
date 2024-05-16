@@ -64,7 +64,7 @@ document.getElementById("searchInput").addEventListener("input", function() {
         <?php if (isset($_SESSION['user'])) {
     // Người dùng đã đăng nhập, lấy vai trò từ session
     $user = $_SESSION['user'];
-    echo "Xin chào ,  " .$user ;
+    echo '<p style="margin: 10px;"> Xin chào, ' .$user. '</p>';
 
 ?>
             <a href="historycart.php"><button>Lịch sử mua hàng</button></a>

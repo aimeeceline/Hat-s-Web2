@@ -1,4 +1,18 @@
+<style>
+    .apply-button {
+    color: white; /* Thiết lập màu chữ thành trắng */
+    background-color: black; /* Thiết lập màu nền thành đen */
+    border: none; /* Xóa viền */
+    padding: 10px 20px; /* Tùy chỉnh padding */
+    border-radius: 5px; /* Bo tròn góc */
+    cursor: pointer; /* Biến con trỏ thành hình bàn tay khi hover */
+}
 
+.apply-button:hover {
+    background-color: #333; /* Thay đổi màu nền khi hover */
+}
+
+</style>
         <div class="show">
             <form method="POST" action="searchadvance.php">
                 <div id="accordion">
@@ -19,6 +33,6 @@
                         <label><input type="checkbox" name="giaban[]" value="6">500.000 đ - 1.000.000 đ</label>
                     </div>
                     <!-- Nút Áp dụng -->
-                    <button type="submit" name="apply-button">Áp dụng</button>
+                    <button type="submit" name="apply-button" class="apply-button">Áp dụng</button>
                 </div>
             </form>

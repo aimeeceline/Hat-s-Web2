@@ -180,6 +180,25 @@ while ($row = mysqli_fetch_assoc($result_order)) {
                                 <td>Phương thức thanh toán:</td>
                                 <td><?php echo $order_info['pay']; ?></td>
                             </tr>
+                            <tr>
+                <td>Trạng thái:</td>
+                <td>
+                    <?php
+                    // Kiểm tra giá trị của trường status và xuất ra chuỗi tương ứng
+                    if ($order_info['status'] == 0) {
+                        echo "<p style='color: red;'>Chưa xác nhận</p>";
+                    } elseif ($order_info['status'] == 1) {
+                        echo "<p style='color: green;'>Đã xác nhận</p>";
+                    }elseif ($order_info['status'] == 2) {
+                        echo "<p style='color: blue;'>Đã giao</p>";
+                    }elseif ($order_info['status'] == 3) {
+                        echo "<p style='color: grey;'>Đã hủy</p>";
+                    } else {
+                        echo "Trạng thái không xác định";
+                    }
+                                        ?>
+                </td>
+            </tr>
                         </tbody>
                     </table>
                     <?php 

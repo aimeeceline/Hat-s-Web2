@@ -19,7 +19,7 @@ function addToCart($product_id, $product_img, $product_name, $product_price, $qu
 {
     // Initialize the cart if it doesn't exist
     if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = array();    
+        $_SESSION['cart'] = array();
     }
 
     // Check if the product already exists in the cart
@@ -85,7 +85,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
                     <table class="table table-bordered" id="table-products">
                         <thead>
                             <tr>
-                                <th> </th>
                                 <th>SẢN PHẨM</th>
                                 <th>GIÁ TIỀN</th>
                                 <th>SỐ LƯỢNG</th>
@@ -98,8 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
                             foreach ($_SESSION['cart'] as $item) {
                                 ?>
                                 <tr>
-                                    
-                                    <td><input type="checkbox"></td>
+
                                     <td class="sanpham">
                                         <a href="chitietsanpham.php?id=<?php echo $item['product_id']; ?>"
                                             style="display: flex; align-items: center;">
@@ -134,48 +132,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
 
                                         </div>
                                     </td>
-                                    <td id="thanhtien"><?php echo number_format($item['product_price'] * $item['quantity'], 0, ',', '.') . 'đ'; ?></td>
+                                    <td id="thanhtien">
+                                        <?php echo number_format($item['product_price'] * $item['quantity'], 0, ',', '.') . 'đ'; ?>
+                                    </td>
                                     <script>
-    function handleQuantityChange(productId, newQuantity) {
-        updateCart(productId, newQuantity);
-        location.reload();
-    }
+                                        function handleQuantityChange(productId, newQuantity) {
+                                            updateCart(productId, newQuantity);
+                                            location.reload();
+                                        }
 
-    function updateCart(productId, quantity) {
-        let formData = new FormData();
-        formData.append('product_id', productId);
-        formData.append('quantity', quantity);
+                                        function updateCart(productId, quantity) {
+                                            let formData = new FormData();
+                                            formData.append('product_id', productId);
+                                            formData.append('quantity', quantity);
 
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'update_cart.php', true);
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                console.log('Giỏ hàng đã được cập nhật thành công.');
-            } else {
-                console.error('Lỗi: ' + xhr.statusText);
-            }
-        };
-        xhr.send(formData);
-    }
+                                            let xhr = new XMLHttpRequest();
+                                            xhr.open('POST', 'update_cart.php', true);
+                                            xhr.onload = function () {
+                                                if (xhr.status === 200) {
+                                                    console.log('Giỏ hàng đã được cập nhật thành công.');
+                                                } else {
+                                                    console.error('Lỗi: ' + xhr.statusText);
+                                                }
+                                            };
+                                            xhr.send(formData);
+                                        }
 
-    function handlePlus(productId) {
-        let amountElement = document.getElementById('amount_' + productId);
-        let amount = parseInt(amountElement.value);
-        amount++;
-        amountElement.value = amount;
-        handleQuantityChange(productId, amount);
-    }
+                                        function handlePlus(productId) {
+                                            let amountElement = document.getElementById('amount_' + productId);
+                                            let amount = parseInt(amountElement.value);
+                                            amount++;
+                                            amountElement.value = amount;
+                                            handleQuantityChange(productId, amount);
+                                        }
 
-    function handleMinus(productId) {
-        let amountElement = document.getElementById('amount_' + productId);
-        let amount = parseInt(amountElement.value);
-        if (amount > 1) {
-            amount--;
-            amountElement.value = amount;
-            handleQuantityChange(productId, amount);
-        }
-    }
-</script>
+                                        function handleMinus(productId) {
+                                            let amountElement = document.getElementById('amount_' + productId);
+                                            let amount = parseInt(amountElement.value);
+                                            if (amount > 1) {
+                                                amount--;
+                                                amountElement.value = amount;
+                                                handleQuantityChange(productId, amount);
+                                            }
+                                        }
+                                    </script>
                                     <td><a href="remove_from_cart.php?product_id=<?php echo $item['product_id']; ?>">XÓA</a>
                                     </td>
                                 </tr>
@@ -203,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
 
             }
             ?>
-
+</div>
             <?php include ('page/footer.php') ?>
         </div>
 </body>

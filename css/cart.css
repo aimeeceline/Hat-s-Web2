@@ -31,7 +31,11 @@ td{
     text-align: center;
     margin-top: 50px;
 }
-
+#thanhtien {
+  width: 20%;
+  text-align: center;
+  margin-top: 50px;
+}
 #xoa {
     width: 20%;
     text-align: center;

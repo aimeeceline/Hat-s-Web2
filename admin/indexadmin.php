@@ -158,7 +158,11 @@ $result_user = mysqli_query($conn, $sql_user);
     if ($row1['status'] == 0) {
         echo "<span class='status return'>Chờ xác nhận</span>";
     } elseif ($row1['status'] == 1) {
+        echo "<span class='status delivered'>Đã xác nhận</span>";
+    } elseif ($row1['status'] == 2) {
         echo "<span class='status delivered'>Đã giao</span>";
+    } elseif ($row1['status'] == 3) {
+        echo "<span class='status delivered'>Đã hủy</span>";
     } else {
         echo "Trạng thái không xác định";
     }
