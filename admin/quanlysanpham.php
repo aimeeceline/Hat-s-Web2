@@ -8,6 +8,15 @@ if (!$conn) {
     die("Kết nối thất bại: " . mysqli_connect_error());
 }
 
+$limit = 10; // Số lượng sản phẩm trên mỗi trang
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Trang hiện tại
+$start = ($current_page - 1) * $limit;
+
+// Truy vấn tổng số sản phẩm
+$total_records_query = "SELECT COUNT(*) AS total FROM product";
+$total_records_result = $conn->query($total_records_query);
+$total_records_row = $total_records_result->fetch_assoc();
+$total_records = $total_records_row['total'];
 
 ?>
 
@@ -23,6 +32,7 @@ if (!$conn) {
     <link rel="stylesheet" href="../css/indexadmin.css">
     <link rel="stylesheet" href="../css/quanlysanpham.css">
     <link rel="stylesheet" href="../css/quanlykhachhang.css">
+    <link rel="stylesheet" href="../css/pagination.css">
 
 </head>
 
@@ -83,42 +93,49 @@ if (!$conn) {
                 <div class="hello">
                     <p>CHÀO MỪNG QUẢN TRỊ CỦA HAT !!!</p>
                 </div>
-
+                
             </div>
+            
             <!-- ================ LÀM QUẢN LÝ SẢN PHẨM Ở ĐÂY ================= -->
             <div class="user">
                 <div class="banner">
                     <button id="adduser"><a href="../admin/themsanpham.php">+ Thêm sản phẩm</a></button>
-
+                    <form action="" method="GET">
+                    <label>
+                    <input type="text" id="searchInput" name="search" placeholder="Nhập tên sản phẩm">
+                        <button id="searchButton">Tìm</button>
+                    </label>
+</form>
+                    
                 </div>
+                
 
                 <div class="user-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>Mã SP</td>
-                                <td>Ảnh</td>
-                                <td>Tên SP </td>
-                                <td>Danh mục</td>
-                                <td>Giá</td>
-                                <td>Tồn kho</td>
-                                <td>Thao tác</td>
-                            </tr>
-                        </thead>
-                        <!-- ================ bảng sửa sản phẩm  ================= -->
-                        <tbody>
-                            <?php
-                            // Truy vấn dữ liệu từ cơ sở dữ liệu
-                            
+        <table>
+            <thead>
+                <tr>
+                    <td>Mã SP</td>
+                    <td>Ảnh</td>
+                    <td>Tên SP</td>
+                    <td>Danh mục</td>
+                    <td>Giá</td>
+                    <td>Tồn kho</td>
+                    <td>Thao tác</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Hiển thị thông tin sản phẩm (nếu không tìm kiếm hoặc khi tìm kiếm có kết quả)
+                if (!isset($_GET['search']) || $result->num_rows > 0) {
+                    // Truy vấn dữ liệu từ cơ sở dữ liệu
+                    $sql = "SELECT * FROM product ORDER BY pro_id DESC LIMIT $start, $limit";
+                    $result = $conn->query($sql);
 
-                            $sql = "SELECT * FROM product ORDER BY pro_id DESC";
-                            $result = $conn->query($sql);
-
-                            // Kiểm tra nếu có dữ liệu trả về từ truy vấn
-                            if ($result->num_rows > 0) {
-                                // Duyệt qua từng dòng dữ liệu và hiển thị thông tin sản phẩm
-                                while ($row = $result->fetch_assoc()) {
-                                    $category = $row['id_category'];
+                    // Kiểm tra nếu có dữ liệu trả về từ truy vấn
+                    if ($result->num_rows > 0) {
+                        // Duyệt qua từng dòng dữ liệu và hiển thị thông tin sản phẩm
+                        while ($row = $result->fetch_assoc()) {
+                            $category = $row['id_category'];
                                     $img = $row['pro_img1'];
                                     $img2 = $row['pro_img2'];
                                     $img3 = $row['pro_img3'];
@@ -148,17 +165,94 @@ if (!$conn) {
                                         echo '<button class="restore-btn" data-proid="' . htmlspecialchars($row['pro_id']) . '">Khôi phục</button>'; 
                                                                        }                                   echo "</td>";
                                     echo "<tr>";
+                                                                
+                        }                       
+                    } else {
+                        echo "<tr><td colspan='7'>Không có sản phẩm nào.</td></tr>";
+                    }
+                }
+                
+                // Hiển thị kết quả tìm kiếm
+                if (isset($_GET['search'])) {
+                    // Lấy từ khoá tìm kiếm từ URL
+                    $searchKeyword = '%' . $_GET['search'] . '%';
 
-                                }
-                            } else {
-                                echo "No products available";
-                            }
+                    // Truy vấn dữ liệu từ cơ sở dữ liệu
+                    $sql = "SELECT * FROM product WHERE pro_name LIKE ?";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("s", $searchKeyword);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    // Hiển thị kết quả tìm kiếm
+                    if ($result->num_rows > 0) {
+                        // Duyệt qua từng dòng dữ liệu và hiển thị thông tin sản phẩm
+                        while ($row = $result->fetch_assoc()) {
+                            $category = $row['id_category'];
+                                    $img = $row['pro_img1'];
+                                    $img2 = $row['pro_img2'];
+                                    $img3 = $row['pro_img3'];
 
 
-                            $conn->close();
-                            ?>
+                                    // Gọi phương thức để lấy tên loại sản phẩm từ bảng category
+                                    $category_name = $p->getCategoryName($category);
+
+                                    // Tạo đường dẫn cho ảnh dựa trên loại sản phẩm
+                                    $image_path = '../img/product/' . $category_name . '/' . $img;
+                                    $image_path2 = '../img/product/' . $category_name . '/' . $img2;
+                                    $image_path3 = '../img/product/' . $category_name . '/' . $img3;
+
+                                    echo "<tr>";
+                                    echo "<td>" . $row["pro_id"] . "</td>";
+                                    echo ' <td><img src="' . $image_path . '" alt="' . $name . '"></td>';
+                                    echo "<td>" . $row["pro_name"] . "</td>";
+                                    echo "<td>" . $category_name . "</td>";
+                                    echo "<td>" . $row["pro_price"] . "</td>";
+                                    echo "<td>" . $row["pro_quantity"] . "</td>";
+                                    echo "<td>";
+                                    if ($row["status"] == 1) {
+                                    echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"" . $row['pro_id'] . "\",\"" . $row['pro_name'] . "\",  \"" . $row['pro_price'] . "\",\"" . $row['pro_author'] . "\",\"" . $row['pro_publisher'] . "\",\"" . $row['pro_description'] . "\",\"" . $row['pro_quantity'] . "\",\"" . $row['id_category'] . "\",\"" . $image_path . "\",\"" . $image_path2 . "\",\"" . $image_path3 . "\")'>Sửa</button>";
+                                        echo "<button id='xoanguoidung' data-proid='" . $row['pro_id'] . "' onclick='performAction(this)'>Xóa</button>";
+                                    }
+                                    else{
+                                        echo '<button class="restore-btn" data-proid="' . htmlspecialchars($row['pro_id']) . '">Khôi phục</button>'; 
+                                                                       }                                   echo "</td>";
+                                    echo "<tr>";
+                                   
+                        }
+                    } else {
+                        echo "<tr><td colspan='7'>Không tìm thấy sản phẩm nào phù hợp.</td></tr>";
+                    }
+                }
+                
+                ?>
                         </tbody>
                     </table>
+                    <div class="pagination1">
+                    <?php
+                    $is_searching = isset($_GET['search']);
+
+                    if (!$is_searching) {
+                    $total_pages = ceil($total_records / $limit);
+                    if ($current_page > 1) {
+                        echo '<li><a href="quanlysanpham.php?page=' . ($current_page - 1) . $searchQuery . '">TRC</a></li>';
+                    }
+        
+                    // Hiển thị nút phân trang
+                    for ($i = 1; $i <= $total_pages; $i++) {
+                        // Kiểm tra xem có phải trang hiện tại không
+                        $current_class = ($i == $current_page) ? ' class="hientai"' : '';
+                        echo '<li' . $current_class . '><a href="quanlysanpham.php?page=' . $i . $searchQuery . '">' . $i . '</a></li>';
+                                    }
+        
+                    // Hiển thị nút Next
+                    if ($current_page < $total_pages) {
+                        echo '<li><a href="quanlysanpham.php?page=' . ($current_page + 1) . $searchQuery . '">SAU</a></li>';
+                    }
+                }
+
+?></div>
+
                     <div class="overlay"></div>
                     <div class="boxsuauser" id="boxsuauser">
                         <button onclick="dongFormChinhSua()">X</button>

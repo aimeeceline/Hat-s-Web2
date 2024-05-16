@@ -23,4 +23,23 @@
 #head{
   margin-left: 390px;
 }
+.pagination1 {
+  padding: 10px;
+  text-align: center;
+  list-style: none;
+}
 
+.pagination1 li {
+  padding: 20px;
+  display: inline-block;
+  margin: 20px 10px;
+  cursor: pointer;
+}
+.pagination1 .hientai {
+  border-bottom: 3px solid rgb(0, 0, 0);
+}
+
+.pagination1 li:not(.hientai):hover {
+  background-color: rgb(152, 50, 50);
+  border-radius: 10px;
+}
