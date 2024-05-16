@@ -162,7 +162,18 @@ $result_order = $stmt->get_result();
         </table>
     </div>
 </div>
-
+<form id="orderForm" action="orderdetails.php" method="post" style="display: none;">
+    <!-- Trường input ẩn để chứa ID -->
+    <input type="hidden" id="orderIdInput" name="orderId">
+</form>
+<script>
+function submitForm(orderId) {
+    // Đặt giá trị ID vào trường input
+    document.getElementById('orderIdInput').value = orderId;
+    // Submit biểu mẫu
+    document.getElementById('orderForm').submit();
+}
+</script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

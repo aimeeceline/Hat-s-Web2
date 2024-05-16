@@ -161,6 +161,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['order_id'])) {
             </tr>
         </tbody>
     </table>
+    <?php
+    // Nếu trạng thái đơn hàng là 0 hoặc 1, hiển thị nút "Hủy đơn"
+    if ($order_info['status'] == 0 || $order_info['status'] == 1):
+    ?>
+        <form action="cancel_order.php" method="post" onsubmit="return confirmCancel()">
+    <input type="hidden" name="order_id" value="<?php echo $order_id; ?>">
+    <button type="submit" name="cancel_order" class="btn-cancel-order">Hủy đơn</button>
+</form>
+        <script>
+            function confirmCancel() {
+        return confirm("Bạn có chắc chắn muốn hủy đơn không?");
+    }
+        </script>
+    <?php endif; ?>
 <?php endif; ?>
 
         </div>
@@ -172,4 +186,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['order_id'])) {
 	  </body>
 	  
 	  </html>
+      
 

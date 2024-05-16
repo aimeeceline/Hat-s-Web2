@@ -219,3 +219,20 @@ p {
     border: #ca2929;
     color: #fff;
 }
+.btn-cancel-order {
+  background-color: #ff0000; /* Màu nền đỏ */
+  color: #ffffff; /* Màu chữ trắng */
+  padding: 10px 20px; /* Kích thước lề bên trong của nút */
+  border: none; /* Không có viền */
+  border-radius: 5px; /* Bo góc nút */
+  cursor: pointer; /* Hiển thị con trỏ tay khi rê chuột qua nút */
+  font-size: 16px; /* Kích thước chữ */
+}
+
+.btn-cancel-order:hover {
+  background-color: #cc0000; /* Màu nền đỏ nhạt khi di chuột qua */
+}
+
+.btn-cancel-order:active {
+  background-color: #aa0000; /* Màu nền đỏ sáng khi nút được nhấn */
+}
