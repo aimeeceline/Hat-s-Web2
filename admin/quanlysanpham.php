@@ -173,14 +173,23 @@ if (!$conn) {
                                         }
                                     </script>
                                     <h2 style="margin-bottom: 10px;">Sửa thông tin sản phẩm  </h2>
+<<<<<<< HEAD
                                     <form id="suaUserForm" action="suaproduct.php" method="post" enctype="multipart/form-data">
+=======
+                                    <form id="suaUserForm" action="../admin/suaproduct.php" method="post"> <!--Thêm action và method vào form-->
+>>>>>>> parent of 680e329 (2)
                                         <div class="form-group">
                                             <label for="image1">Ảnh 1:</label>
                                             <div class="change_img">
                                                 <img src="" id="pro_img1" name="pro_img1">
                                                 <div class="change_action">
                                                     <label for="input_file1" class="change_button">Sửa</label>
+<<<<<<< HEAD
                                                     <input type="file" id="input_file1" name="pro_img1" class="input_file" accept="image/*" onchange="previewImage(event)">
+=======
+                                                    <input type="file" id="input_file1" class="input_file" accept="image/*">
+                                                    <label class="change_button" onclick="del(this)">Xóa</label>
+>>>>>>> parent of 680e329 (2)
                                                 </div>
                                             </div>
                                         </div>
@@ -191,7 +200,12 @@ if (!$conn) {
                                                 <img src="" id="pro_img2" name="pro_img2">
                                                 <div class="change_action">
                                                     <label for="input_file2" class="change_button">Sửa</label>
+<<<<<<< HEAD
                                                     <input type="file" id="input_file2" name="pro_img2" class="input_file" accept="image/*" onchange="previewImage2(event)">
+=======
+                                                    <input type="file" id="input_file2" class="input_file" accept="image/*">
+                                                    <label class="change_button" onclick="del(this)">Xóa</label>
+>>>>>>> parent of 680e329 (2)
                                                 </div>
                                             </div>
                                         </div>
@@ -202,7 +216,12 @@ if (!$conn) {
                                                 <img src="" id="pro_img3" name="pro_img3">
                                                 <div class="change_action">
                                                     <label for="input_file3" class="change_button">Sửa</label>
+<<<<<<< HEAD
                                                     <input type="file" id="input_file3" name="pro_img3" class="input_file" accept="image/*" onchange="previewImage3(event)">
+=======
+                                                    <input type="file" id="input_file3" class="input_file" accept="image/*">
+                                                    <label class="change_button" onclick="del(this)">Xóa</label>
+>>>>>>> parent of 680e329 (2)
                                                 </div>
                                             </div>
                                         </div>
@@ -273,6 +292,7 @@ if (!$conn) {
                                     });
                                 });
                                 ///////////////////
+<<<<<<< HEAD
                                 
                 var input1 = document.getElementById('input_file1');
                 var input2 = document.getElementById('input_file2');
@@ -316,6 +336,25 @@ if (!$conn) {
                         document.getElementById('pro_img3').src = e.target.result;
                     }
                     reader.readAsDataURL(file);
+=======
+                                function performAction(action, pro_id) {
+                             if (action === 'lock') {
+                             if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
+                            // Gửi yêu cầu xóa sản phẩm thông qua AJAX
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST", "xoasanpham.php", true);
+                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState === 4 && xhr.status === 200) {
+                                    // Xử lý kết quả nếu cần
+                                    // Ví dụ: Cập nhật giao diện người dùng sau khi xóa
+                                    location.reload(); // Tải lại trang sau khi xóa thành công
+                                }
+                            };
+                            xhr.send("pro_id=" + pro_id);
+                        }
+                    }
+>>>>>>> parent of 680e329 (2)
                 }
                                         </script>
                                 <script src="../js/suaproduct.js"></script>
