@@ -21,7 +21,8 @@ $sql = "SELECT
             o.status,
             o.total,
             o.order_date,
-            COUNT(o.id) AS total_orders
+            COUNT(o.id) AS total_orders,
+            SUM(o.total) OVER (PARTITION BY u.id) AS total_all_orders
         FROM 
             user u
         JOIN 
@@ -127,7 +128,7 @@ $result_order = $stmt->get_result();
                 <?php
                 $total_products = 0; // Khởi tạo biến $total_products
                 while ($row3 = $result_order->fetch_assoc()) {
-                    $total_products += $row3['total_quantity'];
+                    $total_products += $row3['total_all_orders'];
                 ?>
                 <tr>
                     <td>
@@ -151,6 +152,13 @@ $result_order = $stmt->get_result();
                 }
                 ?>
             </tbody>
+            <thead>
+                        <tr>
+                            <th colspan="3" style="background-color: white;"></th>
+                            <th>Tổng:</th>
+                            <th><?php echo number_format($total_products, 0, ',', '.') . 'đ'; ?></th>
+                        </tr>
+                    </thead>
         </table>
     </div>
 </div>

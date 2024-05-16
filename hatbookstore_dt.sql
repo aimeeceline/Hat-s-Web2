@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 15, 2024 lúc 08:34 AM
+-- Thời gian đã tạo: Th5 16, 2024 lúc 02:37 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -78,7 +78,9 @@ INSERT INTO `orderdetails` (`order_id`, `product_id`, `quantity`, `unitprice`) V
 (29112039, 18, 1, 60520),
 (29112040, 10, 1, 60520),
 (29112041, 10, 9, 60520),
-(29112042, 2, 1, 53320);
+(29112042, 2, 1, 53320),
+(29112043, 9, 1, 151200),
+(29112045, 18, 1, 60520);
 
 -- --------------------------------------------------------
 
@@ -100,7 +102,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `id_user`, `order_date`, `status`, `total`, `pay`) VALUES
-(29112032, 20040001, '2024-04-11', 0, 250920, 'COD'),
+(29112032, 20040001, '2024-04-11', 1, 250920, 'COD'),
 (29112033, 20040001, '2024-04-13', 0, 37050, 'ATM'),
 (29112034, 20040002, '2024-04-15', 0, 347240, 'COD'),
 (29112035, 20040002, '2024-04-16', 0, 108300, 'ATM'),
@@ -109,8 +111,10 @@ INSERT INTO `orders` (`id`, `id_user`, `order_date`, `status`, `total`, `pay`) V
 (29112038, 20040004, '2024-05-02', 1, 292570, 'COD'),
 (29112039, 20040005, '2024-05-04', 1, 155520, 'ATM'),
 (29112040, 20040001, '2024-05-07', 1, 60520, 'ATM'),
-(29112041, 20040001, '2024-05-14', 0, 544680, 'ATM'),
-(29112042, 20040001, '2024-05-16', 0, 53320, 'COD');
+(29112041, 20040001, '2024-05-14', 2, 544680, 'ATM'),
+(29112042, 20040001, '2024-05-16', 0, 53320, 'COD'),
+(29112043, 20040001, '2024-05-15', 2, 151200, 'ATM'),
+(29112045, 20040001, '2024-05-15', 0, 60520, 'ATM');
 
 -- --------------------------------------------------------
 
@@ -239,13 +243,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29112043;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29112046;
 
 --
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
-  MODIFY `pro_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `pro_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT cho bảng `user`
