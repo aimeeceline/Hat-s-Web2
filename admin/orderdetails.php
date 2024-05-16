@@ -124,12 +124,7 @@ while ($row = mysqli_fetch_assoc($result_order)) {
                 <div class="hello">
                     <p>CHÀO MỪNG QUẢN TRỊ CỦA HAT !!!</p>
                 </div>
-                <div class="search">
-                    <label>
-                        <input type="text" placeholder="Tìm kiếm chức năng quản trị">
-                        <a href="../html/adminnotfound.html"><ion-icon name="search-outline"></ion-icon></a>
-                    </label>
-                </div>
+            
             </div>
             <div class="chitietdonhang">
             <div class="madh">
