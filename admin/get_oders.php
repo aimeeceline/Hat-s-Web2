@@ -7,6 +7,7 @@
     border-radius: 10px;
   }
 </style>
+
 <?php
 include("../classfunctionPHPdatabase.php");
 $p = new database();
@@ -64,7 +65,7 @@ if (mysqli_num_rows($result) > 0) {
         echo "<td>";
 ?>
 <select id="statusSelect_<?php echo $order['id']; ?>" class="custom-select" style="background-color: <?php 
-   if ($order['status'] == 0) { echo '#FF0000'; } // Màu do cho đã xử lý
+   if ($order['status'] == 0) { echo '#ffcccc'; } // Màu do cho đã xử lý
     elseif ($order['status'] == 1) { echo '#c9ffd1'; } // Màu xanh lá cây cho đã xử lý
     elseif ($order['status'] == 2) { echo '#add8e6'; } // Màu xanh nước biển cho đã giao
     elseif ($order['status'] == 3) { echo '#f0f0f0'; } // Màu xám cho đã hủy
