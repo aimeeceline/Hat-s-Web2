@@ -241,7 +241,7 @@ function gui() {
                                         <?php if ($order['status'] == 0) : ?>
     <!-- Nếu đơn hàng chưa xử lý -->
     <td> 
-        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)" style="background-color: #f0f0f0; color: black;">
+        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)" style="background-color: #FF0000; color: black;">
             <option value="0" selected>Chưa xử lý</option>
             <option value="1">Đã xử lý</option>
             <option value="2">Đã giao</option>
@@ -271,7 +271,7 @@ function gui() {
 <?php elseif ($order['status'] == 3) : ?>
     <!-- Nếu đơn hàng đã hủy -->
     <td>
-        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)" style="background-color: #ffcccc; color: black;">
+        <select id="statusSelect" onchange="updateStatus(<?php echo $order['id']; ?>, this.value)" style="background-color: #f0f0f0; color: black;">
             <option value="3" selected>Đã hủy</option>
             <option value="0">Chưa xử lý</option>
             <option value="1">Đã xử lý</option>
