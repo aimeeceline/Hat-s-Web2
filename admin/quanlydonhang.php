@@ -119,28 +119,32 @@ if (!$conn) {
                         <option value="yesterday">Hôm qua</option>
                         <option value="last7days">7 ngày trước</option>
                         <option value="last30days">30 ngày trước</option>
-                        <option value="custom" onchange="showCustomDate()" >Tùy chọn</option>
+                        <option value="custom" >Tùy chọn</option>
                     </select>
                     <script>
-                        function sDate() {
-    var selectBox = document.getElementById('ngaymua');
-    var selectedOption = selectBox.options[selectBox.selectedIndex].value;
-    if (selectedOption === 'custom') {
-            showCustomDate();
-        }
-    // Gửi request AJAX để lấy dữ liệu tương ứng với tùy chọn đã chọn
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            // Cập nhật nội dung của tbody trong table với dữ liệu từ phản hồi AJAX
-            document.querySelector('.order-table tbody').innerHTML = this.responseText;
-        }
-    };
-    // Sử dụng phương thức GET và truyền tham số 'month'
-    xhttp.open("GET", "get_date.php?ngaymua=" + selectedOption, true);
-    xhttp.send();
+                       function sDate() {
+                            var selectBox = document.getElementById('ngaymua');
+                            var selectedOption = selectBox.options[selectBox.selectedIndex].value;
 
-}
+                            if (selectedOption === 'custom') {
+                                document.getElementById('customDate').style.display = 'block';
+                            } else {
+                                document.getElementById('customDate').style.display = 'none';
+
+                                // Gửi request AJAX để lấy dữ liệu tương ứng với tùy chọn đã chọn
+                                var xhttp = new XMLHttpRequest();
+                                xhttp.onreadystatechange = function () {
+                                    if (this.readyState == 4 && this.status == 200) {
+                                        // Cập nhật nội dung của tbody trong table với dữ liệu từ phản hồi AJAX
+                                        document.querySelector('.order-table tbody').innerHTML = this.responseText;
+                                    }
+                                };
+                                // Sử dụng phương thức GET và truyền tham số 'ngaymua'
+                                xhttp.open("GET", "get_date.php?ngaymua=" + selectedOption, true);
+                                xhttp.send();
+                            }
+                        }
+
 </script>
 
                     <div id="customDate" style="display: none;">
@@ -163,20 +167,31 @@ if (!$conn) {
     }
 }
 
-    function gui() {
-        const fromDate = document.getElementById('fromDate').value;
-        const toDate = document.getElementById('toDate').value;
-        const customDate = document.getElementById('customDate');
+function gui() {
+                            const fromDate = document.getElementById('fromDate').value;
+                            const toDate = document.getElementById('toDate').value;
+                            const customDate = document.getElementById('customDate');
 
-        if (fromDate !== '' && toDate !== '') {
-            alert(`Đã cập nhật các đơn hàng từ ${fromDate} đến ${toDate}`);
-            customDate.style.display = 'none'; // Ẩn box khi nhấn OK trên alert
-                    console.log(`Từ ngày: ${fromDate}, Đến ngày: ${toDate}`);
+                            if (fromDate !== '' && toDate !== '') {
+                                alert(`Đã cập nhật các đơn hàng từ ${fromDate} đến ${toDate}`);
+                                customDate.style.display = 'none'; // Ẩn box khi nhấn OK trên alert
+                                console.log(`Từ ngày: ${fromDate}, Đến ngày: ${toDate}`);
 
-        } else {
-            alert("Vui lòng nhập đầy đủ thông tin ngày");
-        }
-    }
+                                // Gửi request AJAX để lấy dữ liệu tương ứng với tùy chọn đã chọn
+                                var xhttp = new XMLHttpRequest();
+                                xhttp.onreadystatechange = function () {
+                                    if (this.readyState == 4 && this.status == 200) {
+                                        // Cập nhật nội dung của tbody trong table với dữ liệu từ phản hồi AJAX
+                                        document.querySelector('.order-table tbody').innerHTML = this.responseText;
+                                    }
+                                };
+                                // Sử dụng phương thức GET và truyền tham số 'ngaymua'
+                                xhttp.open("GET", `get_date.php?ngaymua=custom&fromDate=${fromDate}&toDate=${toDate}`, true);
+                                xhttp.send();
+                            } else {
+                                alert("Vui lòng nhập đầy đủ thông tin ngày");
+                            }
+                        }
 </script>
 
 
