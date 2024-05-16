@@ -86,7 +86,7 @@ if (!$conn) {
                 
             </div>
             <!-- ================ LÀM QUẢN LÝ SẢN PHẨM Ở ĐÂY ================= -->
-            <div class="user">
+<div class="user">
                 <div class="banner">
                     <button id="adduser"><a href="../admin/themsanpham.php">+ Thêm sản phẩm</a></button>
                     
@@ -111,7 +111,7 @@ if (!$conn) {
                             // Truy vấn dữ liệu từ cơ sở dữ liệu
                            
 
-                            $sql = "SELECT * FROM product";
+                            $sql = "SELECT * FROM product where status=1";
                             $result = $conn->query($sql);
         
                             // Kiểm tra nếu có dữ liệu trả về từ truy vấn
@@ -140,10 +140,9 @@ if (!$conn) {
                                     echo "<td>".$row["pro_price"]."</td>";
                                     echo "<td>".$row["pro_quantity"]."</td>";
                                     echo "<td>";
-                                    echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row['pro_name']."\",  \"".$row['pro_price']."\",\"".$row['pro_author']."\",\"".$row['pro_publisher']."\",\"".$row['pro_description']."\",\"".$row['id_category']."\",\"".$image_path."\",\"".$image_path2."\",\"".$image_path3."\")'>Sửa</button>";
-                                    if ($row["status"] == 1) {
+echo "<button id='suanguoidung' onclick='hienBoxSuaUser(\"".$row['pro_id']."\",\"".$row['pro_name']."\",  \"".$row['pro_price']."\",\"".$row['pro_author']."\",\"".$row['pro_publisher']."\",\"".$row['pro_description']."\",\"".$row['pro_quantity']."\",\"".$row['id_category']."\",\"".$image_path."\",\"".$image_path2."\",\"".$image_path3."\")'>Sửa</button>";                                    if ($row["status"] == 1) {
                                     // Nếu người dùng chưa bị khóa, hiển thị nút "Khóa"
-                                    echo "<button class='xoanguoidung' onclick='performAction(\"lock\", \"". $row['pro_id'] ."\")'>Xóa</button>";
+                                    echo "<button id='xoanguoidung' data-proid='" . $row['pro_id'] . "' onclick='performAction(this)'>Xóa</button>";                                   
                                 }
                                 
                                 echo "</td>";
@@ -173,27 +172,14 @@ if (!$conn) {
                                         }
                                     </script>
                                     <h2 style="margin-bottom: 10px;">Sửa thông tin sản phẩm  </h2>
-<<<<<<< HEAD
-<<<<<<< HEAD
                                     <form id="suaUserForm" action="suaproduct.php" method="post" enctype="multipart/form-data">
-=======
-                                    <form id="suaUserForm" action="../admin/suaproduct.php" method="post"> <!--Thêm action và method vào form-->
->>>>>>> parent of 680e329 (2)
-=======
-                                    <form id="suaUserForm" action="../admin/suaproduct.php" method="post" enctype="multipart/form-data">
->>>>>>> parent of 6d8e95f (aaaaaaaaa)
                                         <div class="form-group">
                                             <label for="image1">Ảnh 1:</label>
                                             <div class="change_img">
                                                 <img src="" id="pro_img1" name="pro_img1">
                                                 <div class="change_action">
                                                     <label for="input_file1" class="change_button">Sửa</label>
-<<<<<<< HEAD
-                                                    <input type="file" id="input_file1" name="pro_img1" class="input_file" accept="image/*" onchange="previewImage(event)">
-=======
-                                                    <input type="file" id="input_file1" class="input_file" accept="image/*">
-                                                    <label class="change_button" onclick="del(this)">Xóa</label>
->>>>>>> parent of 680e329 (2)
+<input type="file" id="input_file1" name="pro_img1" class="input_file" accept="image/*" onchange="previewImage(event)">
                                                 </div>
                                             </div>
                                         </div>
@@ -204,12 +190,7 @@ if (!$conn) {
                                                 <img src="" id="pro_img2" name="pro_img2">
                                                 <div class="change_action">
                                                     <label for="input_file2" class="change_button">Sửa</label>
-<<<<<<< HEAD
                                                     <input type="file" id="input_file2" name="pro_img2" class="input_file" accept="image/*" onchange="previewImage2(event)">
-=======
-                                                    <input type="file" id="input_file2" class="input_file" accept="image/*">
-                                                    <label class="change_button" onclick="del(this)">Xóa</label>
->>>>>>> parent of 680e329 (2)
                                                 </div>
                                             </div>
                                         </div>
@@ -220,19 +201,14 @@ if (!$conn) {
                                                 <img src="" id="pro_img3" name="pro_img3">
                                                 <div class="change_action">
                                                     <label for="input_file3" class="change_button">Sửa</label>
-<<<<<<< HEAD
                                                     <input type="file" id="input_file3" name="pro_img3" class="input_file" accept="image/*" onchange="previewImage3(event)">
-=======
-                                                    <input type="file" id="input_file3" class="input_file" accept="image/*">
-                                                    <label class="change_button" onclick="del(this)">Xóa</label>
->>>>>>> parent of 680e329 (2)
                                                 </div>
                                             </div>
                                         </div>
-                                        
-
-
-                                       
+                                        <div class="form-group">
+                                            <label for="email">Mã sản phẩm:</label>
+                                            <input type="text" name="pro_id" id="pro_id" value="">
+                                        </div>
                                         <div class="form-group">
                                             <label for="name">Tên sản phẩm:</label>
                                             <input type="text" name="pro_name" id="pro_name" value="">
@@ -242,7 +218,7 @@ if (!$conn) {
                                             <label for="email">Giá:</label>
                                             <input type="text" name="pro_price" id="pro_price" value="">
                                         </div>
-                                        <div class="form-group">
+<div class="form-group">
                                             <label for="email">Tác giả:</label>
                                             <input type="text"name="pro_author" id="pro_author" value="Dale Carnegie">
                                         </div>
@@ -255,6 +231,10 @@ if (!$conn) {
                                             <textarea
                                             name="pro_description" id="pro_description"></textarea>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="quatyti">Số lượng tồn kho:</label>
+                                            <input type="text" name="pro_quantity" id="quatyti" value="1000">
+                                        </div>
                                        
                                         <div class="form-group">
                                             <label for="goi">Danh mục:</label>
@@ -266,7 +246,7 @@ if (!$conn) {
                                         </div>
                                         <div class="form-group">
                                             <div class="update">
-                                            <button type="submit"><i class="fa-solid fa-download"></i>Cập nhật</button> <!--Thay đổi nút "a" thành "button" và thêm type="submit"-->
+                                            <button type="submit"><i class="fa-solid fa-download">Cập nhật</button> <!--Thay đổi nút "a" thành "button" và thêm type="submit"-->
                                             </div>
 
                                         </div>  
@@ -278,7 +258,7 @@ if (!$conn) {
                                     event.preventDefault(); // Ngăn chặn form gửi dữ liệu mặc định
                                     var formData = new FormData(this); // Lấy dữ liệu từ form
                                     fetch('../admin/suaproduct.php', { // Gửi dữ liệu đến sua.php
-                                        method: 'POST',
+method: 'POST',
                                         body: formData
                                     })
                                     .then(response => {
@@ -296,29 +276,7 @@ if (!$conn) {
                                     });
                                 });
                                 ///////////////////
-<<<<<<< HEAD
-<<<<<<< HEAD
                                 
-=======
-                                function performAction(action, pro_id) {
-                             if (action === 'lock') {
-                             if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
-                            // Gửi yêu cầu xóa sản phẩm thông qua AJAX
-                            var xhr = new XMLHttpRequest();
-                            xhr.open("POST", "xoasanpham.php", true);
-                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                            xhr.onreadystatechange = function() {
-                                if (xhr.readyState === 4 && xhr.status === 200) {
-                                    // Xử lý kết quả nếu cần
-                                    // Ví dụ: Cập nhật giao diện người dùng sau khi xóa
-                                    location.reload(); // Tải lại trang sau khi xóa thành công
-                                }
-                            };
-                            xhr.send("pro_id=" + pro_id);
-                        }
-                    }
-                }
->>>>>>> parent of 6d8e95f (aaaaaaaaa)
                 var input1 = document.getElementById('input_file1');
                 var input2 = document.getElementById('input_file2');
                 var input3 = document.getElementById('input_file3');
@@ -358,33 +316,13 @@ if (!$conn) {
                     var file = event.target.files[0];
                     var reader = new FileReader();
                     reader.onload = function(e) {
-                        document.getElementById('pro_img3').src = e.target.result;
+document.getElementById('pro_img3').src = e.target.result;
                     }
                     reader.readAsDataURL(file);
-=======
-                                function performAction(action, pro_id) {
-                             if (action === 'lock') {
-                             if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
-                            // Gửi yêu cầu xóa sản phẩm thông qua AJAX
-                            var xhr = new XMLHttpRequest();
-                            xhr.open("POST", "xoasanpham.php", true);
-                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                            xhr.onreadystatechange = function() {
-                                if (xhr.readyState === 4 && xhr.status === 200) {
-                                    // Xử lý kết quả nếu cần
-                                    // Ví dụ: Cập nhật giao diện người dùng sau khi xóa
-                                    location.reload(); // Tải lại trang sau khi xóa thành công
-                                }
-                            };
-                            xhr.send("pro_id=" + pro_id);
-                        }
-                    }
->>>>>>> parent of 680e329 (2)
                 }
                                         </script>
                                 <script src="../js/suaproduct.js"></script>
                 </div>
-<<<<<<< HEAD
                 <script>
    function performAction(button) {
     // Xác nhận người dùng muốn đánh dấu đã xử lý
@@ -422,29 +360,25 @@ if (!$conn) {
 
 </script>
                
-=======
-                <div class="pagination">
-                    <li class="hientai">1</li>
-                    <li><a href="quanlysanpham1.html" style="color: black;">2</a></li></a>
-                    <li><a href="quanlysanpham1.html" style="color: black;">NEXT</a></li>
-                </div>
->>>>>>> parent of 6d8e95f (aaaaaaaaa)
             </div>
         </div>
         
+
         <!-- ====== ionicons ======= -->
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
         <script>
-        function hienBoxSuaUser(pro_name, pro_price, pro_author, pro_publisher, pro_description, id_category,pro_img1, pro_img2, pro_img3) {
-    var boxSuaUser = document.getElementById('boxsuauser');
+        function hienBoxSuaUser( pro_id, pro_name, pro_price, pro_author, pro_publisher, pro_description, pro_quantity, id_category, pro_img1, pro_img2, pro_img3) {
     var overlay = document.querySelector('.overlay');
     var form = document.getElementById('suaUserForm');
+    var boxSuaUser = document.getElementById('boxsuauser');
     // Thiết lập đường dẫn ảnh cho các thẻ <img>
     document.getElementById('pro_img1').src = pro_img1;
     document.getElementById('pro_img2').src = pro_img2;
     document.getElementById('pro_img3').src = pro_img3;
             
+    // Điền dữ liệu vào form
+form.elements['pro_id'].value = pro_id;
 
 
   
@@ -453,6 +387,7 @@ if (!$conn) {
     form.elements['pro_author'].value = pro_author;
     form.elements['pro_publisher'].value = pro_publisher;
     form.elements['pro_description'].value = pro_description;
+    form.elements['pro_quantity'].value = pro_quantity;
 
 
     
@@ -473,7 +408,6 @@ if (!$conn) {
     overlay.classList.add('show-overlay');
     document.body.classList.add('no-scroll');
 }
-console.log(pro_img1, pro_img2, pro_img3);
 
  </script>
 
